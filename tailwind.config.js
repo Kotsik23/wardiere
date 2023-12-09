@@ -11,6 +11,10 @@ module.exports = {
 			},
 		},
 		extend: {
+			fontFamily: {
+				sans: "Raleway, sans-serif",
+				logo: "Kalnia, serif",
+			},
 			colors: {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
