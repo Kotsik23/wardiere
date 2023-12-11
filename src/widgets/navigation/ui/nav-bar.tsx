@@ -1,7 +1,10 @@
-import { ThemeSwitcher } from "@/features/theme-switcher"
+import { SignInButton } from "@clerk/clerk-react"
+import { Authenticated, Unauthenticated } from "convex/react"
 import { ROUTES } from "@/shared/constants/routes.ts"
+import { Button } from "@/shared/ui/button.tsx"
 import { NavigationLink } from "@/shared/ui/links"
 import { Logo } from "@/shared/ui/logo.tsx"
+import { UserButton } from "./user-button.tsx"
 
 export const NavBar = () => {
 	return (
@@ -14,7 +17,14 @@ export const NavBar = () => {
 				<NavigationLink to={ROUTES.HOME} className={"w-full max-w-[10rem]"}>
 					<Logo />
 				</NavigationLink>
-				<ThemeSwitcher />
+				<Authenticated>
+					<UserButton />
+				</Authenticated>
+				<Unauthenticated>
+					<SignInButton mode={"modal"}>
+						<Button>Sign In</Button>
+					</SignInButton>
+				</Unauthenticated>
 			</div>
 		</header>
 	)
