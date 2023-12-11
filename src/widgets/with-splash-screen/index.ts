@@ -1,1 +1,1 @@
-export { WithSplashScreen } from "@/widgets/with-splash-screen/ui/with-splash-screen.tsx"
+export { WithSplashScreen } from "./ui/with-splash-screen.tsx"

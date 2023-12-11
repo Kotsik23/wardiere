@@ -5,7 +5,7 @@ module.exports = {
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react-hooks/recommended",
-		"@feature-sliced",
+		"plugin:@conarti/feature-sliced/recommended"
 	],
 	ignorePatterns: ["dist", ".eslintrc.cjs", "convex/*"],
 	parser: "@typescript-eslint/parser",

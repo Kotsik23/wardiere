@@ -1,4 +1,4 @@
-import { cn } from "@/shared/ui/util.ts"
+import { cn } from "./util.ts"
 
 type LogoProps = {
 	className?: string

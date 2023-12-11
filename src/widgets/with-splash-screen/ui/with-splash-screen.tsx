@@ -1,7 +1,5 @@
 import { useConvexAuth } from "convex/react"
-
 import { ReactNode } from "react"
-
 import { Logo } from "@/shared/ui/logo.tsx"
 import { Spinner } from "@/shared/ui/spinner.tsx"
 

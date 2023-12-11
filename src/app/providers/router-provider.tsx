@@ -1,7 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-
-import { HomePage } from "@/pages"
-
+import { HomePage } from "@/pages/home-page"
 import { ROUTES } from "@/shared/constants/routes.ts"
 
 export const RouterProvider = () => {
