@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-react"
 import { LightbulbIcon } from "lucide-react"
+import { ThemeSwitcher } from "@/features/theme-switcher"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar.tsx"
 import {
 	DropdownMenu,
@@ -41,6 +42,8 @@ export const UserButton = () => {
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<SignOut />
+				<DropdownMenuSeparator />
+				<ThemeSwitcher containerClassName={"px-2 py-1.5"} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)
