@@ -3,13 +3,18 @@ import { NavigationLink } from "@/shared/ui/links"
 import { cn } from "@/shared/ui/util.ts"
 import { navBarLinksData } from "../constants/nav-bar-links-data.ts"
 
-export const NavBarLinks = () => {
+type NavBarLinksProps = {
+	className?: string
+	onItemClick?: () => void
+}
+
+export const NavBarLinks = ({ className, onItemClick }: NavBarLinksProps) => {
 	const { pathname } = useLocation()
 
 	return (
-		<ul className={"flex items-center gap-10"}>
+		<ul className={cn("flex flex-col items-center gap-10 md:flex-row", className)}>
 			{navBarLinksData.map(linkData => (
-				<li key={linkData.href}>
+				<li key={linkData.href} onClick={onItemClick}>
 					<NavigationLink
 						to={linkData.href}
 						className={cn(

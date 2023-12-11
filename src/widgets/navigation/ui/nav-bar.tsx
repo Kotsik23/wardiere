@@ -1,9 +1,9 @@
-import { SignInButton, SignUpButton } from "@clerk/clerk-react"
 import { Authenticated, Unauthenticated } from "convex/react"
 import { ROUTES } from "@/shared/constants/routes.ts"
-import { Button } from "@/shared/ui/button.tsx"
 import { NavigationLink } from "@/shared/ui/links"
 import { Logo } from "@/shared/ui/logo.tsx"
+import { ActionButtons } from "./action-buttons.tsx"
+import { MobileMenu } from "./mobile-menu/mobile-menu.tsx"
 import { NavBarLinks } from "./nav-bar-links.tsx"
 import { UserButton } from "./user-button.tsx"
 
@@ -24,15 +24,11 @@ export const NavBar = () => {
 						<UserButton />
 					</Authenticated>
 					<Unauthenticated>
-						<div className={"flex items-center gap-5"}>
-							<SignUpButton mode={"modal"}>
-								<Button variant={"ghost"}>Sign Up</Button>
-							</SignUpButton>
-							<SignInButton mode={"modal"}>
-								<Button>Sign In</Button>
-							</SignInButton>
-						</div>
+						<ActionButtons />
 					</Unauthenticated>
+				</nav>
+				<nav className={"flex gap-2 md:hidden"}>
+					<MobileMenu />
 				</nav>
 			</div>
 		</header>
