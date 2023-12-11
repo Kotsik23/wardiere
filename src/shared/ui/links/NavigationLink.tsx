@@ -6,12 +6,12 @@ import { cn } from "../util.ts"
 const navigationLinkVariants = cva(
 	[
 		"focus-visible:outline-none focus-visible:ring focus-visible:ring-ring focus-visible:ring-offset-background",
-		"text-base font-normal select-none",
+		"text-base font-normal",
 	],
 	{
 		variants: {
 			variant: {
-				default: "hover:text-foreground/80 text-foreground transition-colors",
+				default: "hover:text-foreground/70 text-foreground transition-colors",
 				underline: "hover:underline",
 			},
 		},
