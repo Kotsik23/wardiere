@@ -26,7 +26,7 @@
 		"use-query-params": "^2.2.1"
 	},
 	"devDependencies": {
-		"@feature-sliced/eslint-config": "^0.1.0-beta.6",
+		"@conarti/eslint-plugin-feature-sliced": "^1.0.5",
 		"@types/node": "^20.10.4",
 		"@types/react": "^18.2.37",
 		"@types/react-dom": "^18.2.15",
@@ -36,7 +36,6 @@
 		"autoprefixer": "^10.4.16",
 		"eslint": "^8.53.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
-		"eslint-plugin-boundaries": "^4.0.1",
 		"eslint-plugin-import": "^2.29.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.4",
