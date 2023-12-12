@@ -6,4 +6,8 @@ export default defineSchema({
 		name: v.string(),
 		slug: v.string(),
 	}),
+	author: defineTable({
+		userId: v.string(),
+		brand: v.optional(v.string()),
+	}),
 })
