@@ -28,7 +28,7 @@ export const UserButton = () => {
 						"cursor-pointer transition-all hover:ring-2 hover:ring-ring hover:ring-offset-2 hover:ring-offset-background"
 					}
 				>
-					<AvatarImage src={user?.imageUrl} />
+					<AvatarImage src={user?.imageUrl} className={"object-cover"} />
 					<AvatarFallback>{user?.fullName?.at(0)}</AvatarFallback>
 				</Avatar>
 			</DropdownMenuTrigger>
