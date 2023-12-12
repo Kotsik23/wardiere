@@ -1,4 +1,6 @@
 import { Authenticated, Unauthenticated } from "convex/react"
+import { useMediaQuery } from "usehooks-ts"
+import { ThemeSwitcher } from "@/features/theme-switcher"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { NavigationLink } from "@/shared/ui/links"
 import { Logo } from "@/shared/ui/logo.tsx"
@@ -8,6 +10,8 @@ import { NavBarLinks } from "./nav-bar-links.tsx"
 import { UserButton } from "./user-button.tsx"
 
 export const NavBar = () => {
+	const isMedium = useMediaQuery("(min-width: 768px)")
+
 	return (
 		<header
 			className={
@@ -23,9 +27,12 @@ export const NavBar = () => {
 					<Authenticated>
 						<UserButton />
 					</Authenticated>
-					<Unauthenticated>
-						<ActionButtons />
-					</Unauthenticated>
+					<div className={"flex items-center gap-5"}>
+						<Unauthenticated>
+							<ActionButtons />
+							{isMedium && <ThemeSwitcher />}
+						</Unauthenticated>
+					</div>
 				</nav>
 				<nav className={"flex gap-2 md:hidden"}>
 					<MobileMenu />

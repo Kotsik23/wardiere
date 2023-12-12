@@ -1,6 +1,7 @@
 import { Authenticated, Unauthenticated } from "convex/react"
 import { MenuIcon } from "lucide-react"
-import { useBoolean } from "usehooks-ts"
+import { useBoolean, useMediaQuery } from "usehooks-ts"
+import { ThemeSwitcher } from "@/features/theme-switcher"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { Button } from "@/shared/ui/button.tsx"
 import { NavigationLink } from "@/shared/ui/links"
@@ -12,6 +13,7 @@ import { MobileMenuActions } from "./mobile-menu-actions.tsx"
 
 export const MobileMenu = () => {
 	const { value: open, setValue: setOpen, setFalse: onClose } = useBoolean()
+	const isMedium = useMediaQuery("(min-width: 768px)")
 
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
@@ -27,6 +29,7 @@ export const MobileMenu = () => {
 					</NavigationLink>
 				</SheetHeader>
 				<NavBarLinks className={"items-start gap-4"} onItemClick={onClose} />
+				<Unauthenticated>{!isMedium && <ThemeSwitcher />}</Unauthenticated>
 				<Authenticated>
 					<MobileMenuActions onClose={onClose} />
 				</Authenticated>

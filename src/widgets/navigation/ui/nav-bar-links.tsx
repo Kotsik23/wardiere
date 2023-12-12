@@ -19,7 +19,7 @@ export const NavBarLinks = ({ className, onItemClick }: NavBarLinksProps) => {
 						to={linkData.href}
 						className={cn(
 							"flex items-center gap-2 font-medium",
-							pathname === linkData.href && "text-indigo-500 hover:text-indigo-500/70"
+							pathname === linkData.href && "text-secondary hover:text-secondary/70"
 						)}
 					>
 						<linkData.icon className={"h-5 w-5"} />
