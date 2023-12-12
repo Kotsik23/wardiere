@@ -4,7 +4,6 @@ import { Checkbox } from "@/shared/ui/checkbox.tsx"
 import { Label } from "@/shared/ui/label.tsx"
 import { cn } from "@/shared/ui/util.ts"
 import type { FilterItemType, FilterProps } from "../model/types.ts"
-import { useResetMultipleFilter } from "../model/use-reset-multiple-filter.ts"
 import { FilterHeader } from "./filter-header.tsx"
 
 export const MultipleFilter = ({
@@ -13,8 +12,10 @@ export const MultipleFilter = ({
 	items,
 	className,
 }: FilterProps & { className?: string }) => {
-	const [selected, setSelected] = useQueryParam(name, withDefault(ArrayParam, []))
-	const { handleReset, hasSelection } = useResetMultipleFilter({ key: name })
+	const defaultValue: string[] = []
+	const [selected, setSelected] = useQueryParam(name, withDefault(ArrayParam, defaultValue))
+	const handleReset = () => setSelected(defaultValue)
+	const hasSelection = selected?.length > 0
 
 	const handleCheckedChange = (checked: CheckedState, filter: FilterItemType) => {
 		setSelected(

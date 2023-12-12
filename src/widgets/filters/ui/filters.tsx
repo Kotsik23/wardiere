@@ -1,4 +1,4 @@
-import { MultipleFilter } from "@/features/filters"
+import { genderItems, MultipleFilter, SingleFilter } from "@/features/filters"
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card.tsx"
 import { Spinner } from "@/shared/ui/spinner.tsx"
 import { cn } from "@/shared/ui/util.ts"
@@ -28,6 +28,7 @@ export const Filters = ({ containerClassName, titleClassName, contentClassName }
 				) : (
 					<>
 						<MultipleFilter name={"category"} title={"Categories"} items={categories} />
+						<SingleFilter name={"gender"} title={"Gender"} items={genderItems} />
 					</>
 				)}
 			</CardContent>
