@@ -29,7 +29,9 @@ export const MobileMenu = () => {
 					</NavigationLink>
 				</SheetHeader>
 				<NavBarLinks className={"items-start gap-4"} onItemClick={onClose} />
-				<Unauthenticated>{!isMedium && <ThemeSwitcher />}</Unauthenticated>
+				<Unauthenticated>
+					{!isMedium && <ThemeSwitcher containerClassName={"mt-4"} />}
+				</Unauthenticated>
 				<Authenticated>
 					<MobileMenuActions onClose={onClose} />
 				</Authenticated>
