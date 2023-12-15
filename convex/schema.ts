@@ -10,6 +10,7 @@ export default defineSchema({
 		userId: v.string(),
 		brand: v.optional(v.string()),
 		keywords: v.optional(v.array(v.string())),
+		likes: v.array(v.string()),
 		contacts: v.optional(
 			v.object({
 				email: v.optional(v.string()),
