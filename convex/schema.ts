@@ -9,5 +9,11 @@ export default defineSchema({
 	author: defineTable({
 		userId: v.string(),
 		brand: v.optional(v.string()),
-	}),
+		keywords: v.optional(v.array(v.string())),
+		contacts: v.optional(
+			v.object({
+				email: v.optional(v.string()),
+			})
+		),
+	}).index("by_userId", ["userId"]),
 })

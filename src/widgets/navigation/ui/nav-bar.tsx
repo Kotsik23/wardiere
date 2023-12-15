@@ -15,7 +15,7 @@ export const NavBar = () => {
 	return (
 		<header
 			className={
-				"fixed left-0 right-0 top-0 w-full border-b border-b-border bg-background/80 backdrop-blur"
+				"fixed left-0 right-0 top-0 z-50 w-full border-b border-b-border bg-background/80 backdrop-blur"
 			}
 		>
 			<div className={"container flex items-center justify-between py-4"}>

@@ -42,6 +42,9 @@ export default defineConfig({
 					if (id.includes("sonner")) {
 						return "sonner"
 					}
+					if (id.includes("swiper")) {
+						return "swiper"
+					}
 				},
 			},
 		},

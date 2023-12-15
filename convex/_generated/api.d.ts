@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as authors from "../authors.js";
 import type * as categories from "../categories.js";
 
 /**
@@ -25,6 +26,7 @@ import type * as categories from "../categories.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  authors: typeof authors;
   categories: typeof categories;
 }>;
 export declare const api: FilterApi<
