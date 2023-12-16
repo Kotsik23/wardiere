@@ -1,7 +1,9 @@
+import { PageLayout } from "@/shared/ui/layouts"
+
 export const HelpPage = () => {
 	return (
 		<>
-			<main className={"my-20"}>HelpPage</main>
+			<PageLayout>HelpPage</PageLayout>
 		</>
 	)
 }

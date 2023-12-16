@@ -11,6 +11,9 @@ const ExplorePage = lazy(() =>
 const HelpPage = lazy(() =>
 	import("@/pages/help-page").then(value => ({ default: value.HelpPage }))
 )
+const AuthorPage = lazy(() =>
+	import("@/pages/author-page").then(value => ({ default: value.AuthorPage }))
+)
 
 export const RouterProvider = () => {
 	return (
@@ -21,6 +24,7 @@ export const RouterProvider = () => {
 					<Route element={<HomePage />} path={ROUTES.HOME} />
 					<Route element={<ExplorePage />} path={ROUTES.EXPLORE} />
 					<Route element={<HelpPage />} path={ROUTES.HELP} />
+					<Route element={<AuthorPage />} path={ROUTES.AUTHOR(":id")} />
 
 					<Route element={<Navigate to={ROUTES.HOME} replace />} path={ROUTES.UNKNOWN} />
 				</Routes>

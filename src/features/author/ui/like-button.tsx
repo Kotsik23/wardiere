@@ -3,7 +3,7 @@ import { HeartIcon } from "lucide-react"
 import { Doc } from "@convex/_generated/dataModel"
 import { Button } from "@/shared/ui/button.tsx"
 import { cn } from "@/shared/ui/util.ts"
-import { useLiked } from "../model/use-liked.ts"
+import { useIsLiked } from "../model/use-is-liked.ts"
 import { useToggleLike } from "../model/use-toggle-like.ts"
 
 type LikeButtonProps = {
@@ -13,7 +13,7 @@ type LikeButtonProps = {
 
 export const LikeButton = ({ author, className }: LikeButtonProps) => {
 	const { user } = useUser()
-	const isLiked = useLiked(author.likes)
+	const isLiked = useIsLiked(author.likes)
 	const { handleToggle, isPending } = useToggleLike()
 
 	return (

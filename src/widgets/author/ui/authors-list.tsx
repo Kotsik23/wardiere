@@ -8,7 +8,9 @@ type AuthorsListProps = {
 
 export const AuthorsList = ({ authors }: AuthorsListProps) => {
 	return (
-		<section className={"grid w-full grid-cols-1 items-start gap-8 lg:grid-cols-2"}>
+		<section
+			className={"grid w-full grid-flow-row-dense grid-cols-1 items-start gap-8 lg:grid-cols-2"}
+		>
 			{authors.map(author => (
 				<AuthorCard
 					key={author._id}

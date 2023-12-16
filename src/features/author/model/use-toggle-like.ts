@@ -3,6 +3,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { api } from "@convex/_generated/api"
 import { Id } from "@convex/_generated/dataModel"
+import { unauthenticatedToast } from "@/shared/ui/toasts"
 
 export const useToggleLike = () => {
 	const [isPending, setPending] = useState<boolean>(false)
@@ -16,7 +17,7 @@ export const useToggleLike = () => {
 		userId: string | undefined
 	}) => {
 		if (!userId) {
-			return toast.error("Unauthenticated")
+			return unauthenticatedToast()
 		}
 		try {
 			setPending(true)
