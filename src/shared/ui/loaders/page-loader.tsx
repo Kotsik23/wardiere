@@ -1,4 +1,4 @@
-import { Spinner } from "./spinner.tsx"
+import { Spinner } from "../spinner.tsx"
 
 export const PageLoader = () => {
 	return (
