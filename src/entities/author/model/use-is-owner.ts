@@ -3,9 +3,9 @@ export const useIsOwner = ({
 	authorUserId,
 }: {
 	userId: string | undefined
-	authorUserId: string
+	authorUserId: string | undefined
 }) => {
-	if (!userId) {
+	if (!userId || !authorUserId) {
 		return false
 	}
 	return userId === authorUserId
