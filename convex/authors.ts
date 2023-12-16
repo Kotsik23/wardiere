@@ -61,6 +61,7 @@ export const update = mutation({
 		authorId: v.id("author"),
 		payload: v.object({
 			brand: v.optional(v.string()),
+			aboutText: v.optional(v.string()),
 			keywords: v.optional(v.array(v.string())),
 			likes: v.optional(v.array(v.string())),
 			contacts: v.optional(

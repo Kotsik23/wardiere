@@ -4,6 +4,7 @@ import { v } from "convex/values"
 export const authorFields = {
 	userId: v.string(),
 	brand: v.optional(v.string()),
+	aboutText: v.optional(v.string()),
 	keywords: v.array(v.string()),
 	likes: v.array(v.string()),
 	isPublic: v.boolean(),

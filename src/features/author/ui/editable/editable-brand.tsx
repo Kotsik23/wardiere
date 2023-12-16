@@ -2,14 +2,14 @@ import { ChangeEvent, useState } from "react"
 import { useDebounce, useUpdateEffect } from "usehooks-ts"
 import { Doc } from "@convex/_generated/dataModel"
 import { Textarea } from "@/shared/ui/textarea.tsx"
-import { useEditableBrand } from "../../model/editable/use-editable-brand.ts"
+import { useEditable } from "../../model/use-editable.ts"
 
 type EditableBrandProps = {
 	author: Doc<"author">
 }
 
 export const EditableBrand = ({ author }: EditableBrandProps) => {
-	const { handleUpdate } = useEditableBrand()
+	const { handleUpdate } = useEditable()
 	const [brandValue, setBrandValue] = useState<string | undefined>(author.brand)
 	const debouncedBrandValue = useDebounce(brandValue, 400)
 

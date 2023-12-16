@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/clerk-react"
 import { Navigate, useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { EditableBrand, TogglePubic } from "@/features/author"
+import { EditableAboutText, EditableBrand, TogglePubic } from "@/features/author"
 import { useGetAuthorById, useIsOwner } from "@/entities/author"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { PageLayout } from "@/shared/ui/layouts"
@@ -26,6 +26,12 @@ export const AuthorEditPage = () => {
 			<TogglePubic author={author} />
 
 			<EditableBrand author={author} />
+			<div className={"mt-4 flex flex-col items-center gap-3"}>
+				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+					About Me
+				</h2>
+				<EditableAboutText author={author} />
+			</div>
 		</PageLayout>
 	)
 }

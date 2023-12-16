@@ -16,6 +16,7 @@ export const useTogglePublic = () => {
 		try {
 			setPending(true)
 			await togglePublicMutation({ authorId })
+			toast.success("Successfully updated")
 		} catch (error) {
 			unexpectedErrorToast()
 		} finally {

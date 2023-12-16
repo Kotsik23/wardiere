@@ -5,3 +5,4 @@ export { TogglePubic } from "./ui/toggle-pubic.tsx"
 
 // EDITABLE
 export { EditableBrand } from "./ui/editable/editable-brand.tsx"
+export { EditableAboutText } from "./ui/editable/editable-about-text.tsx"
