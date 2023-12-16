@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { TogglePubic } from "@/features/author"
+import { EditableBrand, TogglePubic } from "@/features/author"
 import { useGetAuthorById } from "@/entities/author"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
@@ -14,10 +14,10 @@ export const AuthorEditPage = () => {
 	}
 
 	return (
-		<PageLayout>
+		<PageLayout className={"container flex flex-col"}>
 			<TogglePubic author={author} />
 
-			<p>AuthorEditPage</p>
+			<EditableBrand author={author} />
 		</PageLayout>
 	)
 }

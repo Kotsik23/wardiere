@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { useGetAuthorById } from "@/entities/author"
+import { Brand, useGetAuthorById } from "@/entities/author"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
 
@@ -14,7 +14,7 @@ export const AuthorPage = () => {
 
 	return (
 		<PageLayout>
-			<p>Author page</p>
+			<Brand brand={author.brand} />
 		</PageLayout>
 	)
 }

@@ -16,13 +16,13 @@ export const useAuthorButton = () => {
 		try {
 			const isExistsAuthor = await getAuthorByUserId({ userId })
 			if (isExistsAuthor) {
-				return navigate(ROUTES.AUTHOR(isExistsAuthor._id))
+				return navigate(ROUTES.AUTHOR_EDIT(isExistsAuthor._id))
 			}
 			const newAuthorPromise = createAuthorMutation({ userId })
 			toast.promise(newAuthorPromise, {
 				loading: "Creating author for you...",
 				success: authorId => {
-					navigate(ROUTES.AUTHOR(authorId))
+					navigate(ROUTES.AUTHOR_EDIT(authorId))
 					return "Successfully created"
 				},
 				error: "Failed to create an author",

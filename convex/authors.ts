@@ -56,6 +56,29 @@ export const create = mutation({
 	},
 })
 
+export const update = mutation({
+	args: {
+		authorId: v.id("author"),
+		payload: v.object({
+			brand: v.optional(v.string()),
+			keywords: v.optional(v.array(v.string())),
+			likes: v.optional(v.array(v.string())),
+			contacts: v.optional(
+				v.object({
+					email: v.optional(v.string()),
+				})
+			),
+		}),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity()
+		if (!identity) {
+			throw new ConvexError("Unauthenticated")
+		}
+		return ctx.db.patch(args.authorId, args.payload)
+	},
+})
+
 export const remove = mutation({
 	args: {
 		authorId: v.id("author"),

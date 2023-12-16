@@ -9,6 +9,13 @@ export const useCreateAuthor = () => {
 	}
 }
 
+export const useUpdateAuthor = () => {
+	const updateAuthorMutation = useMutation(api.authors.update)
+	return {
+		updateAuthorMutation,
+	}
+}
+
 export const useRemoveAuthor = () => {
 	const removeAuthorMutation = useMutation(api.authors.remove)
 	return {
