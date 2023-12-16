@@ -69,6 +69,25 @@ export const remove = mutation({
 	},
 })
 
+export const togglePublic = mutation({
+	args: {
+		authorId: v.id("author"),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity()
+		if (!identity) {
+			throw new ConvexError("Unauthenticated")
+		}
+		const author = await ctx.db.get(args.authorId)
+		if (!author) {
+			throw new ConvexError("Author doesn't exists")
+		}
+		return ctx.db.patch(args.authorId, {
+			isPublic: !author.isPublic,
+		})
+	},
+})
+
 export const toggleLike = mutation({
 	args: {
 		authorId: v.id("author"),

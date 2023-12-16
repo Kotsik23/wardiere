@@ -8,33 +8,39 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/shared/ui/alert-dialog.tsx"
+} from "../../alert-dialog.tsx"
 
 type ConfirmationDialogProps = {
-	children: ReactNode
+	open: boolean
+	onOpenChange: (open: boolean) => void
 	onConfirm: () => void
 	title: string | ReactNode
 	description?: string | ReactNode
+	isPending?: boolean
 }
 
 export const ConfirmationDialog = ({
-	children,
+	open,
+	onOpenChange,
 	onConfirm,
 	title,
 	description,
+	isPending = false,
 }: ConfirmationDialogProps) => {
 	return (
-		<AlertDialog>
-			<AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+		<AlertDialog open={open} onOpenChange={onOpenChange}>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>{title}</AlertDialogTitle>
-					<AlertDialogDescription>{description}</AlertDialogDescription>
+					<AlertDialogTitle className={"text-2xl"}>{title}</AlertDialogTitle>
+					<AlertDialogDescription className={"text-base"}>
+						{description}
+					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction onClick={onConfirm}>Confirm</AlertDialogAction>
+					<AlertDialogAction onClick={onConfirm} disabled={isPending}>
+						Confirm
+					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>
