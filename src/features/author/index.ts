@@ -1,8 +1,7 @@
-export { LikeButton } from "./ui/like-button.tsx"
-export { CommentButton } from "./ui/comment-button.tsx"
-export { AuthorButton } from "./ui/author-button.tsx"
-export { TogglePubic } from "./ui/toggle-pubic.tsx"
+export { AuthorButton } from "./navigate-author"
+export { CommentButton } from "./comment-author"
+export { LikeButton } from "./like-author"
+export { TogglePubic } from "./toggle-public"
 
 // EDITABLE
-export { EditableBrand } from "./ui/editable/editable-brand.tsx"
-export { EditableAboutText } from "./ui/editable/editable-about-text.tsx"
+export { EditableBrand, EditableAboutText } from "./edit-author"

@@ -1,4 +1,4 @@
-import { useTheme } from "../providers/theme-provider.tsx"
+import { useTheme } from "./theme-provider.tsx"
 
 export const useThemeSwitcher = () => {
 	const { theme, setTheme } = useTheme()

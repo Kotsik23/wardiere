@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react"
 import { useDebounce, useUpdateEffect } from "usehooks-ts"
 import { Doc } from "@convex/_generated/dataModel"
 import { Textarea } from "@/shared/ui/textarea.tsx"
-import { useEditable } from "../../model/use-editable.ts"
+import { useEditable } from "../model/use-editable.ts"
 
 type EditableBrandProps = {
 	author: Doc<"author">

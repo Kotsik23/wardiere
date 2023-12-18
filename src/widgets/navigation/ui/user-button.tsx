@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-react"
-import { ThemeSwitcher } from "@/features/theme-switcher"
+import { AuthorButton } from "@/features/author"
+import { ThemeSwitcher } from "@/features/toggle-theme"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar.tsx"
 import {
 	DropdownMenu,
@@ -10,7 +11,6 @@ import {
 } from "@/shared/ui/dropdown-menu.tsx"
 import { SignOut } from "./sign-out.tsx"
 import { UserSettings } from "./user-settings.tsx"
-import { AuthorButton } from "@/features/author"
 
 export const UserButton = () => {
 	const { user } = useUser()

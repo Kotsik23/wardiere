@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from "react"
 import { useDebounce, useUpdateEffect } from "usehooks-ts"
 import { Doc } from "@convex/_generated/dataModel"
+import { CompletionButton } from "@/entities/author"
 import { Textarea } from "@/shared/ui/textarea.tsx"
-import { AboutTextCompletionType } from "../../model/types.ts"
-import { useAboutTextCompletion } from "../../model/use-about-text-completion.ts"
-import { useEditable } from "../../model/use-editable.ts"
-import { CompletionButton } from "../completion-button.tsx"
+import { useEditable } from "../model/use-editable.ts"
+import { AboutTextCompletionType } from "../model/types.ts"
+import { useAboutTextCompletion } from "../model/use-about-text-completion.ts"
 
 type EditableAboutTextProps = {
 	author: Doc<"author">

@@ -1,5 +1,5 @@
 import { Toaster } from "sonner"
-import { useTheme } from "@/features/theme-switcher"
+import { useTheme } from "@/features/toggle-theme"
 
 export const ToasterProvider = () => {
 	const { theme } = useTheme()

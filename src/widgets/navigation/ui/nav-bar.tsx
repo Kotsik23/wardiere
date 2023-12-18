@@ -1,6 +1,6 @@
 import { Authenticated, Unauthenticated } from "convex/react"
 import { useMediaQuery } from "usehooks-ts"
-import { ThemeSwitcher } from "@/features/theme-switcher"
+import { ThemeSwitcher } from "@/features/toggle-theme"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { NavigationLink } from "@/shared/ui/links"
 import { Logo } from "@/shared/ui/logo.tsx"

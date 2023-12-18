@@ -1,5 +1,7 @@
+import { useUser } from "@clerk/clerk-react"
 import { LightbulbIcon, LogOutIcon, SettingsIcon } from "lucide-react"
-import { ThemeSwitcher } from "@/features/theme-switcher"
+import { useAuthorButton } from "@/features/author/navigate-author"
+import { ThemeSwitcher } from "@/features/toggle-theme"
 import { useSignOut } from "../../model/use-sign-out.ts"
 import { useUserSettings } from "../../model/use-user-settings.ts"
 import { MobileMenuAction } from "./mobile-menu-action.tsx"
@@ -11,6 +13,8 @@ type MobileMenuActionsProps = {
 export const MobileMenuActions = ({ onClose }: MobileMenuActionsProps) => {
 	const { handleOpenUserSettings } = useUserSettings()
 	const { handleSignOut } = useSignOut()
+	const { handleClick } = useAuthorButton()
+	const { user } = useUser()
 
 	const withClose = (fn: () => void) => {
 		fn()
@@ -27,7 +31,7 @@ export const MobileMenuActions = ({ onClose }: MobileMenuActionsProps) => {
 			<MobileMenuAction
 				label={"Author"}
 				icon={LightbulbIcon}
-				onClick={() => withClose(() => {})}
+				onClick={() => withClose(() => handleClick({ userId: user?.id }))}
 			/>
 			<MobileMenuAction
 				className={"text-destructive hover:text-destructive"}

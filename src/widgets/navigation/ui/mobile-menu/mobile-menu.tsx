@@ -1,7 +1,7 @@
 import { Authenticated, Unauthenticated } from "convex/react"
 import { MenuIcon } from "lucide-react"
 import { useBoolean, useMediaQuery } from "usehooks-ts"
-import { ThemeSwitcher } from "@/features/theme-switcher"
+import { ThemeSwitcher } from "@/features/toggle-theme"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { Button } from "@/shared/ui/button.tsx"
 import { NavigationLink } from "@/shared/ui/links"

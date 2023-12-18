@@ -1,7 +1,7 @@
 import { ClerkProvider as ReactClerkProvider } from "@clerk/clerk-react"
 import { dark } from "@clerk/themes"
 import { ReactNode } from "react"
-import { useTheme } from "@/features/theme-switcher"
+import { useTheme } from "@/features/toggle-theme"
 
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
