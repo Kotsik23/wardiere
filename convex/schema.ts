@@ -5,6 +5,7 @@ export const authorFields = {
 	userId: v.string(),
 	brand: v.optional(v.string()),
 	aboutText: v.optional(v.string()),
+	photo: v.optional(v.id("image")),
 	keywords: v.array(v.string()),
 	likes: v.array(v.string()),
 	isPublic: v.boolean(),
@@ -16,9 +17,13 @@ export const authorFields = {
 }
 
 export default defineSchema({
+	author: defineTable(authorFields).index("by_userId", ["userId"]),
 	categories: defineTable({
 		name: v.string(),
 		slug: v.string(),
 	}),
-	author: defineTable(authorFields).index("by_userId", ["userId"]),
+	image: defineTable({
+		fileId: v.string(),
+		url: v.string(),
+	}),
 })

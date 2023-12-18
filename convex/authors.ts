@@ -1,7 +1,8 @@
-import { mutation, query } from "./_generated/server"
+import { action, mutation, query } from "./_generated/server"
 import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
 import { authorFields } from "./schema"
+import { api, internal } from "./_generated/api"
 
 export const getAll = query({
 	args: {
@@ -62,6 +63,7 @@ export const update = mutation({
 		payload: v.object({
 			brand: v.optional(v.string()),
 			aboutText: v.optional(v.string()),
+			photo: v.optional(v.id("image")),
 			keywords: v.optional(v.array(v.string())),
 			likes: v.optional(v.array(v.string())),
 			contacts: v.optional(
@@ -132,6 +134,45 @@ export const toggleLike = mutation({
 			likes: isLikeExists
 				? author.likes.filter(id => args.userId !== id)
 				: [...author.likes, args.userId],
+		})
+	},
+})
+
+export const updatePhoto = action({
+	args: {
+		authorId: v.id("author"),
+		arrayBuffer: v.bytes(),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity()
+		if (!identity) {
+			throw new ConvexError("Authentication required")
+		}
+
+		const author = await ctx.runQuery(api.authors.getById, { authorId: args.authorId })
+		if (!author) {
+			throw new ConvexError("Author doesn't exists")
+		}
+
+		if (author.photo) {
+			const currentImage = await ctx.runQuery(api.image.getById, { imageId: author.photo })
+			if (!currentImage) {
+				throw new ConvexError("Current photo doesn't exists")
+			}
+			await ctx.runAction(internal.imageKit.remove, { fileId: currentImage.fileId })
+			await ctx.runMutation(api.image.remove, { imageId: currentImage._id })
+		}
+
+		const uploadedImage = await ctx.runAction(internal.imageKit.upload, {
+			arrayBuffer: args.arrayBuffer,
+		})
+		const newImage = await ctx.runMutation(api.image.create, {
+			fileId: uploadedImage.fileId,
+			url: uploadedImage.url,
+		})
+		await ctx.runMutation(api.authors.update, {
+			authorId: args.authorId,
+			payload: { photo: newImage },
 		})
 	},
 })

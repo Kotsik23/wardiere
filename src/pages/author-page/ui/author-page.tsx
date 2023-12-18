@@ -13,7 +13,7 @@ export const AuthorPage = () => {
 	}
 
 	return (
-		<PageLayout>
+		<PageLayout className={"container flex flex-col"}>
 			<Brand brand={author.brand} />
 			<div className={"mt-4 flex flex-col items-center gap-3"}>
 				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
