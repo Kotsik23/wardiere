@@ -1,5 +1,6 @@
 import { Doc } from "@convex/_generated/dataModel"
-import { CommentButton, LikeButton } from "@/features/author"
+import { CommentButton } from "@/features/author/comment-author"
+import { LikeButton } from "@/features/author/like-author"
 import { AuthorCard } from "@/entities/author"
 
 type AuthorsListProps = {

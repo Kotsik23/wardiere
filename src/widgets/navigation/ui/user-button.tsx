@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-react"
-import { AuthorButton } from "@/features/author"
+import { AuthorButton } from "@/features/author/navigate-author"
 import { ThemeSwitcher } from "@/features/toggle-theme"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar.tsx"
 import {

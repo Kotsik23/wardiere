@@ -16,7 +16,7 @@ export const Filters = ({ containerClassName, titleClassName, contentClassName }
 	const isLoading = !categories
 
 	return (
-		<Card className={cn("w-80 shrink-0", containerClassName)}>
+		<Card className={cn("h-fit w-80 shrink-0", containerClassName)}>
 			<CardHeader className={"p-4"}>
 				<CardTitle className={titleClassName}>Filter By</CardTitle>
 			</CardHeader>
