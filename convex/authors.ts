@@ -53,6 +53,7 @@ export const create = mutation({
 			isPublic: false,
 			likes: [],
 			keywords: [],
+			comments: [],
 		})
 	},
 })

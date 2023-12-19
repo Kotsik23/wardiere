@@ -19,7 +19,7 @@ export const AuthorsList = ({ authors }: AuthorsListProps) => {
 					actions={
 						<div className={"flex items-center gap-4"}>
 							<LikeButton author={author} />
-							<CommentButton />
+							<CommentButton author={author} />
 						</div>
 					}
 				/>

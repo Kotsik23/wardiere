@@ -8,6 +8,7 @@ export const authorFields = {
 	photo: v.optional(v.id("image")),
 	keywords: v.array(v.string()),
 	likes: v.array(v.string()),
+	comments: v.array(v.id("comments")),
 	isPublic: v.boolean(),
 	contacts: v.optional(
 		v.object({
@@ -18,6 +19,10 @@ export const authorFields = {
 
 export default defineSchema({
 	author: defineTable(authorFields).index("by_userId", ["userId"]),
+	comments: defineTable({
+		userId: v.string(),
+		text: v.string(),
+	}),
 	categories: defineTable({
 		name: v.string(),
 		slug: v.string(),

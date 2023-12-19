@@ -16,6 +16,7 @@ import type {
 } from "convex/server";
 import type * as authors from "../authors.js";
 import type * as categories from "../categories.js";
+import type * as comments from "../comments.js";
 import type * as image from "../image.js";
 import type * as imageKit from "../imageKit.js";
 import type * as openai from "../openai.js";
@@ -31,6 +32,7 @@ import type * as openai from "../openai.js";
 declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   categories: typeof categories;
+  comments: typeof comments;
   image: typeof image;
   imageKit: typeof imageKit;
   openai: typeof openai;
