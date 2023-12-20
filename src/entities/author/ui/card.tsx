@@ -3,7 +3,6 @@ import { ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { Doc } from "@convex/_generated/dataModel"
 import { ROUTES } from "@/shared/constants/routes.ts"
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar.tsx"
 import { Button } from "@/shared/ui/button.tsx"
 import {
 	Card as UiCard,
@@ -14,6 +13,7 @@ import {
 import { useIsNew } from "../model/use-is-new.ts"
 import { Keywords } from "./keywords.tsx"
 import { NewBadge } from "./new-badge.tsx"
+import { Photo as AuthorPhoto } from "./photo.tsx"
 
 type AuthorCardProps = {
 	data: Doc<"author">
@@ -26,13 +26,7 @@ export const Card = ({ data, actions }: AuthorCardProps) => {
 	return (
 		<UiCard className={"relative"}>
 			<UiCardHeader className={"flex flex-row items-center gap-4"}>
-				<Avatar className={"h-14 w-14 rounded-md shadow-lg md:h-20 md:w-20"}>
-					<AvatarImage
-						src={"https://ik.imagekit.io/k3z5s13bx/5979737.jpg?updatedAt=1702390501155"}
-						className={"object-cover"}
-					/>
-					<AvatarFallback>{data.brand?.at(0)}</AvatarFallback>
-				</Avatar>
+				<AuthorPhoto author={data} imageClassName={"w-20 md:w-28"} />
 				<div className={"flex flex-col items-start gap-0.5"}>
 					<h3 className={"text-lg font-semibold md:text-xl"}>{data.brand}</h3>
 					<span className={"text-sm font-medium text-secondary md:text-base"}>
