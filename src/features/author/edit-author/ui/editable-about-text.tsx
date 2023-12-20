@@ -30,7 +30,7 @@ export const EditableAboutText = ({ author }: EditableAboutTextProps) => {
 			placeholder={"Your about text here..."}
 			value={aboutTextValue}
 			onChange={handleChange}
-			className={"my-2 text-center text-lg font-medium md:text-xl lg:text-2xl"}
+			className={"mx-auto max-w-4xl text-justify text-base font-medium md:text-lg lg:text-xl"}
 			minRows={6}
 			maxRows={12}
 		/>

@@ -44,3 +44,7 @@ export const useGetAuthorByUserId = () => {
 		getAuthorByUserId,
 	}
 }
+
+export const useGetAuthorPhoto = ({ imageId }: { imageId: Id<"image"> | undefined }) => {
+	return useQuery(api.image.getById, imageId ? { imageId: imageId } : "skip")
+}

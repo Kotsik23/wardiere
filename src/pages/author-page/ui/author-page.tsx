@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
 import { CommentList, CreateCommentForm } from "@/features/author/comment-author"
-import { AboutText, Brand, useGetAuthorById } from "@/entities/author"
+import { AboutText, AuthorPhoto, Brand, useGetAuthorById } from "@/entities/author"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
 
@@ -14,17 +14,20 @@ export const AuthorPage = () => {
 	}
 
 	return (
-		<PageLayout className={"container my-16 flex flex-col"}>
+		<PageLayout className={"container mb-12 mt-24 flex flex-col gap-10"}>
 			<Brand brand={author.brand} />
+			<div className={"flex w-full flex-col items-center gap-4"}>
+				<AuthorPhoto author={author} />
+			</div>
 			{author.aboutText && (
-				<div className={"mt-8 flex flex-col items-center gap-3"}>
+				<div className={"flex flex-col items-center gap-6"}>
 					<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
 						About Me
 					</h2>
 					<AboutText aboutText={author.aboutText} />
 				</div>
 			)}
-			<div className={"mt-8 flex flex-col items-start gap-6"}>
+			<div className={"flex flex-col items-start gap-6"}>
 				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
 					Comments ({author.comments.length})
 				</h2>

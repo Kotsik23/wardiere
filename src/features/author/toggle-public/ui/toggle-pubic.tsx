@@ -3,19 +3,21 @@ import { Doc } from "@convex/_generated/dataModel"
 import { ConfirmationDialog } from "@/shared/ui/confirmation"
 import { Label } from "@/shared/ui/label.tsx"
 import { Switch } from "@/shared/ui/switch.tsx"
+import { cn } from "@/shared/ui/util.ts"
 import { useTogglePublic } from "../model/use-toggle-public.ts"
 
 type TogglePubicProps = {
 	author: Doc<"author">
+	className?: string
 }
 
-export const TogglePubic = ({ author }: TogglePubicProps) => {
+export const TogglePubic = ({ author, className }: TogglePubicProps) => {
 	const { value: open, setValue: setOpen, toggle } = useBoolean()
 	const { handleTogglePublic, isPending } = useTogglePublic()
 
 	return (
 		<>
-			<div className={"flex items-center gap-2"}>
+			<div className={cn("flex items-center gap-2", className)}>
 				<Switch id={"public-author"} checked={author.isPublic} onCheckedChange={toggle} />
 				<Label htmlFor={"public-author"} className={"text-base"}>
 					Toggle Public

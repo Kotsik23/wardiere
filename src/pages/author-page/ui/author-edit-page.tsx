@@ -1,10 +1,12 @@
 import { useUser } from "@clerk/clerk-react"
 import { Navigate, useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
+import { UploadAuthorPhotoButton } from "@/widgets/author"
+import { CommentList } from "@/features/author/comment-author"
 import { AboutTextCompletionButton, BrandCompletionButton } from "@/features/author/completions"
 import { EditableAboutText, EditableBrand } from "@/features/author/edit-author"
 import { TogglePubic } from "@/features/author/toggle-public"
-import { useGetAuthorById, useIsOwner } from "@/entities/author"
+import { AuthorPhoto, useGetAuthorById, useIsOwner } from "@/entities/author"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
@@ -24,24 +26,34 @@ export const AuthorEditPage = () => {
 	}
 
 	return (
-		<PageLayout className={"container flex flex-col"}>
+		<PageLayout className={"container mb-12 mt-24 flex flex-col gap-10"}>
 			<TogglePubic author={author} />
 
 			<div className={"relative w-full"}>
 				<EditableBrand author={author} />
-				<BrandCompletionButton authorId={author._id} className={"absolute -right-3 top-3"} />
+				<BrandCompletionButton authorId={author._id} className={"absolute -right-6 -top-6"} />
 			</div>
-			<div className={"mt-4 flex flex-col items-center gap-3"}>
+			<div className={"flex w-full flex-col items-center gap-4"}>
+				<AuthorPhoto author={author} />
+				<UploadAuthorPhotoButton authorId={author._id} />
+			</div>
+			<div className={"flex flex-col items-center gap-6"}>
 				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
 					About Me
 				</h2>
-				<div className={"relative w-full"}>
+				<div className={"relative w-full max-w-4xl"}>
 					<EditableAboutText author={author} />
 					<AboutTextCompletionButton
 						authorId={author._id}
-						className={"absolute -right-3 -top-3"}
+						className={"absolute -right-6 -top-6"}
 					/>
 				</div>
+			</div>
+			<div className={"flex flex-col items-start gap-6"}>
+				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
+					Comments ({author.comments.length})
+				</h2>
+				<CommentList author={author} />
 			</div>
 		</PageLayout>
 	)
