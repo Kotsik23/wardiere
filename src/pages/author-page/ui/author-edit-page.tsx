@@ -31,7 +31,7 @@ export const AuthorEditPage = () => {
 
 			<div className={"relative w-full"}>
 				<EditableBrand author={author} />
-				<BrandCompletionButton authorId={author._id} className={"absolute -right-6 -top-6"} />
+				<BrandCompletionButton authorId={author._id} className={"absolute -right-3 -top-8"} />
 			</div>
 			<div className={"flex w-full flex-col items-center gap-4"}>
 				<AuthorPhoto author={author} />
@@ -45,7 +45,7 @@ export const AuthorEditPage = () => {
 					<EditableAboutText author={author} />
 					<AboutTextCompletionButton
 						authorId={author._id}
-						className={"absolute -right-6 -top-6"}
+						className={"absolute -right-3 -top-8"}
 					/>
 				</div>
 			</div>

@@ -4,6 +4,7 @@ import { CommentList, CreateCommentForm } from "@/features/author/comment-author
 import { AboutText, AuthorPhoto, Brand, useGetAuthorById } from "@/entities/author"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
+import { cn } from "@/shared/ui/util.ts"
 
 export const AuthorPage = () => {
 	const { id: authorId } = useParams()
@@ -14,7 +15,7 @@ export const AuthorPage = () => {
 	}
 
 	return (
-		<PageLayout className={"container mb-12 mt-24 flex flex-col gap-10"}>
+		<PageLayout className={cn("container mb-12 mt-24 flex flex-col gap-10")}>
 			<Brand brand={author.brand} />
 			<div className={"flex w-full flex-col items-center gap-4"}>
 				<AuthorPhoto author={author} />

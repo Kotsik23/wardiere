@@ -12,7 +12,7 @@ module.exports = {
 		},
 		extend: {
 			fontFamily: {
-				sans: "Raleway, sans-serif",
+				sans: "Work Sans, sans-serif",
 				logo: "Kalnia, serif",
 			},
 			colors: {
@@ -54,6 +54,9 @@ module.exports = {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
+			},
+			backgroundImage: {
+				"author-pattern": "url(/favicon.svg)",
 			},
 			keyframes: {
 				"accordion-down": {
