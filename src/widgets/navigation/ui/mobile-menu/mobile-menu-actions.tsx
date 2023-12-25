@@ -1,9 +1,10 @@
 import { useUser } from "@clerk/clerk-react"
 import { LightbulbIcon, LogOutIcon, SettingsIcon } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 import { useAuthorButton } from "@/features/author/navigate-author"
 import { ThemeSwitcher } from "@/features/toggle-theme"
+import { ROUTES } from "@/shared/constants/routes.ts"
 import { useSignOut } from "../../model/use-sign-out.ts"
-import { useUserSettings } from "../../model/use-user-settings.ts"
 import { MobileMenuAction } from "./mobile-menu-action.tsx"
 
 type MobileMenuActionsProps = {
@@ -11,9 +12,9 @@ type MobileMenuActionsProps = {
 }
 
 export const MobileMenuActions = ({ onClose }: MobileMenuActionsProps) => {
-	const { handleOpenUserSettings } = useUserSettings()
 	const { handleSignOut } = useSignOut()
 	const { handleClick } = useAuthorButton()
+	const navigate = useNavigate()
 	const { user } = useUser()
 
 	const withClose = (fn: () => void) => {
@@ -26,7 +27,7 @@ export const MobileMenuActions = ({ onClose }: MobileMenuActionsProps) => {
 			<MobileMenuAction
 				label={"Settings"}
 				icon={SettingsIcon}
-				onClick={() => withClose(handleOpenUserSettings)}
+				onClick={() => withClose(() => navigate(ROUTES.SETTINGS))}
 			/>
 			<MobileMenuAction
 				label={"Author"}

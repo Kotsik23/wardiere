@@ -25,7 +25,7 @@ export const Card = ({ data, actions }: AuthorCardProps) => {
 
 	return (
 		<UiCard className={"relative"}>
-			<UiCardHeader className={"lg: flex flex-col items-center gap-4 xl:flex-row"}>
+			<UiCardHeader className={"flex flex-col items-center gap-4 xl:flex-row"}>
 				<AuthorPhoto author={data} imageClassName={"w-40"} />
 				<div className={"flex flex-col items-center gap-0.5 xl:items-start"}>
 					<h3 className={"text-lg font-semibold md:text-xl"}>{data.brand}</h3>

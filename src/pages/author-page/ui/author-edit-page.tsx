@@ -34,7 +34,7 @@ export const AuthorEditPage = () => {
 				<BrandCompletionButton authorId={author._id} className={"absolute -right-3 -top-8"} />
 			</div>
 			<div className={"flex w-full flex-col items-center gap-4"}>
-				<AuthorPhoto author={author} />
+				<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
 				<UploadAuthorPhotoButton authorId={author._id} />
 			</div>
 			<div className={"flex flex-col items-center gap-6"}>

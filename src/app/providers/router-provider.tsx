@@ -11,6 +11,9 @@ const ExplorePage = lazy(() =>
 const HelpPage = lazy(() =>
 	import("@/pages/help-page").then(value => ({ default: value.HelpPage }))
 )
+const SettingsPage = lazy(() =>
+	import("@/pages/settings-page").then(value => ({ default: value.SettingsPage }))
+)
 const AuthorPage = lazy(() =>
 	import("@/pages/author-page").then(value => ({ default: value.AuthorPage }))
 )
@@ -27,6 +30,7 @@ export const RouterProvider = () => {
 					<Route element={<HomePage />} path={ROUTES.HOME} />
 					<Route element={<ExplorePage />} path={ROUTES.EXPLORE} />
 					<Route element={<HelpPage />} path={ROUTES.HELP} />
+					<Route element={<SettingsPage />} path={ROUTES.SETTINGS} />
 					<Route element={<AuthorPage />} path={ROUTES.AUTHOR(":id")} />
 					<Route element={<AuthorEditPage />} path={ROUTES.AUTHOR_EDIT(":id")} />
 

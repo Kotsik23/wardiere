@@ -17,7 +17,7 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: (id: string) => {
-					if (id.includes("@radix-ui") || id.includes("@floating-ui")) {
+					if (id.includes("@radix-ui") || id.includes("@floating-ui") || id.includes("vaul")) {
 						return "@radix-ui"
 					}
 					if (

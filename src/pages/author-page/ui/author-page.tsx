@@ -15,10 +15,10 @@ export const AuthorPage = () => {
 	}
 
 	return (
-		<PageLayout className={cn("container mb-12 mt-24 flex flex-col gap-10")}>
+		<PageLayout className={cn("container flex flex-col gap-6")}>
 			<Brand brand={author.brand} />
 			<div className={"flex w-full flex-col items-center gap-4"}>
-				<AuthorPhoto author={author} />
+				<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
 			</div>
 			{author.aboutText && (
 				<div className={"flex flex-col items-center gap-6"}>

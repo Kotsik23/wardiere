@@ -20,10 +20,10 @@ export const Photo = ({ author, containerClassName, imageClassName }: Props) => 
 					alt={`${author._id}-photo`}
 					placeholder={photo.url + "?tr=w-100,h-100,fo-auto,q-1"}
 					src={photo.url + "?tr=h-800,w-800,fo-auto"}
-					className={cn("object-cove aspect-square h-full w-96", imageClassName)}
+					className={cn("aspect-square h-full w-96 object-cover", imageClassName)}
 				/>
 			) : (
-				<Skeleton className={cn("aspect-square h-full w-96", imageClassName)} />
+				<Skeleton className={cn("aspect-square h-full w-96 max-w-full", imageClassName)} />
 			)}
 		</div>
 	)
