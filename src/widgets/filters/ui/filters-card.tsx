@@ -10,10 +10,12 @@ type FiltersProps = {
 	contentClassName?: string
 }
 
-export const Filters = ({ containerClassName, titleClassName, contentClassName }: FiltersProps) => {
+export const FiltersCard = ({
+	containerClassName,
+	titleClassName,
+	contentClassName,
+}: FiltersProps) => {
 	const { categories } = useCategories()
-
-	const isLoading = !categories
 
 	return (
 		<Card className={cn("h-fit w-80 shrink-0", containerClassName)}>
@@ -21,7 +23,7 @@ export const Filters = ({ containerClassName, titleClassName, contentClassName }
 				<CardTitle className={titleClassName}>Filter By</CardTitle>
 			</CardHeader>
 			<CardContent className={cn("flex flex-col gap-4 p-4", contentClassName)}>
-				{isLoading ? (
+				{!categories ? (
 					<div className={"grid place-items-center"}>
 						<Spinner />
 					</div>

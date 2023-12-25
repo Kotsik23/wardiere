@@ -1,18 +1,18 @@
 import { useMediaQuery } from "usehooks-ts"
 import { AuthorsList } from "@/widgets/author"
-import { Filters } from "@/widgets/filters"
+import { FiltersCard, FiltersDrawer } from "@/widgets/filters"
 import { useGetAuthors } from "@/entities/author"
 import { PageLayout } from "@/shared/ui/layouts"
 import { Spinner } from "@/shared/ui/spinner.tsx"
 
 export const ExplorePage = () => {
-	const isDesktop = useMediaQuery("(min-width: 1024px)")
+	const isMedium = useMediaQuery("(min-width: 768px)")
 	const { query } = useGetAuthors({ initialNumItems: 5 })
 
 	return (
 		<>
-			<PageLayout className={"container my-28 flex gap-6"}>
-				{isDesktop && <Filters />}
+			<PageLayout className={"container mb-8 mt-24 flex flex-col gap-6 md:flex-row"}>
+				{isMedium ? <FiltersCard /> : <FiltersDrawer />}
 				{query.isLoading ? (
 					<div className={"flex h-[40vh] w-full items-center justify-center"}>
 						<Spinner />
