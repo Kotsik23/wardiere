@@ -1,13 +1,19 @@
 import { UserProfile } from "@clerk/clerk-react"
+import { BackButton } from "@/shared/ui/back-button.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 
 export const SettingsPage = () => {
 	return (
-		<PageLayout className={"container grid place-items-center overflow-hidden"}>
+		<PageLayout
+			className={
+				"container flex  max-w-4xl flex-col items-center justify-center gap-6 overflow-hidden"
+			}
+		>
+			<BackButton className={"self-start"} />
 			<UserProfile
 				appearance={{
 					elements: {
-						rootBox: "max-w-4xl w-full",
+						rootBox: "w-full",
 						card: "border-0 p-0 m-0 shadow-none w-auto max-w-full rounded-none [&>div:nth-child(3)]:hidden",
 						navbar: "hidden",
 						navbarMobileMenuButton: "hidden",
