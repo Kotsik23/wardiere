@@ -10,7 +10,8 @@ export const getByAuthorId = query({
 		if (!author) {
 			throw new ConvexError("Author doesn't exists")
 		}
-		return Promise.all(author.comments.map(commentId => ctx.db.get(commentId)).reverse())
+		const res = await Promise.all(author.comments.map(commentId => ctx.db.get(commentId)))
+		return res.reverse()
 	},
 })
 
