@@ -36,14 +36,7 @@ export const RouterProvider = () => {
 				<Routes>
 					<Route element={<HomePage />} path={ROUTES.HOME} />
 					<Route element={<ExplorePage />} path={ROUTES.EXPLORE} />
-					<Route
-						element={
-							<ProtectedRoute>
-								<HelpPage />
-							</ProtectedRoute>
-						}
-						path={ROUTES.HELP}
-					/>
+					<Route element={<HelpPage />} path={ROUTES.HELP} />
 					<Route
 						element={
 							<ProtectedRoute>
