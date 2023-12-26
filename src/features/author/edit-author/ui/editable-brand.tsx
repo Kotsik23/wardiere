@@ -13,7 +13,7 @@ type EditableBrandProps = {
 export const EditableBrand = ({ author, className }: EditableBrandProps) => {
 	const { handleUpdate } = useEditable()
 	const [brandValue, setBrandValue] = useState<string | undefined>(author.brand)
-	const debouncedBrandValue = useDebounce(brandValue, 400)
+	const debouncedBrandValue = useDebounce(brandValue, 800)
 
 	const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setBrandValue(e.target.value)
