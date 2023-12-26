@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 import { HomePage } from "@/pages/home-page"
 import { NavBar } from "@/widgets/navigation"
+import { ProtectedRoute } from "@/widgets/routes"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { PageLoader } from "@/shared/ui/loaders"
 
@@ -20,6 +21,12 @@ const AuthorPage = lazy(() =>
 const AuthorEditPage = lazy(() =>
 	import("@/pages/author-page").then(value => ({ default: value.AuthorEditPage }))
 )
+const SignInPage = lazy(() =>
+	import("@/pages/auth-page").then(value => ({ default: value.SignInPage }))
+)
+const SignUpPage = lazy(() =>
+	import("@/pages/auth-page").then(value => ({ default: value.SignUpPage }))
+)
 
 export const RouterProvider = () => {
 	return (
@@ -29,10 +36,35 @@ export const RouterProvider = () => {
 				<Routes>
 					<Route element={<HomePage />} path={ROUTES.HOME} />
 					<Route element={<ExplorePage />} path={ROUTES.EXPLORE} />
-					<Route element={<HelpPage />} path={ROUTES.HELP} />
-					<Route element={<SettingsPage />} path={ROUTES.SETTINGS} />
+					<Route
+						element={
+							<ProtectedRoute>
+								<HelpPage />
+							</ProtectedRoute>
+						}
+						path={ROUTES.HELP}
+					/>
+					<Route
+						element={
+							<ProtectedRoute>
+								<SettingsPage />
+							</ProtectedRoute>
+						}
+						path={ROUTES.SETTINGS}
+					/>
+
+					<Route element={<SignInPage />} path={ROUTES.SIGN_IN} />
+					<Route element={<SignUpPage />} path={ROUTES.SIGN_UP} />
+
 					<Route element={<AuthorPage />} path={ROUTES.AUTHOR(":id")} />
-					<Route element={<AuthorEditPage />} path={ROUTES.AUTHOR_EDIT(":id")} />
+					<Route
+						element={
+							<ProtectedRoute>
+								<AuthorEditPage />
+							</ProtectedRoute>
+						}
+						path={ROUTES.AUTHOR_EDIT(":id")}
+					/>
 
 					<Route element={<Navigate to={ROUTES.HOME} replace />} path={ROUTES.UNKNOWN} />
 				</Routes>

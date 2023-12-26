@@ -12,7 +12,7 @@ export const AuthRequiredAlert = () => {
 				You are not logged in. Please{" "}
 				<NavigationLink
 					variant={"underline"}
-					to={ROUTES.HOME}
+					to={ROUTES.SIGN_IN}
 					className={"text-sm text-secondary"}
 				>
 					Sign In
@@ -20,7 +20,7 @@ export const AuthRequiredAlert = () => {
 				or{" "}
 				<NavigationLink
 					variant={"underline"}
-					to={ROUTES.HOME}
+					to={ROUTES.SIGN_UP}
 					className={"text-sm text-secondary"}
 				>
 					Sign Up

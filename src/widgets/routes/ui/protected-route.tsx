@@ -1,0 +1,21 @@
+import { useConvexAuth } from "convex/react"
+import { ReactNode } from "react"
+import { Navigate, useLocation } from "react-router-dom"
+import { ROUTES } from "@/shared/constants/routes.ts"
+
+export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+	const location = useLocation()
+	const { isAuthenticated } = useConvexAuth()
+
+	if (!isAuthenticated) {
+		return (
+			<Navigate
+				to={ROUTES.SIGN_IN + `#/?redirect_url=${encodeURIComponent(location.pathname)}`}
+				replace
+				state={{ from: location }}
+			/>
+		)
+	}
+
+	return children
+}
