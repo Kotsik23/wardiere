@@ -11,7 +11,7 @@ import { cn } from "@/shared/ui/util.ts"
 
 export const AuthorPage = () => {
 	const { id: authorId } = useParams()
-	const author = useGetAuthorById({ authorId: authorId as Id<"author"> | undefined })
+	const author = useGetAuthorById({ authorId: authorId as Id<"authors"> | undefined })
 	const { user } = useUser()
 	const isOwner = useIsOwner({ userId: user?.id, authorUserId: author?.userId })
 

@@ -16,7 +16,7 @@ import { NewBadge } from "./new-badge.tsx"
 import { Photo as AuthorPhoto } from "./photo.tsx"
 
 type AuthorCardProps = {
-	data: Doc<"author">
+	data: Doc<"authors">
 	actions: ReactNode
 }
 
@@ -28,7 +28,7 @@ export const Card = ({ data, actions }: AuthorCardProps) => {
 			<UiCardHeader className={"flex flex-col items-center gap-4 xl:flex-row"}>
 				<AuthorPhoto author={data} imageClassName={"w-40"} />
 				<div className={"flex flex-col items-center gap-0.5 xl:items-start"}>
-					<h3 className={"text-lg font-semibold md:text-xl"}>{data.brand}</h3>
+					<h3 className={"text-lg font-semibold md:text-xl"}>{data?.brand}</h3>
 					<span className={"text-sm font-medium text-secondary md:text-base"}>
 						{data.contacts?.email}
 					</span>

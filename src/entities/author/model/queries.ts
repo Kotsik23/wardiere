@@ -29,7 +29,7 @@ export const useGetAuthors = ({ initialNumItems }: { initialNumItems: number }) 
 	return { query }
 }
 
-export const useGetAuthorById = ({ authorId }: { authorId: Id<"author"> | undefined }) => {
+export const useGetAuthorById = ({ authorId }: { authorId: Id<"authors"> | undefined }) => {
 	return useQuery(api.authors.getById, authorId ? { authorId } : "skip")
 }
 
@@ -45,6 +45,6 @@ export const useGetAuthorByUserId = () => {
 	}
 }
 
-export const useGetAuthorPhoto = ({ imageId }: { imageId: Id<"image"> | undefined }) => {
+export const useGetAuthorPhoto = ({ imageId }: { imageId: Id<"images"> | undefined }) => {
 	return useQuery(api.image.getById, imageId ? { imageId: imageId } : "skip")
 }

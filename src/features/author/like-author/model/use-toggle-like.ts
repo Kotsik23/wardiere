@@ -13,7 +13,7 @@ export const useToggleLike = () => {
 		authorId,
 		userId,
 	}: {
-		authorId: Id<"author">
+		authorId: Id<"authors">
 		userId: string | undefined
 	}) => {
 		if (!userId) {

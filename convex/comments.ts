@@ -1,26 +1,38 @@
 import { mutation, query } from "./_generated/server"
 import { ConvexError, v } from "convex/values"
+import { paginationOptsValidator } from "convex/server"
+import { commentFields } from "./schema"
 
 export const getByAuthorId = query({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 	},
 	handler: async (ctx, args) => {
-		const author = await ctx.db.get(args.authorId)
-		if (!author) {
-			throw new ConvexError("Author doesn't exists")
-		}
-		const res = await Promise.all(author.comments.map(commentId => ctx.db.get(commentId)))
-		return res.reverse()
+		const comments = await ctx.db
+			.query("comments")
+			.withIndex("by_author_id")
+			.filter(q => q.eq(q.field("authorId"), args.authorId))
+			.order("desc")
+			.collect()
+		const usersPromises = comments.map(comment =>
+			ctx.db
+				.query("users")
+				.withIndex("by_clerk_id")
+				.filter(q => q.eq(q.field("clerk_id"), comment.userId))
+				.unique()
+		)
+		const users = await Promise.all(usersPromises)
+		return comments.map((comment, index) => {
+			return {
+				comment: comment,
+				user: users[index],
+			}
+		})
 	},
 })
 
 export const create = mutation({
-	args: {
-		authorId: v.id("author"),
-		userId: v.string(),
-		text: v.string(),
-	},
+	args: commentFields,
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
 		if (!identity) {
@@ -31,6 +43,7 @@ export const create = mutation({
 			throw new ConvexError("Author doesn't exists")
 		}
 		const newComment = await ctx.db.insert("comments", {
+			authorId: args.authorId,
 			userId: args.userId,
 			text: args.text,
 		})
@@ -42,7 +55,7 @@ export const create = mutation({
 
 export const remove = mutation({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 		commentId: v.id("comments"),
 	},
 	handler: async (ctx, args) => {

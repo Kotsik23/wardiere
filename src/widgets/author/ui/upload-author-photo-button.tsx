@@ -7,7 +7,7 @@ import { cn } from "@/shared/ui/util.ts"
 import { useUploadAuthorPhoto } from "../model/use-upload-author-photo.ts"
 
 type Props = {
-	authorId: Id<"author">
+	authorId: Id<"authors">
 	className?: string
 }
 

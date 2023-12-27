@@ -5,7 +5,7 @@ import { ROUTES } from "@/shared/constants/routes.ts"
 import { Button } from "@/shared/ui/button.tsx"
 
 type CommentButtonProps = {
-	author: Doc<"author">
+	author: Doc<"authors">
 }
 
 export const CommentButton = ({ author }: CommentButtonProps) => {

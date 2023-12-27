@@ -3,7 +3,7 @@ import { ConvexError, v } from "convex/values"
 
 export const getById = query({
 	args: {
-		imageId: v.id("image"),
+		imageId: v.id("images"),
 	},
 	handler: (ctx, args) => {
 		return ctx.db.get(args.imageId)
@@ -20,13 +20,13 @@ export const create = mutation({
 		if (!identity) {
 			throw new ConvexError("Authentication required")
 		}
-		return ctx.db.insert("image", args)
+		return ctx.db.insert("images", args)
 	},
 })
 
 export const remove = mutation({
 	args: {
-		imageId: v.id("image"),
+		imageId: v.id("images"),
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()

@@ -4,7 +4,7 @@ import { LikeButton } from "@/features/author/like-author"
 import { AuthorCard } from "@/entities/author"
 
 type AuthorsListProps = {
-	authors: Doc<"author">[]
+	authors: Doc<"authors">[]
 }
 
 export const AuthorsList = ({ authors }: AuthorsListProps) => {

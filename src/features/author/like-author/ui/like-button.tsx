@@ -7,7 +7,7 @@ import { useIsLiked } from "../model/use-is-liked.ts"
 import { useToggleLike } from "../model/use-toggle-like.ts"
 
 type LikeButtonProps = {
-	author: Doc<"author">
+	author: Doc<"authors">
 	className?: string
 }
 

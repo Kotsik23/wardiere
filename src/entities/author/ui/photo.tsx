@@ -5,7 +5,7 @@ import { cn } from "@/shared/ui/util.ts"
 import { useGetAuthorPhoto } from "../model/queries.ts"
 
 type Props = {
-	author: Doc<"author">
+	author: Doc<"authors">
 	containerClassName?: string
 	imageClassName?: string
 }

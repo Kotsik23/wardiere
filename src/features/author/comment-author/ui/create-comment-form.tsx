@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-react"
-import { PlusIcon } from "lucide-react"
+import { SendHorizonalIcon } from "lucide-react"
 import { FormEvent, useState } from "react"
 import { Id } from "@convex/_generated/dataModel"
 import { Button } from "@/shared/ui/button.tsx"
@@ -9,7 +9,7 @@ import { cn } from "@/shared/ui/util.ts"
 import { useCreateComment } from "../model/use-create-comment.ts"
 
 type Props = {
-	authorId: Id<"author">
+	authorId: Id<"authors">
 	afterSubmit?: () => void
 	className?: string
 }
@@ -53,7 +53,7 @@ export const CreateCommentForm = ({ authorId, afterSubmit, className }: Props) =
 					className={"shrink-0"}
 					disabled={text.trim().length <= 0}
 				>
-					<PlusIcon className={"h-5 w-5"} />
+					<SendHorizonalIcon className={"h-5 w-5"} />
 				</Button>
 			</form>
 		</fieldset>

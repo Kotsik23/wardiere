@@ -5,7 +5,7 @@ import { Textarea } from "@/shared/ui/textarea.tsx"
 import { useEditable } from "../model/use-editable.ts"
 
 type EditableAboutTextProps = {
-	author: Doc<"author">
+	author: Doc<"authors">
 }
 
 export const EditableAboutText = ({ author }: EditableAboutTextProps) => {

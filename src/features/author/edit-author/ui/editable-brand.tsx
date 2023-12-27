@@ -6,7 +6,7 @@ import { cn } from "@/shared/ui/util.ts"
 import { useEditable } from "../model/use-editable.ts"
 
 type EditableBrandProps = {
-	author: Doc<"author">
+	author: Doc<"authors">
 	className?: string
 }
 

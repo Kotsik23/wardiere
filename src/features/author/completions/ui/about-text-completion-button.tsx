@@ -5,7 +5,7 @@ import { AboutTextCompletionType } from "../model/types.ts"
 import { useAboutTextCompletion } from "../model/use-about-text-completion.ts"
 
 type Props = {
-	authorId: Id<"author">
+	authorId: Id<"authors">
 	className?: string
 }
 

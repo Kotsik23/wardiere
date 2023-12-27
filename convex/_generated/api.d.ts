@@ -16,10 +16,15 @@ import type {
 } from "convex/server";
 import type * as authors from "../authors.js";
 import type * as categories from "../categories.js";
+import type * as clerk from "../clerk.js";
 import type * as comments from "../comments.js";
+import type * as http from "../http.js";
 import type * as image from "../image.js";
 import type * as imageKit from "../imageKit.js";
 import type * as openai from "../openai.js";
+import type * as types from "../types.js";
+import type * as user from "../user.js";
+import type * as validate from "../validate.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -32,10 +37,15 @@ import type * as openai from "../openai.js";
 declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   categories: typeof categories;
+  clerk: typeof clerk;
   comments: typeof comments;
+  http: typeof http;
   image: typeof image;
   imageKit: typeof imageKit;
   openai: typeof openai;
+  types: typeof types;
+  user: typeof user;
+  validate: typeof validate;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

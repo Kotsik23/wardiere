@@ -9,7 +9,7 @@ export const useTogglePublic = () => {
 	const [isPending, setPending] = useState<boolean>(false)
 	const togglePublicMutation = useMutation(api.authors.togglePublic)
 
-	const handleTogglePublic = async ({ authorId }: { authorId: Id<"author"> | undefined }) => {
+	const handleTogglePublic = async ({ authorId }: { authorId: Id<"authors"> | undefined }) => {
 		if (!authorId) {
 			return toast.error("Author doesn't exists")
 		}

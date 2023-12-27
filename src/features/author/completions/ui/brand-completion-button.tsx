@@ -9,7 +9,7 @@ import { useBrandCompletion } from "../model/use-brand-completion.ts"
 import { ChooseBrandCompletion } from "./choose-brand-completion.tsx"
 
 type Props = {
-	authorId: Id<"author">
+	authorId: Id<"authors">
 	className?: string
 }
 

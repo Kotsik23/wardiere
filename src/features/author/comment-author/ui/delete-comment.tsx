@@ -6,7 +6,7 @@ import { ConfirmationDialog } from "@/shared/ui/confirmation"
 import { useDeleteComment } from "../model/use-delete-comment.ts"
 
 type Props = {
-	authorId: Id<"author">
+	authorId: Id<"authors">
 	commentId: Id<"comments">
 }
 

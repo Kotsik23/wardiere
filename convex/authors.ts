@@ -10,7 +10,7 @@ export const getAll = query({
 	},
 	handler: async (ctx, args) => {
 		return await ctx.db
-			.query("author")
+			.query("authors")
 			.filter(q => q.neq(q.field("isPublic"), false))
 			.order("desc")
 			.paginate(args.paginationOpts)
@@ -19,7 +19,7 @@ export const getAll = query({
 
 export const getById = query({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 	},
 	handler: (ctx, args) => {
 		return ctx.db.get(args.authorId)
@@ -32,7 +32,7 @@ export const getByUserId = query({
 	},
 	handler: (ctx, args) => {
 		return ctx.db
-			.query("author")
+			.query("authors")
 			.withIndex("by_userId")
 			.filter(q => q.eq(q.field("userId"), args.userId))
 			.unique()
@@ -48,7 +48,7 @@ export const create = mutation({
 		if (!identity) {
 			throw new ConvexError("Unauthenticated")
 		}
-		return ctx.db.insert("author", {
+		return ctx.db.insert("authors", {
 			userId: args.userId,
 			isPublic: false,
 			likes: [],
@@ -60,11 +60,11 @@ export const create = mutation({
 
 export const update = mutation({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 		payload: v.object({
 			brand: v.optional(v.string()),
 			aboutText: v.optional(v.string()),
-			photo: v.optional(v.id("image")),
+			photo: v.optional(v.id("images")),
 			keywords: v.optional(v.array(v.string())),
 			likes: v.optional(v.array(v.string())),
 			contacts: v.optional(
@@ -85,7 +85,7 @@ export const update = mutation({
 
 export const remove = mutation({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
@@ -98,7 +98,7 @@ export const remove = mutation({
 
 export const togglePublic = mutation({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
@@ -117,7 +117,7 @@ export const togglePublic = mutation({
 
 export const toggleLike = mutation({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 		userId: v.string(),
 	},
 	handler: async (ctx, args) => {
@@ -141,7 +141,7 @@ export const toggleLike = mutation({
 
 export const updatePhoto = action({
 	args: {
-		authorId: v.id("author"),
+		authorId: v.id("authors"),
 		arrayBuffer: v.bytes(),
 	},
 	handler: async (ctx, args) => {

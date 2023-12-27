@@ -7,7 +7,7 @@ import { cn } from "@/shared/ui/util.ts"
 import { useTogglePublic } from "../model/use-toggle-public.ts"
 
 type TogglePubicProps = {
-	author: Doc<"author">
+	author: Doc<"authors">
 	className?: string
 }
 

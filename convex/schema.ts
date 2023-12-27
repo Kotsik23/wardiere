@@ -5,7 +5,7 @@ export const authorFields = {
 	userId: v.string(),
 	brand: v.optional(v.string()),
 	aboutText: v.optional(v.string()),
-	photo: v.optional(v.id("image")),
+	photo: v.optional(v.id("images")),
 	keywords: v.array(v.string()),
 	likes: v.array(v.string()),
 	comments: v.array(v.id("comments")),
@@ -17,17 +17,34 @@ export const authorFields = {
 	),
 }
 
+export const userFields = {
+	clerk_id: v.string(),
+	image_url: v.optional(v.union(v.string(), v.null())),
+	first_name: v.optional(v.union(v.string(), v.null())),
+	last_name: v.optional(v.union(v.string(), v.null())),
+	username: v.optional(v.union(v.string(), v.null())),
+	email_addresses: v.array(
+		v.object({
+			email_address: v.union(v.string(), v.null()),
+		})
+	),
+}
+
+export const commentFields = {
+	authorId: v.id("authors"),
+	userId: v.string(),
+	text: v.string(),
+}
+
 export default defineSchema({
-	author: defineTable(authorFields).index("by_userId", ["userId"]),
-	comments: defineTable({
-		userId: v.string(),
-		text: v.string(),
-	}),
+	authors: defineTable(authorFields).index("by_userId", ["userId"]),
+	users: defineTable(userFields).index("by_clerk_id", ["clerk_id"]),
+	comments: defineTable(commentFields).index("by_author_id", ["authorId"]),
 	categories: defineTable({
 		name: v.string(),
 		slug: v.string(),
 	}),
-	image: defineTable({
+	images: defineTable({
 		fileId: v.string(),
 		url: v.string(),
 	}),

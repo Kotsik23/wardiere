@@ -14,7 +14,7 @@ import { ScreenLoader } from "@/shared/ui/loaders"
 export const AuthorEditPage = () => {
 	const { id: authorId } = useParams()
 	const { user } = useUser()
-	const author = useGetAuthorById({ authorId: authorId as Id<"author"> | undefined })
+	const author = useGetAuthorById({ authorId: authorId as Id<"authors"> | undefined })
 	const isOwner = useIsOwner({ userId: user?.id, authorUserId: author?.userId })
 
 	if (!author) {
