@@ -8,7 +8,7 @@ type Props = {
 
 export const UploadsList = ({ files, onDelete }: Props) => {
 	return (
-		<ScrollArea className={"max-h-[20rem] w-full"}>
+		<ScrollArea className={"h-[20rem] w-full"}>
 			<div className={"flex flex-col gap-2"}>
 				{files.map(file => (
 					<UploadsListItem key={file.name} file={file} onDelete={onDelete} />

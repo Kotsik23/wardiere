@@ -1,4 +1,4 @@
-import { action, mutation, query } from "./_generated/server"
+import { action, internalMutation, mutation, query } from "./_generated/server"
 import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
 import { authorFields } from "./schema"
@@ -51,6 +51,7 @@ export const create = mutation({
 		return ctx.db.insert("authors", {
 			userId: args.userId,
 			isPublic: false,
+			portfolioImages: [],
 			likes: [],
 			keywords: [],
 			comments: [],
@@ -65,6 +66,7 @@ export const update = mutation({
 			brand: v.optional(v.string()),
 			aboutText: v.optional(v.string()),
 			photo: v.optional(v.id("images")),
+			portfolioImages: v.optional(v.array(v.id("portfolioImages"))),
 			keywords: v.optional(v.array(v.string())),
 			likes: v.optional(v.array(v.string())),
 			contacts: v.optional(
@@ -83,15 +85,11 @@ export const update = mutation({
 	},
 })
 
-export const remove = mutation({
+export const remove = internalMutation({
 	args: {
 		authorId: v.id("authors"),
 	},
 	handler: async (ctx, args) => {
-		const identity = await ctx.auth.getUserIdentity()
-		if (!identity) {
-			throw new ConvexError("Unauthenticated")
-		}
 		return ctx.db.delete(args.authorId)
 	},
 })
@@ -161,13 +159,13 @@ export const updatePhoto = action({
 				throw new ConvexError("Current photo doesn't exists")
 			}
 			await ctx.runAction(internal.imageKit.remove, { fileId: currentImage.fileId })
-			await ctx.runMutation(api.image.remove, { imageId: currentImage._id })
+			await ctx.runMutation(internal.image.remove, { imageId: currentImage._id })
 		}
 
 		const uploadedImage = await ctx.runAction(internal.imageKit.upload, {
 			arrayBuffer: args.arrayBuffer,
 		})
-		const newImage = await ctx.runMutation(api.image.create, {
+		const newImage = await ctx.runMutation(internal.image.create, {
 			fileId: uploadedImage.fileId,
 			url: uploadedImage.url,
 		})

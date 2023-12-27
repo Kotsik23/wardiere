@@ -1,6 +1,5 @@
-import { mutation, query } from "./_generated/server"
+import { internalMutation, mutation, query } from "./_generated/server"
 import { ConvexError, v } from "convex/values"
-import { paginationOptsValidator } from "convex/server"
 import { commentFields } from "./schema"
 
 export const getByAuthorId = query({
@@ -71,5 +70,28 @@ export const remove = mutation({
 			comments: author.comments.filter(commentId => commentId !== args.commentId),
 		})
 		return ctx.db.delete(args.commentId)
+	},
+})
+
+export const removeAllByUserId = internalMutation({
+	args: {
+		userId: v.string(),
+	},
+	handler: async (ctx, args) => {
+		const authors = await ctx.db.query("authors").collect()
+		const comments = await ctx.db
+			.query("comments")
+			.filter(q => q.eq(q.field("userId"), args.userId))
+			.collect()
+		await Promise.all(
+			authors.map(author => {
+				return ctx.db.patch(author._id, {
+					comments: author.comments.filter(
+						commentId => !comments.some(c => c._id === commentId)
+					),
+				})
+			})
+		)
+		await Promise.all(comments.map(comment => ctx.db.delete(comment._id)))
 	},
 })

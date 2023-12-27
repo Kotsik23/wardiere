@@ -1,6 +1,7 @@
 import { UserProfile } from "@clerk/clerk-react"
 import { BackButton } from "@/shared/ui/back-button.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
+import { ROUTES } from "@/shared/constants/routes.ts"
 
 export const SettingsPage = () => {
 	return (
@@ -11,6 +12,7 @@ export const SettingsPage = () => {
 		>
 			<BackButton className={"self-start"} />
 			<UserProfile
+				path={ROUTES.SETTINGS}
 				appearance={{
 					elements: {
 						rootBox: "w-full",

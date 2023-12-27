@@ -1,5 +1,5 @@
-import { mutation, query } from "./_generated/server"
-import { ConvexError, v } from "convex/values"
+import { internalMutation, query } from "./_generated/server"
+import { v } from "convex/values"
 
 export const getById = query({
 	args: {
@@ -10,30 +10,21 @@ export const getById = query({
 	},
 })
 
-export const create = mutation({
+export const create = internalMutation({
 	args: {
 		fileId: v.string(),
 		url: v.string(),
 	},
 	handler: async (ctx, args) => {
-		const identity = await ctx.auth.getUserIdentity()
-		if (!identity) {
-			throw new ConvexError("Authentication required")
-		}
 		return ctx.db.insert("images", args)
 	},
 })
 
-export const remove = mutation({
+export const remove = internalMutation({
 	args: {
 		imageId: v.id("images"),
 	},
 	handler: async (ctx, args) => {
-		const identity = await ctx.auth.getUserIdentity()
-		if (!identity) {
-			throw new ConvexError("Authentication required")
-		}
-
 		return ctx.db.delete(args.imageId)
 	},
 })

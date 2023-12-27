@@ -6,9 +6,10 @@ export { Photo as AuthorPhoto } from "./ui/photo.tsx"
 export {
 	useCreateAuthor,
 	useUpdateAuthor,
-	useRemoveAuthor,
 	useGetAuthorById,
 	useGetAuthorByUserId,
 	useGetAuthors,
+	useGetPortfolioImage,
+	useGetAuthorPhoto,
 } from "./model/queries.ts"
 export { useIsOwner } from "./model/use-is-owner.ts"

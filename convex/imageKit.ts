@@ -31,11 +31,7 @@ export const upload = internalAction({
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
-		if (!identity) {
-			throw new ConvexError("Unauthenticated")
-		}
-
-		const userId = identity.subject
+		const userId = identity?.subject
 		const buffer = Buffer.from(args.arrayBuffer)
 
 		return imagekit.upload({
@@ -50,12 +46,7 @@ export const remove = internalAction({
 	args: {
 		fileId: v.string(),
 	},
-	handler: async (ctx, args) => {
-		const identity = await ctx.auth.getUserIdentity()
-		if (!identity) {
-			throw new ConvexError("Unauthenticated")
-		}
-
+	handler: async (_, args) => {
 		return imagekit.deleteFile(args.fileId)
 	},
 })

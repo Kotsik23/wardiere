@@ -22,6 +22,7 @@ import type * as http from "../http.js";
 import type * as image from "../image.js";
 import type * as imageKit from "../imageKit.js";
 import type * as openai from "../openai.js";
+import type * as portfolioImages from "../portfolioImages.js";
 import type * as types from "../types.js";
 import type * as user from "../user.js";
 import type * as validate from "../validate.js";
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   image: typeof image;
   imageKit: typeof imageKit;
   openai: typeof openai;
+  portfolioImages: typeof portfolioImages;
   types: typeof types;
   user: typeof user;
   validate: typeof validate;

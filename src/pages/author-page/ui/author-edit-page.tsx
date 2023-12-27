@@ -1,7 +1,11 @@
 import { useUser } from "@clerk/clerk-react"
 import { Navigate, useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { UploadAuthorPhotoButton } from "@/widgets/author"
+import {
+	PortfolioImagesGrid,
+	UploadAuthorPhotoButton,
+	UploadAuthorPortfolioButton,
+} from "@/widgets/author"
 import { CommentList } from "@/features/author/comment-author"
 import { AboutTextCompletionButton, BrandCompletionButton } from "@/features/author/completions"
 import { EditableAboutText, EditableBrand } from "@/features/author/edit-author"
@@ -49,6 +53,12 @@ export const AuthorEditPage = () => {
 					/>
 				</div>
 			</div>
+
+			<div className={"flex flex-col items-start gap-6"}>
+				<UploadAuthorPortfolioButton authorId={author._id} />
+				<PortfolioImagesGrid author={author} />
+			</div>
+
 			<div className={"flex flex-col items-start gap-6"}>
 				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
 					Comments ({author.comments.length})

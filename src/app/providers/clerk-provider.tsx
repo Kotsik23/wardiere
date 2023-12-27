@@ -2,6 +2,7 @@ import { ClerkProvider as ReactClerkProvider } from "@clerk/clerk-react"
 import { dark } from "@clerk/themes"
 import { ReactNode } from "react"
 import { useTheme } from "@/features/toggle-theme"
+import { useNavigate } from "react-router-dom"
 
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -11,10 +12,12 @@ if (!publishableKey) {
 
 export const ClerkProvider = ({ children }: { children: ReactNode }) => {
 	const { theme } = useTheme()
+	const navigate = useNavigate()
 	const isDark = theme === "dark"
 
 	return (
 		<ReactClerkProvider
+			navigate={navigate}
 			publishableKey={publishableKey}
 			appearance={{
 				baseTheme: isDark ? dark : undefined,

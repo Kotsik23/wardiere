@@ -16,13 +16,6 @@ export const useUpdateAuthor = () => {
 	}
 }
 
-export const useRemoveAuthor = () => {
-	const removeAuthorMutation = useMutation(api.authors.remove)
-	return {
-		removeAuthorMutation,
-	}
-}
-
 export const useGetAuthors = ({ initialNumItems }: { initialNumItems: number }) => {
 	const query = usePaginatedQuery(api.authors.getAll, {}, { initialNumItems })
 
@@ -47,4 +40,16 @@ export const useGetAuthorByUserId = () => {
 
 export const useGetAuthorPhoto = ({ imageId }: { imageId: Id<"images"> | undefined }) => {
 	return useQuery(api.image.getById, imageId ? { imageId: imageId } : "skip")
+}
+
+export const useGetPortfolioImage = ({
+	imageId,
+}: {
+	imageId: Id<"portfolioImages"> | undefined
+}) => {
+	const portfolioImage = useQuery(
+		api.portfolioImages.getById,
+		imageId ? { portfolioImageId: imageId } : "skip"
+	)
+	return useQuery(api.image.getById, portfolioImage ? { imageId: portfolioImage.imageId } : "skip")
 }
