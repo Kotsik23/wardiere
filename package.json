@@ -30,6 +30,7 @@
 		"clsx": "^2.0.0",
 		"convex": "^1.6.3",
 		"convex-helpers": "^0.1.7",
+		"embla-carousel-react": "^8.0.0-rc17",
 		"imagekit": "^4.1.4",
 		"lucide-react": "^0.294.0",
 		"openai": "^4.22.1",

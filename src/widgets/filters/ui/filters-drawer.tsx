@@ -17,7 +17,7 @@ export const FiltersDrawer = () => {
 	const { categories } = useCategories()
 
 	return (
-		<Drawer shouldScaleBackground={false}>
+		<Drawer>
 			<DrawerTrigger asChild>
 				<Button>
 					<FilterIcon className={"mr-2 h-5 w-5"} />

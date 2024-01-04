@@ -7,10 +7,8 @@ export const SignInPage = () => {
 	const { state } = useLocation()
 	const from = state?.from?.pathname
 
-	console.log(from)
-
 	return (
-		<PageLayout className={"grid place-items-center md:mt-40"}>
+		<PageLayout className={"grid place-items-center md:pt-20"}>
 			<SignIn
 				path={ROUTES.SIGN_IN}
 				signUpUrl={ROUTES.SIGN_UP}

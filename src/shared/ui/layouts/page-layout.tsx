@@ -7,5 +7,5 @@ type PageLayoutProps = {
 }
 
 export const PageLayout = ({ children, className }: PageLayoutProps) => {
-	return <main className={cn("mb-10 mt-24", className)}>{children}</main>
+	return <main className={cn("flex-1", className)}>{children}</main>
 }
