@@ -6,7 +6,7 @@ import { FilterItemType } from "@/features/filters"
 const transformResponse = (response: Doc<"categories">[]): FilterItemType[] => {
 	return response.map(item => ({
 		label: item.name,
-		value: item.slug,
+		value: item._id,
 	}))
 }
 

@@ -20,7 +20,7 @@ export const AuthorPage = () => {
 	}
 
 	return (
-		<PageLayout className={cn("container flex flex-col gap-6")}>
+		<PageLayout className={cn("container my-8 flex flex-col gap-6")}>
 			<Brand brand={author.brand} />
 			<div className={"flex w-full flex-col items-center gap-4"}>
 				<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
@@ -34,13 +34,11 @@ export const AuthorPage = () => {
 				</div>
 			)}
 			<div className={"flex flex-col items-start gap-6"}>
-				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
-					Comments ({author.comments.length})
-				</h2>
+				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>Comments</h2>
 				{isOwner && <OwnerAlert />}
 				{!user && <AuthRequiredAlert />}
 				{!isOwner && user && <CreateCommentForm authorId={author._id} className={"flex-row"} />}
-				<CommentList author={author} />
+				<CommentList authorId={author._id} />
 			</div>
 		</PageLayout>
 	)

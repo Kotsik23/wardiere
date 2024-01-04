@@ -1,32 +1,28 @@
-import { TrashIcon } from "lucide-react"
+import { XIcon } from "lucide-react"
 import { useBoolean } from "usehooks-ts"
 import { Id } from "@convex/_generated/dataModel"
 import { Button } from "@/shared/ui/button.tsx"
 import { ConfirmationDialog } from "@/shared/ui/confirmation"
+import { cn } from "@/shared/ui/util.ts"
 import { useDeleteComment } from "../model/use-delete-comment.ts"
 
 type Props = {
-	authorId: Id<"authors">
 	commentId: Id<"comments">
+	className?: string
 }
 
-export const DeleteComment = ({ commentId, authorId }: Props) => {
+export const DeleteComment = ({ commentId, className }: Props) => {
 	const { value: open, setValue: onOpenChange, toggle } = useBoolean()
 	const { handleDelete, isPending } = useDeleteComment()
 
 	const handleConfirm = async () => {
-		await handleDelete({ commentId, authorId })
+		await handleDelete({ commentId })
 	}
 
 	return (
 		<>
-			<Button
-				variant={"ghost"}
-				size={"icon"}
-				className={"h-8 w-8 text-muted-foreground hover:text-destructive"}
-				onClick={toggle}
-			>
-				<TrashIcon className={"h-5 w-5"} />
+			<Button size={"icon"} className={cn("h-7 w-7 rounded-full", className)} onClick={toggle}>
+				<XIcon className={"h-5 w-5"} />
 			</Button>
 			<ConfirmationDialog
 				open={open}

@@ -27,15 +27,24 @@ const imagekit = new ImageKit({
 
 export const upload = internalAction({
 	args: {
-		arrayBuffer: v.bytes(),
+		payload: v.union(v.bytes(), v.string()), // MAX 1 MB
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
 		const userId = identity?.subject
-		const buffer = Buffer.from(args.arrayBuffer)
+		if (!userId) {
+			throw new ConvexError("UserId is undefined")
+		}
+		let file: string | Buffer
+
+		if (typeof args.payload === "string") {
+			file = args.payload
+		} else {
+			file = Buffer.from(args.payload as ArrayBuffer)
+		}
 
 		return imagekit.upload({
-			file: buffer,
+			file,
 			fileName: uuidv4(),
 			folder: userId,
 		})
@@ -48,5 +57,14 @@ export const remove = internalAction({
 	},
 	handler: async (_, args) => {
 		return imagekit.deleteFile(args.fileId)
+	},
+})
+
+export const removeFolder = internalAction({
+	args: {
+		clerkUserId: v.string(),
+	},
+	handler: (_, args) => {
+		return imagekit.deleteFolder(args.clerkUserId)
 	},
 })

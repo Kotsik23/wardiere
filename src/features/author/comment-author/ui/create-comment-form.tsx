@@ -27,7 +27,7 @@ export const CreateCommentForm = ({ authorId, afterSubmit, className }: Props) =
 		await handleCreate({
 			authorId,
 			text,
-			userId: user.id,
+			clerkUserId: user.id,
 		})
 		setText("")
 		afterSubmit?.()

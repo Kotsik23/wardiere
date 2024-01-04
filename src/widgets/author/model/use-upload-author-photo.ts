@@ -4,7 +4,7 @@ import { api } from "@convex/_generated/api"
 import { unexpectedErrorToast } from "@/shared/ui/toasts"
 
 export const useUploadAuthorPhoto = () => {
-	const uploadPhotoAction = useAction(api.authors.updatePhoto)
+	const uploadPhotoAction = useAction(api.authors.uploadPhoto)
 
 	const handleUploadPhoto = async (args: Parameters<typeof uploadPhotoAction>[0]) => {
 		try {

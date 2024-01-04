@@ -1,8 +1,8 @@
 import { useMutation } from "convex/react"
 import { useState } from "react"
+import { toast } from "sonner"
 import { api } from "@convex/_generated/api"
 import { unexpectedErrorToast } from "@/shared/ui/toasts"
-import { toast } from "sonner"
 
 export const useCreateComment = () => {
 	const [isPending, setIsPending] = useState<boolean>(false)
