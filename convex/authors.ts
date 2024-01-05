@@ -51,6 +51,7 @@ export const create = mutation({
 		return ctx.db.insert("authors", {
 			userId: args.userId,
 			isPublic: false,
+			keywords: [],
 		})
 	},
 })
@@ -62,6 +63,7 @@ export const update = mutation({
 			brand: v.optional(v.string()),
 			aboutText: v.optional(v.string()),
 			photo: v.optional(v.object(imageFields)),
+			keywords: v.optional(v.array(v.string())),
 		}),
 	},
 	handler: async (ctx, args) => {

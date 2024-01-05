@@ -4,7 +4,12 @@ import { Id } from "@convex/_generated/dataModel"
 import { UploadAuthorPhotoButton } from "@/widgets/author"
 import { CommentList } from "@/features/author/comment-author"
 import { AboutTextCompletionButton, BrandCompletionButton } from "@/features/author/completions"
-import { EditableAboutText, EditableBrand } from "@/features/author/edit-author"
+import {
+	CreateKeyword,
+	EditableAboutText,
+	EditableBrand,
+	EditableKeywords,
+} from "@/features/author/edit-author"
 import { TogglePubic } from "@/features/author/toggle-public"
 import { AuthorPhoto, useGetAuthorById, useIsOwner } from "@/entities/author"
 import { ROUTES } from "@/shared/constants/routes.ts"
@@ -48,6 +53,11 @@ export const AuthorEditPage = () => {
 						className={"absolute -right-3 -top-8"}
 					/>
 				</div>
+			</div>
+
+			<div className={"flex flex-col items-center gap-6"}>
+				<CreateKeyword authorId={author._id} keywords={author.keywords} />
+				<EditableKeywords authorId={author._id} keywords={author.keywords} />
 			</div>
 
 			<div className={"flex flex-col items-start gap-6"}>

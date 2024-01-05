@@ -3,6 +3,7 @@ export { CompletionButton } from "./ui/completion-button.tsx"
 export { Brand } from "./ui/brand.tsx"
 export { AboutText } from "./ui/about-text.tsx"
 export { Photo as AuthorPhoto } from "./ui/photo.tsx"
+export { Keyword, KeywordsWrapper } from "./ui/keyword.tsx"
 export {
 	useCreateAuthor,
 	useUpdateAuthor,

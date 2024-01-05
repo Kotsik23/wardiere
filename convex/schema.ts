@@ -11,6 +11,7 @@ export const authorFields = {
 	brand: v.optional(v.string()),
 	aboutText: v.optional(v.string()),
 	photo: v.optional(v.object(imageFields)),
+	keywords: v.array(v.string()),
 	isPublic: v.boolean(),
 }
 
