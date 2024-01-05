@@ -3,7 +3,7 @@ import { SendHorizonalIcon } from "lucide-react"
 import { FormEvent, useState } from "react"
 import { Id } from "@convex/_generated/dataModel"
 import { Button } from "@/shared/ui/button.tsx"
-import { Textarea } from "@/shared/ui/textarea.tsx"
+import { Input } from "@/shared/ui/input.tsx"
 import { unauthenticatedToast } from "@/shared/ui/toasts"
 import { cn } from "@/shared/ui/util.ts"
 import { useCreateComment } from "../model/use-create-comment.ts"
@@ -39,11 +39,9 @@ export const CreateCommentForm = ({ authorId, afterSubmit, className }: Props) =
 			className={"w-full disabled:pointer-events-none disabled:opacity-50"}
 		>
 			<form className={cn("flex items-center gap-4", className)} onSubmit={handleSubmit}>
-				<Textarea
+				<Input
 					placeholder={"Write your opinion..."}
-					minRows={1}
-					maxRows={4}
-					className={"resize-none"}
+					className={"text-base"}
 					value={text}
 					onChange={e => setText(e.target.value)}
 				/>
