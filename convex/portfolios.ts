@@ -8,6 +8,7 @@ export const getByAuthorCategory = query({
 	args: {
 		authorId: v.id("authors"),
 		categoryId: v.id("categories"),
+		order: v.union(v.literal("asc"), v.literal("desc")),
 		paginationOpts: paginationOptsValidator,
 	},
 	handler: (ctx, args) => {
@@ -16,6 +17,7 @@ export const getByAuthorCategory = query({
 			.withIndex("by_author_category", q =>
 				q.eq("authorId", args.authorId).eq("categoryId", args.categoryId)
 			)
+			.order(args.order)
 			.paginate(args.paginationOpts)
 	},
 })

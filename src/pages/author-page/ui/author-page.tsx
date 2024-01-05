@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/clerk-react"
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { PortfoliosList } from "@/widgets/author"
+import { PortfoliosHeader, PortfoliosList } from "@/widgets/author"
 import { CommentList, CreateCommentForm } from "@/features/author/comment-author"
 import {
 	AboutText,
@@ -58,6 +58,7 @@ export const AuthorPage = () => {
 				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
 					Portfolios
 				</h2>
+				<PortfoliosHeader />
 				<PortfoliosList authorId={author._id} />
 			</div>
 

@@ -70,7 +70,7 @@ export const AuthorEditPage = () => {
 					Portfolios
 				</h2>
 				<PortfoliosHeader />
-				<UploadAuthorPortfolioButton authorId={author._id} className={"self-start"} />
+				<UploadAuthorPortfolioButton authorId={author._id} />
 				<PortfoliosList authorId={author._id} editable />
 			</div>
 

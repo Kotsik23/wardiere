@@ -59,7 +59,7 @@ module.exports = {
 				"author-pattern": "url(/favicon.svg)",
 			},
 			gridTemplateColumns: {
-				portfolios: "repeat(auto-fit, minmax(240px, 1fr))",
+				portfolios: "repeat(auto-fill, minmax(240px, 1fr))",
 			},
 			keyframes: {
 				"accordion-down": {

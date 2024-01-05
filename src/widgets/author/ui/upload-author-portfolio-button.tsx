@@ -1,8 +1,10 @@
 import { PlusIcon } from "lucide-react"
 import { toast } from "sonner"
+import { StringParam, useQueryParam, withDefault } from "use-query-params"
 import { useBoolean } from "usehooks-ts"
 import { Id } from "@convex/_generated/dataModel"
 import { UploadDialog } from "@/features/upload-files"
+import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
 import { cn } from "@/shared/ui/util.ts"
 import { useUploadAuthorPortfolio } from "../model/use-upload-author-portfolio.ts"
@@ -13,6 +15,11 @@ type Props = {
 }
 
 export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
+	const { categories } = useCategories()
+	const [category] = useQueryParam(
+		"category",
+		withDefault(StringParam, categories ? categories[0]?.value : "")
+	)
 	const { value: open, setValue: onOpenChange, toggle } = useBoolean()
 	const { handleUploadPortfolio } = useUploadAuthorPortfolio()
 
@@ -22,7 +29,7 @@ export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
 				buffers.map(buffer =>
 					handleUploadPortfolio({
 						authorId,
-						categoryId: "j9792qgqc6zm47cr4b0nfkrrkd6gw55w" as Id<"categories">,
+						categoryId: category as Id<"categories">,
 						arrayBuffer: buffer,
 					})
 				)
@@ -35,7 +42,7 @@ export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
 
 	return (
 		<>
-			<Button onClick={toggle} className={cn("w-80", className)}>
+			<Button onClick={toggle} className={cn("w-full max-w-80", className)}>
 				Upload Portfolio <PlusIcon className={"ml-2"} />
 			</Button>
 			<UploadDialog

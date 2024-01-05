@@ -27,7 +27,7 @@ export const CategoriesSelect = () => {
 		return (
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
-					<Button variant={"outline"} className={"w-80 justify-between"}>
+					<Button variant={"outline"} className={"w-full max-w-80 justify-between"}>
 						{currentCategory?.label || "Select category"}{" "}
 						<ChevronsUpDownIcon className={"ml-2 size-4 shrink-0 opacity-50"} />
 					</Button>
@@ -46,7 +46,7 @@ export const CategoriesSelect = () => {
 	return (
 		<Drawer open={open} onOpenChange={setOpen}>
 			<DrawerTrigger asChild>
-				<Button variant={"outline"} className={"w-80 justify-between"}>
+				<Button variant={"outline"} className={"w-full justify-between md:max-w-80"}>
 					{currentCategory?.label || "Select category"}{" "}
 					<ChevronsUpDownIcon className={"ml-2 size-4 shrink-0 opacity-50"} />
 				</Button>

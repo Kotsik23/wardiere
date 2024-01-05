@@ -1,11 +1,12 @@
 import { ChevronDownIcon, GalleryVerticalEndIcon } from "lucide-react"
-import { StringParam, useQueryParam, withDefault } from "use-query-params"
+import { StringParam, useQueryParams, withDefault } from "use-query-params"
 import { Id } from "@convex/_generated/dataModel"
 import { PortfolioImage, PortfoliosWrapper } from "@/entities/author"
+import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
+import { Spinner } from "@/shared/ui/spinner.tsx"
 import { usePortfoliosList } from "../model/use-portfolios-list.ts"
 import { PortfolioActions } from "./portfolio-actions.tsx"
-import { Spinner } from "@/shared/ui/spinner.tsx"
 
 type Props = {
 	authorId: Id<"authors">
@@ -13,10 +14,17 @@ type Props = {
 }
 
 export const PortfoliosList = ({ authorId, editable = false }: Props) => {
-	const defaultCategory = "j9792qgqc6zm47cr4b0nfkrrkd6gw55w"
-	const [categoryId] = useQueryParam("category", withDefault(StringParam, defaultCategory))
+	const { categories } = useCategories()
+	const [params] = useQueryParams({
+		category: withDefault(StringParam, categories ? categories[0]?.value : ""),
+		sort: withDefault(StringParam, "desc"),
+	})
 
-	const { query } = usePortfoliosList({ authorId, categoryId: categoryId as Id<"categories"> })
+	const { query } = usePortfoliosList({
+		authorId,
+		categoryId: params.category as Id<"categories">,
+		order: params.sort as "asc" | "desc",
+	})
 
 	if (query.isLoading) {
 		return (

@@ -5,15 +5,17 @@ import { Id } from "@convex/_generated/dataModel"
 export const usePortfoliosList = ({
 	authorId,
 	categoryId,
+	order,
 	initialNumItems = 10,
 }: {
 	authorId: Id<"authors">
 	categoryId: Id<"categories">
+	order: "asc" | "desc"
 	initialNumItems?: number
 }) => {
 	const query = usePaginatedQuery(
 		api.portfolios.getByAuthorCategory,
-		{ authorId, categoryId },
+		{ authorId, categoryId, order },
 		{ initialNumItems }
 	)
 	return { query }
