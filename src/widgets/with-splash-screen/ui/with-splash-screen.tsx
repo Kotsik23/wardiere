@@ -12,11 +12,7 @@ export const WithSplashScreen = ({ children }: { children: ReactNode }) => {
 
 	return (
 		<div className={"fixed inset-0 grid place-items-center bg-background/80 backdrop-blur"}>
-			<div
-				className={
-					"flex w-full flex-col items-center gap-5 duration-500 animate-in fade-in-80 zoom-in-75"
-				}
-			>
+			<div className={"flex w-full flex-col items-center gap-5"}>
 				<Logo className={"mb-8 text-5xl"} isFull />
 				<Spinner className={"h-12 w-12 text-primary"} />
 				<p className={"text-base font-light tracking-wide text-muted-foreground"}>

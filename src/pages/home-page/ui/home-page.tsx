@@ -3,7 +3,7 @@ import { PageLayout } from "@/shared/ui/layouts"
 export const HomePage = () => {
 	return (
 		<>
-			<PageLayout>HomePage</PageLayout>
+			<PageLayout className={"my-8"}>HomePage</PageLayout>
 		</>
 	)
 }

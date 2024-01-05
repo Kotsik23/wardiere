@@ -6,7 +6,7 @@ export const SettingsPage = () => {
 	return (
 		<PageLayout
 			className={
-				"container flex  max-w-4xl flex-col items-center justify-center gap-6 overflow-hidden"
+				"container my-8 flex max-w-4xl flex-col items-center justify-center gap-6 overflow-hidden"
 			}
 		>
 			<BackButton className={"self-start"} />
