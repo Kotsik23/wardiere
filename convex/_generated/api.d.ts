@@ -19,6 +19,7 @@ import type * as categories from "../categories.js";
 import type * as comments from "../comments.js";
 import type * as http from "../http.js";
 import type * as imageKit from "../imageKit.js";
+import type * as likes from "../likes.js";
 import type * as openai from "../openai.js";
 import type * as portfolios from "../portfolios.js";
 import type * as users from "../users.js";
@@ -37,6 +38,7 @@ declare const fullApi: ApiFromModules<{
   comments: typeof comments;
   http: typeof http;
   imageKit: typeof imageKit;
+  likes: typeof likes;
   openai: typeof openai;
   portfolios: typeof portfolios;
   users: typeof users;

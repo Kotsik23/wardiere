@@ -15,6 +15,7 @@ import {
 	EditableBrand,
 	EditableKeywords,
 } from "@/features/author/edit-author"
+import { LikeButton } from "@/features/author/like-author"
 import { TogglePubic } from "@/features/author/toggle-public"
 import { AuthorPhoto, useGetAuthorById, useIsOwner } from "@/entities/author"
 import { ROUTES } from "@/shared/constants/routes.ts"
@@ -46,6 +47,7 @@ export const AuthorEditPage = () => {
 			<div className={"flex w-full flex-col items-center gap-4"}>
 				<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
 				<UploadAuthorPhotoButton authorId={author._id} />
+				<LikeButton authorId={author._id} />
 			</div>
 			<div className={"flex flex-col items-center gap-6"}>
 				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>

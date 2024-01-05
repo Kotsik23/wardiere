@@ -46,7 +46,7 @@ export const create = mutation({
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
 		if (!identity) {
-			throw new ConvexError("Unauthenticated")
+			throw new ConvexError("Authentication required")
 		}
 		return ctx.db.insert("authors", {
 			userId: args.userId,
@@ -69,7 +69,7 @@ export const update = mutation({
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
 		if (!identity) {
-			throw new ConvexError("Unauthenticated")
+			throw new ConvexError("Authentication required")
 		}
 		return ctx.db.patch(args.authorId, args.payload)
 	},
@@ -91,7 +91,7 @@ export const togglePublic = mutation({
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
 		if (!identity) {
-			throw new ConvexError("Unauthenticated")
+			throw new ConvexError("Authentication required")
 		}
 		const author = await ctx.db.get(args.authorId)
 		if (!author) {

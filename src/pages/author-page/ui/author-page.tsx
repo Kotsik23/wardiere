@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
 import { PortfoliosHeader, PortfoliosList } from "@/widgets/author"
 import { CommentList, CreateCommentForm } from "@/features/author/comment-author"
+import { LikeButton } from "@/features/author/like-author"
 import {
 	AboutText,
 	AuthorPhoto,
@@ -33,6 +34,7 @@ export const AuthorPage = () => {
 			<Brand brand={author.brand} />
 			<div className={"flex w-full flex-col items-center gap-4"}>
 				<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
+				<LikeButton authorId={author._id} />
 			</div>
 			{author.aboutText && (
 				<div className={"flex flex-col items-center gap-6"}>

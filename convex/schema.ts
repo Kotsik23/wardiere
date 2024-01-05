@@ -21,6 +21,11 @@ export const commentFields = {
 	text: v.string(),
 }
 
+export const likeFields = {
+	authorId: v.id("authors"),
+	clerkUserId: v.string(),
+}
+
 export const portfolioFields = {
 	authorId: v.id("authors"),
 	categoryId: v.id("categories"),
@@ -34,6 +39,7 @@ export default defineSchema({
 	}).index("by_clerk_id", ["clerkUser.id"]),
 	authors: defineTable(authorFields).index("by_userId", ["userId"]),
 	comments: defineTable(commentFields).index("by_author_id", ["authorId"]),
+	likes: defineTable(likeFields).index("by_author_id", ["authorId"]),
 	categories: defineTable({
 		name: v.string(),
 	}),
