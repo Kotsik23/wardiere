@@ -41,7 +41,7 @@ export const getByUserId = query({
 
 export const create = mutation({
 	args: {
-		userId: authorFields.userId,
+		userId: v.string(),
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity()
@@ -144,6 +144,41 @@ export const uploadPhoto = action({
 				photo: {
 					fileId,
 					url,
+				},
+			},
+		})
+	},
+})
+
+export const populateAuthor = action({
+	args: {
+		authorId: v.id("authors"),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity()
+		if (!identity) {
+			throw new ConvexError("Authenticated required")
+		}
+		let profileImage
+		if (identity.pictureUrl) {
+			const uploadedImage = await ctx.runAction(internal.imageKit.upload, {
+				payload: identity.pictureUrl,
+			})
+			profileImage = {
+				url: uploadedImage.url,
+				fileId: uploadedImage.fileId,
+			}
+		} else {
+			profileImage = undefined
+		}
+		await ctx.runMutation(api.authors.update, {
+			authorId: args.authorId,
+			payload: {
+				photo: profileImage,
+				contacts: {
+					email: identity.email as string,
+					instagram: "@" + identity.nickname,
+					telegram: "@" + identity.nickname,
 				},
 			},
 		})

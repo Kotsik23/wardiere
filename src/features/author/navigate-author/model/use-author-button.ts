@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { useCreateAuthor, useGetAuthorByUserId } from "@/entities/author"
+import { usePopulateAuthor } from "@/entities/author/model/queries.ts"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { unauthenticatedToast } from "@/shared/ui/toasts"
 
 export const useAuthorButton = () => {
 	const { createAuthorMutation } = useCreateAuthor()
+	const { populateAuthorAction } = usePopulateAuthor()
 	const { getAuthorByUserId } = useGetAuthorByUserId()
 	const navigate = useNavigate()
 
@@ -22,6 +24,7 @@ export const useAuthorButton = () => {
 			toast.promise(newAuthorPromise, {
 				loading: "Creating author for you...",
 				success: authorId => {
+					populateAuthorAction({ authorId })
 					navigate(ROUTES.AUTHOR_EDIT(authorId))
 					return "Successfully created"
 				},

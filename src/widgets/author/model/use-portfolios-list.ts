@@ -15,7 +15,7 @@ export const usePortfoliosList = ({
 }) => {
 	const query = usePaginatedQuery(
 		api.portfolios.getByAuthorCategory,
-		{ authorId, categoryId, order },
+		categoryId.trim() !== "" ? { authorId, categoryId, order } : "skip",
 		{ initialNumItems }
 	)
 	return { query }

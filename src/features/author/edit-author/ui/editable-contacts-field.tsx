@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react"
+import { useUpdateEffect } from "usehooks-ts"
 import { Doc, Id } from "@convex/_generated/dataModel"
 import { getContactsIcons } from "@/entities/author"
 import { Button } from "@/shared/ui/button.tsx"
@@ -34,6 +35,10 @@ export const EditableContactsField = ({ authorId, field, fieldValue, contacts }:
 			},
 		})
 	}
+
+	useUpdateEffect(() => {
+		setInputValue(fieldValue)
+	}, [fieldValue])
 
 	return (
 		<div className={"flex w-full items-center gap-4"}>

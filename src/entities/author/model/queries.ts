@@ -1,4 +1,4 @@
-import { useConvex, useMutation, usePaginatedQuery, useQuery } from "convex/react"
+import { useAction, useConvex, useMutation, usePaginatedQuery, useQuery } from "convex/react"
 import { api } from "@convex/_generated/api"
 import { Id } from "@convex/_generated/dataModel"
 
@@ -14,6 +14,11 @@ export const useUpdateAuthor = () => {
 	return {
 		updateAuthorMutation,
 	}
+}
+
+export const usePopulateAuthor = () => {
+	const populateAuthorAction = useAction(api.authors.populateAuthor)
+	return { populateAuthorAction }
 }
 
 export const useGetAuthors = ({ initialNumItems }: { initialNumItems: number }) => {
