@@ -13,6 +13,7 @@ import {
 	CreateKeyword,
 	EditableAboutText,
 	EditableBrand,
+	EditableContacts,
 	EditableKeywords,
 } from "@/features/author/edit-author"
 import { LikeButton } from "@/features/author/like-author"
@@ -71,9 +72,18 @@ export const AuthorEditPage = () => {
 				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
 					Portfolios
 				</h2>
-				<PortfoliosHeader />
 				<UploadAuthorPortfolioButton authorId={author._id} />
+				<PortfoliosHeader />
 				<PortfoliosList authorId={author._id} editable />
+			</div>
+
+			<div className={"my-6 flex flex-col items-start gap-6"}>
+				<h2 className={"self-center text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+					Contacts
+				</h2>
+				<div className={"mx-auto flex w-full max-w-xl flex-col"}>
+					<EditableContacts authorId={author._id} contacts={author.contacts} />
+				</div>
 			</div>
 
 			<div className={"flex flex-col items-start gap-6"}>

@@ -52,6 +52,11 @@ export const create = mutation({
 			userId: args.userId,
 			isPublic: false,
 			keywords: [],
+			contacts: {
+				email: "",
+				instagram: "",
+				telegram: "",
+			},
 		})
 	},
 })
@@ -64,6 +69,13 @@ export const update = mutation({
 			aboutText: v.optional(v.string()),
 			photo: v.optional(v.object(imageFields)),
 			keywords: v.optional(v.array(v.string())),
+			contacts: v.optional(
+				v.object({
+					email: v.string(),
+					instagram: v.string(),
+					telegram: v.string(),
+				})
+			),
 		}),
 	},
 	handler: async (ctx, args) => {

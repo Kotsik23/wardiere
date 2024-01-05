@@ -12,6 +12,11 @@ export const authorFields = {
 	aboutText: v.optional(v.string()),
 	photo: v.optional(v.object(imageFields)),
 	keywords: v.array(v.string()),
+	contacts: v.object({
+		email: v.string(),
+		instagram: v.string(),
+		telegram: v.string(),
+	}),
 	isPublic: v.boolean(),
 }
 

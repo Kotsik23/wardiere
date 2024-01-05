@@ -8,6 +8,7 @@ import {
 	AboutText,
 	AuthorPhoto,
 	Brand,
+	Contacts,
 	Keyword,
 	KeywordsWrapper,
 	useGetAuthorById,
@@ -62,6 +63,13 @@ export const AuthorPage = () => {
 				</h2>
 				<PortfoliosHeader />
 				<PortfoliosList authorId={author._id} />
+			</div>
+
+			<div className={"my-6 flex flex-col items-start gap-6"}>
+				<h2 className={"self-center text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+					Contacts
+				</h2>
+				<Contacts contacts={author.contacts} />
 			</div>
 
 			<div className={"flex flex-col items-start gap-6"}>
