@@ -5,6 +5,7 @@ import { PortfolioImage, PortfoliosWrapper } from "@/entities/author"
 import { Button } from "@/shared/ui/button.tsx"
 import { usePortfoliosList } from "../model/use-portfolios-list.ts"
 import { PortfolioActions } from "./portfolio-actions.tsx"
+import { Spinner } from "@/shared/ui/spinner.tsx"
 
 type Props = {
 	authorId: Id<"authors">
@@ -16,6 +17,14 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 	const [categoryId] = useQueryParam("category", withDefault(StringParam, defaultCategory))
 
 	const { query } = usePortfoliosList({ authorId, categoryId: categoryId as Id<"categories"> })
+
+	if (query.isLoading) {
+		return (
+			<div className={"flex h-96 flex-col items-center justify-center"}>
+				<Spinner className={"size-10"} />
+			</div>
+		)
+	}
 
 	if (!query.isLoading && query.results.length <= 0) {
 		return (
@@ -31,7 +40,7 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 	}
 
 	return (
-		<div className={"flex w-full flex-col items-center gap-6"}>
+		<div className={"flex min-h-96 w-full flex-col items-center gap-6"}>
 			<PortfoliosWrapper>
 				{query.results.map(portfolio => (
 					<PortfolioImage

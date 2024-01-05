@@ -2,6 +2,7 @@ import { useUser } from "@clerk/clerk-react"
 import { Navigate, useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
 import {
+	PortfoliosHeader,
 	PortfoliosList,
 	UploadAuthorPhotoButton,
 	UploadAuthorPortfolioButton,
@@ -64,8 +65,12 @@ export const AuthorEditPage = () => {
 				<EditableKeywords authorId={author._id} keywords={author.keywords} />
 			</div>
 
-			<div className={"flex flex-col items-center gap-6"}>
-				<UploadAuthorPortfolioButton authorId={author._id} />
+			<div className={"my-6 flex flex-col items-center gap-6"}>
+				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+					Portfolios
+				</h2>
+				<PortfoliosHeader />
+				<UploadAuthorPortfolioButton authorId={author._id} className={"self-start"} />
 				<PortfoliosList authorId={author._id} editable />
 			</div>
 

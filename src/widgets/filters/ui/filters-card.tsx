@@ -1,8 +1,8 @@
 import { genderItems, MultipleFilter, SingleFilter } from "@/features/filters"
+import { useCategories } from "@/entities/category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card.tsx"
 import { Spinner } from "@/shared/ui/spinner.tsx"
 import { cn } from "@/shared/ui/util.ts"
-import { useCategories } from "../model/queries.ts"
 
 type FiltersProps = {
 	containerClassName?: string

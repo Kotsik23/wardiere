@@ -1,9 +1,13 @@
 import { useQuery } from "convex/react"
 import { api } from "@convex/_generated/api"
 import { Doc } from "@convex/_generated/dataModel"
-import { FilterItemType } from "@/features/filters"
 
-const transformResponse = (response: Doc<"categories">[]): FilterItemType[] => {
+export type SelectItem = {
+	label: string
+	value: string
+}
+
+const transformResponse = (response: Doc<"categories">[]): SelectItem[] => {
 	return response.map(item => ({
 		label: item.name,
 		value: item._id,

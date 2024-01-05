@@ -1,5 +1,6 @@
 import { FilterIcon } from "lucide-react"
 import { genderItems, MultipleFilter, SingleFilter } from "@/features/filters"
+import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
 import {
 	Drawer,
@@ -11,7 +12,6 @@ import {
 	DrawerTrigger,
 } from "@/shared/ui/drawer.tsx"
 import { Spinner } from "@/shared/ui/spinner.tsx"
-import { useCategories } from "../model/queries.ts"
 
 export const FiltersDrawer = () => {
 	const { categories } = useCategories()

@@ -35,7 +35,7 @@ export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
 
 	return (
 		<>
-			<Button onClick={toggle} className={cn("w-full max-w-sm", className)}>
+			<Button onClick={toggle} className={cn("w-80", className)}>
 				Upload Portfolio <PlusIcon className={"ml-2"} />
 			</Button>
 			<UploadDialog
