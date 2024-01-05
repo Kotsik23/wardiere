@@ -1,5 +1,6 @@
 import { FolderIcon } from "lucide-react"
 import { ChangeEvent, useRef } from "react"
+import { toast } from "sonner"
 import { Button } from "@/shared/ui/button.tsx"
 
 type Props = {
@@ -12,8 +13,13 @@ export const UploadFromFile = ({ multiple, onChange, accept = "image/*" }: Props
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files) {
-			onChange(Array.from(e.target.files))
+		const files = e.target.files
+		if (files) {
+			const validFiles = Array.from(files).filter(file => file.size <= 1048576) // Фильтрация файлов размером до 1 МБ
+			if (validFiles.length !== files.length) {
+				toast.warning("Some files were skipped because their size exceeds 1 MB.")
+			}
+			onChange(validFiles)
 		}
 	}
 

@@ -1,11 +1,11 @@
-import { Id } from "@convex/_generated/dataModel"
-import { useBoolean } from "usehooks-ts"
-import { cn } from "@/shared/ui/util.ts"
 import { PlusIcon } from "lucide-react"
-import { Button } from "@/shared/ui/button.tsx"
-import { UploadDialog } from "@/features/upload-files"
-import { useUploadAuthorPortfolio } from "@/widgets/author/model/use-upload-author-portfolio.ts"
 import { toast } from "sonner"
+import { useBoolean } from "usehooks-ts"
+import { Id } from "@convex/_generated/dataModel"
+import { UploadDialog } from "@/features/upload-files"
+import { Button } from "@/shared/ui/button.tsx"
+import { cn } from "@/shared/ui/util.ts"
+import { useUploadAuthorPortfolio } from "../model/use-upload-author-portfolio.ts"
 
 type Props = {
 	authorId: Id<"authors">
@@ -22,7 +22,7 @@ export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
 				buffers.map(buffer =>
 					handleUploadPortfolio({
 						authorId,
-						categoryId: "j97bxtrcvn2p74gq50s9xcb2q96ffjr4" as Id<"categories">,
+						categoryId: "j9792qgqc6zm47cr4b0nfkrrkd6gw55w" as Id<"categories">,
 						arrayBuffer: buffer,
 					})
 				)
@@ -36,7 +36,7 @@ export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
 	return (
 		<>
 			<Button onClick={toggle} className={cn("w-full max-w-sm", className)}>
-				Upload <PlusIcon className={"ml-2"} />
+				Upload Portfolio <PlusIcon className={"ml-2"} />
 			</Button>
 			<UploadDialog
 				multiple={true}

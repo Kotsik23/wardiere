@@ -21,6 +21,12 @@ export const commentFields = {
 	text: v.string(),
 }
 
+export const portfolioFields = {
+	authorId: v.id("authors"),
+	categoryId: v.id("categories"),
+	...imageFields,
+}
+
 export default defineSchema({
 	users: defineTable({
 		// this is UserJSON from @clerk/backend
@@ -31,4 +37,5 @@ export default defineSchema({
 	categories: defineTable({
 		name: v.string(),
 	}),
+	portfolios: defineTable(portfolioFields).index("by_author_category", ["authorId", "categoryId"]),
 })

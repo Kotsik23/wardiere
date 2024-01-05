@@ -8,7 +8,7 @@ export const SignInPage = () => {
 	const from = state?.from?.pathname
 
 	return (
-		<PageLayout className={"grid place-items-center md:pt-20"}>
+		<PageLayout className={"my-8 grid place-items-center"}>
 			<SignIn
 				path={ROUTES.SIGN_IN}
 				signUpUrl={ROUTES.SIGN_UP}

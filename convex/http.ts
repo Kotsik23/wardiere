@@ -43,11 +43,9 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
 			if (!author) {
 				console.log("Author doesn't exists")
 			} else {
-				if (author.photo) {
-					await ctx.runAction(internal.imageKit.removeFolder, {
-						clerkUserId: id,
-					})
-				}
+				await ctx.runAction(internal.imageKit.removeFolder, {
+					clerkUserId: id,
+				})
 				await ctx.runMutation(api.authors.remove, { authorId: author._id })
 			}
 			await ctx.runMutation(internal.comments.removeAllByUser, { clerkUserId: id })

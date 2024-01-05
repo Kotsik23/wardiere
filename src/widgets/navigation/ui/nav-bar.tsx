@@ -1,9 +1,10 @@
-import { Authenticated, Unauthenticated } from "convex/react"
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react"
 import { useMediaQuery } from "usehooks-ts"
 import { ThemeSwitcher } from "@/features/toggle-theme"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { NavigationLink } from "@/shared/ui/links"
 import { Logo } from "@/shared/ui/logo.tsx"
+import { Skeleton } from "@/shared/ui/skeleton.tsx"
 import { ActionButtons } from "./action-buttons.tsx"
 import { MobileMenu } from "./mobile-menu/mobile-menu.tsx"
 import { NavBarLinks } from "./nav-bar-links.tsx"
@@ -27,12 +28,15 @@ export const NavBar = () => {
 					<Authenticated>
 						<UserButton />
 					</Authenticated>
-					<div className={"flex items-center gap-5"}>
-						<Unauthenticated>
+					<AuthLoading>
+						<Skeleton className={"size-10 rounded-full"} />
+					</AuthLoading>
+					<Unauthenticated>
+						<div className={"flex items-center gap-5"}>
 							<ActionButtons />
 							{isMedium && <ThemeSwitcher />}
-						</Unauthenticated>
-					</div>
+						</div>
+					</Unauthenticated>
 				</nav>
 				<nav className={"flex gap-2 md:hidden"}>
 					<MobileMenu />

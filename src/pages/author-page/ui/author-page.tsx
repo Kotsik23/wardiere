@@ -1,8 +1,17 @@
 import { useUser } from "@clerk/clerk-react"
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
+import { PortfoliosList } from "@/widgets/author"
 import { CommentList, CreateCommentForm } from "@/features/author/comment-author"
-import { AboutText, AuthorPhoto, Brand, useGetAuthorById, useIsOwner } from "@/entities/author"
+import {
+	AboutText,
+	AuthorPhoto,
+	Brand,
+	Keyword,
+	KeywordsWrapper,
+	useGetAuthorById,
+	useIsOwner,
+} from "@/entities/author"
 import { AuthRequiredAlert } from "@/shared/ui/alerts/auth-required-alert.tsx"
 import { OwnerAlert } from "@/shared/ui/alerts/owner-alert.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
@@ -33,6 +42,25 @@ export const AuthorPage = () => {
 					<AboutText aboutText={author.aboutText} />
 				</div>
 			)}
+			<div className={"my-6 flex flex-col items-center gap-6"}>
+				<KeywordsWrapper>
+					{author.keywords.map(keyword => (
+						<Keyword
+							key={author._id + keyword}
+							keyword={keyword}
+							className={"h-8 shrink-0 px-4 text-base"}
+						/>
+					))}
+				</KeywordsWrapper>
+			</div>
+
+			<div className={"my-6 flex flex-col items-center gap-6"}>
+				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+					Portfolios
+				</h2>
+				<PortfoliosList authorId={author._id} />
+			</div>
+
 			<div className={"flex flex-col items-start gap-6"}>
 				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>Comments</h2>
 				{isOwner && <OwnerAlert />}

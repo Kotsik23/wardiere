@@ -23,7 +23,7 @@ type Props = {
 
 export const UploadDialog = ({ multiple, onOpenChange, open, onUpload }: Props) => {
 	const [isPending, setIsPending] = useState<boolean>(false)
-	const { files, onAdd, onClear, onDelete } = useUploadDialog()
+	const { files, onAdd, onClear, onDelete } = useUploadDialog({ multiple })
 
 	const handleUpload = async () => {
 		try {

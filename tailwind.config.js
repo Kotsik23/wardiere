@@ -58,6 +58,9 @@ module.exports = {
 			backgroundImage: {
 				"author-pattern": "url(/favicon.svg)",
 			},
+			gridTemplateColumns: {
+				portfolios: "repeat(auto-fit, minmax(240px, 1fr))",
+			},
 			keyframes: {
 				"accordion-down": {
 					from: { height: 0 },

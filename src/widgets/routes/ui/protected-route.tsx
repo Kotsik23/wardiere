@@ -6,9 +6,9 @@ import { createRedirectLink } from "@/shared/lib/create-redirect-link.ts"
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 	const location = useLocation()
-	const { isAuthenticated } = useConvexAuth()
+	const { isAuthenticated, isLoading } = useConvexAuth()
 
-	if (!isAuthenticated) {
+	if (!isAuthenticated && !isLoading) {
 		return (
 			<Navigate
 				to={createRedirectLink({ pathname: ROUTES.SIGN_IN, to: location.pathname })}

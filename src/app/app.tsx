@@ -1,5 +1,4 @@
 import { BrowserRouter } from "react-router-dom"
-import { WithSplashScreen } from "@/widgets/with-splash-screen"
 import { ThemeProvider } from "@/features/toggle-theme"
 import { ClerkProvider } from "./providers/clerk-provider.tsx"
 import { ConvexProvider } from "./providers/convex-provider.tsx"
@@ -14,10 +13,8 @@ export const App = () => {
 				<ThemeProvider defaultTheme={"system"}>
 					<ClerkProvider>
 						<ConvexProvider>
-							<WithSplashScreen>
-								<RouterProvider />
-								<ToasterProvider />
-							</WithSplashScreen>
+							<RouterProvider />
+							<ToasterProvider />
 						</ConvexProvider>
 					</ClerkProvider>
 				</ThemeProvider>
