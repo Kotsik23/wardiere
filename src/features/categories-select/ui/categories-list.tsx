@@ -33,7 +33,12 @@ export const CategoriesList = ({ onClose, setCategory, categories }: Props) => {
 				<CommandEmpty>No such category.</CommandEmpty>
 				<CommandGroup>
 					{categories.map(category => (
-						<CommandItem key={category.value} value={category.value} onSelect={handleSelect}>
+						<CommandItem
+							key={category.value}
+							value={category.value}
+							onSelect={handleSelect}
+							className={"text-base"}
+						>
 							{category.label}
 						</CommandItem>
 					))}
