@@ -11,6 +11,7 @@ import {
 	CardHeader as UiCardHeader,
 } from "@/shared/ui/card.tsx"
 import { useIsNew } from "../model/use-is-new.ts"
+import { Keyword, KeywordsWrapper } from "./keyword.tsx"
 import { NewBadge } from "./new-badge.tsx"
 import { Photo as AuthorPhoto } from "./photo.tsx"
 
@@ -28,12 +29,18 @@ export const Card = ({ author, actions }: AuthorCardProps) => {
 				<AuthorPhoto author={author} imageClassName={"w-40"} />
 				<div className={"flex flex-col items-center gap-0.5 xl:items-start"}>
 					<h3 className={"text-lg font-semibold md:text-xl"}>{author?.brand}</h3>
-					{/*<span className={"text-sm font-medium text-secondary md:text-base"}>*/}
-					{/*	{data.contacts?.email}*/}
-					{/*</span>*/}
+					<span className={"text-sm font-medium text-secondary md:text-base"}>
+						{author.contacts.instagram || author.contacts.telegram || author.contacts.email}
+					</span>
 				</div>
 			</UiCardHeader>
-			<UiCardContent>{/*<Keywords words={data.keywords ?? []} />*/}</UiCardContent>
+			<UiCardContent>
+				<KeywordsWrapper className={"justify-start"}>
+					{author.keywords.map(keyword => (
+						<Keyword key={author._id + keyword} keyword={keyword} />
+					))}
+				</KeywordsWrapper>
+			</UiCardContent>
 			<UiCardFooter className={"flex flex-col items-start gap-2"}>
 				{actions}
 				<Button variant={"outline"} className={"group w-full"} asChild>

@@ -1,7 +1,10 @@
-import { internalMutation, mutation, query } from "./_generated/server"
+import { internalMutation, mutation, query, QueryCtx } from "./_generated/server"
 import { commentFields } from "./schema"
 import { ConvexError, v } from "convex/values"
 import { paginationOptsValidator } from "convex/server"
+import { asyncMap } from "convex-helpers"
+import { Doc } from "./_generated/dataModel"
+import { UserJSON } from "@clerk/backend"
 
 export const getByAuthor = query({
 	args: {
@@ -9,11 +12,15 @@ export const getByAuthor = query({
 		paginationOpts: paginationOptsValidator,
 	},
 	handler: async (ctx, args) => {
-		return ctx.db
+		const result = await ctx.db
 			.query("comments")
-			.withIndex("by_author_id", q => q.eq("authorId", args.authorId))
+			.withIndex("by_authorId", q => q.eq("authorId", args.authorId))
 			.order("desc")
 			.paginate(args.paginationOpts)
+		return {
+			...result,
+			page: await enrichComments(ctx, result.page),
+		}
 	},
 })
 
@@ -57,3 +64,15 @@ export const removeAllByUser = internalMutation({
 		}
 	},
 })
+
+async function enrichComments(ctx: QueryCtx, comments: Doc<"comments">[]) {
+	return await asyncMap(comments, comment => enrichComment(ctx, comment))
+}
+
+async function enrichComment(ctx: QueryCtx, comment: Doc<"comments">) {
+	const user = await ctx.db
+		.query("users")
+		.withIndex("by_clerkId", q => q.eq("clerkUser.id", comment.clerkUserId))
+		.unique()
+	return { comment, user: user?.clerkUser as UserJSON }
+}

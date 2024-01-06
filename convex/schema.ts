@@ -41,12 +41,15 @@ export default defineSchema({
 	users: defineTable({
 		// this is UserJSON from @clerk/backend
 		clerkUser: v.any(),
-	}).index("by_clerk_id", ["clerkUser.id"]),
+	}).index("by_clerkId", ["clerkUser.id"]),
 	authors: defineTable(authorFields).index("by_userId", ["userId"]),
-	comments: defineTable(commentFields).index("by_author_id", ["authorId"]),
-	likes: defineTable(likeFields).index("by_author_id", ["authorId"]),
+	comments: defineTable(commentFields).index("by_authorId", ["authorId"]),
+	likes: defineTable(likeFields).index("by_authorId", ["authorId"]),
 	categories: defineTable({
 		name: v.string(),
 	}),
-	portfolios: defineTable(portfolioFields).index("by_author_category", ["authorId", "categoryId"]),
+	portfolios: defineTable(portfolioFields).index("by_authorId_categoryId", [
+		"authorId",
+		"categoryId",
+	]),
 })

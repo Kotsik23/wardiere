@@ -15,7 +15,7 @@ export const UploadFromFile = ({ multiple, onChange, accept = "image/*" }: Props
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files
 		if (files) {
-			const validFiles = Array.from(files).filter(file => file.size <= 1048576) // Фильтрация файлов размером до 1 МБ
+			const validFiles = Array.from(files).filter(file => file.size <= 1024 * 1024 * 4) // Фильтрация файлов размером до 4 МБ
 			if (validFiles.length !== files.length) {
 				toast.warning("Some files were skipped because their size exceeds 1 MB.")
 			}

@@ -9,7 +9,7 @@ export const getByAuthor = query({
 	handler: (ctx, args) => {
 		return ctx.db
 			.query("likes")
-			.withIndex("by_author_id", q => q.eq("authorId", args.authorId))
+			.withIndex("by_authorId", q => q.eq("authorId", args.authorId))
 			.collect()
 	},
 })

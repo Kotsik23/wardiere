@@ -26,7 +26,7 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 		order: params.sort as "asc" | "desc",
 	})
 
-	if (query.isLoading) {
+	if (!query.results) {
 		return (
 			<div className={"flex h-96 flex-col items-center justify-center"}>
 				<Spinner className={"size-10"} />

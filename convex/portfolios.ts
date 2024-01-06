@@ -14,7 +14,7 @@ export const getByAuthorCategory = query({
 	handler: (ctx, args) => {
 		return ctx.db
 			.query("portfolios")
-			.withIndex("by_author_category", q =>
+			.withIndex("by_authorId_categoryId", q =>
 				q.eq("authorId", args.authorId).eq("categoryId", args.categoryId)
 			)
 			.order(args.order)

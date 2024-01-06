@@ -11,7 +11,7 @@ export const ExplorePage = () => {
 
 	return (
 		<>
-			<PageLayout className={"container my-8 flex flex-col gap-6 md:flex-row"}>
+			<PageLayout className={"container my-9 flex flex-col gap-6 md:flex-row"}>
 				{isMedium ? <FiltersCard /> : <FiltersDrawer />}
 				{query.isLoading ? (
 					<div className={"flex h-[40vh] w-full items-center justify-center"}>

@@ -17,7 +17,7 @@ export const UploadsListItem = ({ file, onDelete }: Props) => {
 				</Card>
 				<div className={"flex flex-col items-start gap-1"}>
 					<h6 className={"w-40 overflow-auto truncate font-medium sm:w-60 lg:w-full"}>
-						{file.name}
+						{file.name.length > 30 ? file.name.slice(0, 30).concat("...") : file.name}
 					</h6>
 					<span className={"text-sm text-muted-foreground"}>{formatFileSize(file.size)}</span>
 				</div>
