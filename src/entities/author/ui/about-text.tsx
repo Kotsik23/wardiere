@@ -4,7 +4,11 @@ type AboutTextProps = {
 
 export const AboutText = ({ aboutText }: AboutTextProps) => {
 	return (
-		<p className={"mx-auto max-w-4xl text-justify text-base font-medium md:text-lg lg:text-xl"}>
+		<p
+			className={
+				"mx-auto max-w-4xl text-balance text-justify text-base font-medium md:text-lg lg:text-xl"
+			}
+		>
 			{aboutText}
 		</p>
 	)
