@@ -4,7 +4,7 @@ import { Id } from "@convex/_generated/dataModel"
 import { PortfolioImage, PortfoliosWrapper } from "@/entities/author"
 import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
-import { Spinner } from "@/shared/ui/spinner.tsx"
+import { Skeleton } from "@/shared/ui/skeleton.tsx"
 import { usePortfoliosList } from "../model/use-portfolios-list.ts"
 import { PortfolioActions } from "./portfolio-actions.tsx"
 
@@ -26,18 +26,16 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 		order: params.sort as "asc" | "desc",
 	})
 
-	if (!query.results) {
-		return (
-			<div className={"flex h-96 flex-col items-center justify-center"}>
-				<Spinner className={"size-10"} />
-			</div>
-		)
+	if (!query.results || query.isLoading) {
+		return <PortfoliosList.Skeleton />
 	}
 
 	if (!query.isLoading && query.results.length <= 0) {
 		return (
 			<div
-				className={"flex h-96 flex-col items-center justify-center gap-6 text-muted-foreground"}
+				className={
+					"flex min-h-96 flex-col items-center justify-center gap-6 text-muted-foreground"
+				}
 			>
 				<GalleryVerticalEndIcon className={"size-24"} strokeWidth={1} />
 				<p className={"max-w-sm text-balance text-center text-lg font-medium"}>
@@ -66,13 +64,25 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 					/>
 				))}
 			</PortfoliosWrapper>
-			<Button
-				variant={"outline"}
-				onClick={() => query.loadMore(10)}
-				disabled={query.status === "Exhausted" || query.isLoading}
-			>
-				Load More <ChevronDownIcon className={"ml-2 size-5"} />
-			</Button>
+			{query.results.length > 0 && query.status === "CanLoadMore" && (
+				<Button
+					variant={"outline"}
+					disabled={query.isLoading}
+					onClick={() => query.loadMore(10)}
+				>
+					Load More <ChevronDownIcon className={"ml-2 size-5"} />
+				</Button>
+			)}
 		</div>
+	)
+}
+
+PortfoliosList.Skeleton = () => {
+	return (
+		<PortfoliosWrapper>
+			{Array.from({ length: 10 }).map((_, index) => (
+				<Skeleton key={index} className={"aspect-square h-full w-full rounded-xl shadow-lg"} />
+			))}
+		</PortfoliosWrapper>
 	)
 }
