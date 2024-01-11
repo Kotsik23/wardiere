@@ -17,7 +17,7 @@ export const UploadFromFile = ({ multiple, onChange, accept = "image/*" }: Props
 		if (files) {
 			const validFiles = Array.from(files).filter(file => file.size <= 1024 * 1024 * 4) // Фильтрация файлов размером до 4 МБ
 			if (validFiles.length !== files.length) {
-				toast.warning("Some files were skipped because their size exceeds 1 MB.")
+				toast.warning("Some files were skipped because their size exceeds 4 MB.")
 			}
 			onChange(validFiles)
 		}
