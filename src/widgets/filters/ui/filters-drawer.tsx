@@ -13,7 +13,7 @@ import {
 } from "@/shared/ui/drawer.tsx"
 
 export const FiltersDrawer = () => {
-	const { categories } = useCategories()
+	const { categories } = useCategories({})
 
 	return (
 		<Drawer>

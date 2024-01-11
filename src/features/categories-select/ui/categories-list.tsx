@@ -1,5 +1,6 @@
+import { CircleIcon } from "lucide-react"
 import { Id } from "@convex/_generated/dataModel"
-import { SelectItem } from "@/entities/category"
+import { CategorySelectItem } from "@/entities/category"
 import {
 	Command,
 	CommandEmpty,
@@ -8,11 +9,12 @@ import {
 	CommandItem,
 	CommandList,
 } from "@/shared/ui/command.tsx"
+import { cn } from "@/shared/ui/util.ts"
 
 type Props = {
 	onClose: () => void
 	setCategory: (categoryId: Id<"categories">) => void
-	categories: SelectItem[]
+	categories: CategorySelectItem[]
 }
 
 export const CategoriesList = ({ onClose, setCategory, categories }: Props) => {
@@ -37,9 +39,13 @@ export const CategoriesList = ({ onClose, setCategory, categories }: Props) => {
 							key={category.value}
 							value={category.value}
 							onSelect={handleSelect}
-							className={"text-base"}
+							className={"justify-between text-base"}
 						>
 							{category.label}
+							<CircleIcon
+								strokeWidth={3}
+								className={cn("size-2.5 text-secondary", category.has && "fill-secondary")}
+							/>
 						</CommandItem>
 					))}
 				</CommandGroup>

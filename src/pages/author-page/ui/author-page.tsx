@@ -61,7 +61,7 @@ export const AuthorPage = () => {
 				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
 					Portfolios
 				</h2>
-				<PortfoliosHeader />
+				<PortfoliosHeader authorId={author._id} />
 				<PortfoliosList authorId={author._id} />
 			</div>
 

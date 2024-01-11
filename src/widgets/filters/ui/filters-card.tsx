@@ -14,7 +14,7 @@ export const FiltersCard = ({
 	titleClassName,
 	contentClassName,
 }: FiltersProps) => {
-	const { categories } = useCategories()
+	const { categories } = useCategories({})
 
 	return (
 		<Card className={cn("sticky top-24 h-fit w-80 shrink-0", containerClassName)}>

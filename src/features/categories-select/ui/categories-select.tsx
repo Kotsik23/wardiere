@@ -7,9 +7,14 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/shared/ui/drawer.tsx"
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover.tsx"
 import { Skeleton } from "@/shared/ui/skeleton.tsx"
 import { CategoriesList } from "./categories-list.tsx"
+import { Id } from "@convex/_generated/dataModel"
 
-export const CategoriesSelect = () => {
-	const { categories } = useCategories()
+type Props = {
+	authorId: Id<"authors">
+}
+
+export const CategoriesSelect = ({ authorId }: Props) => {
+	const { categories } = useCategories({ authorId })
 	const [categoryId, setCategoryId] = useQueryParam(
 		"category",
 		withDefault(StringParam, categories ? categories[0]?.value : "")
