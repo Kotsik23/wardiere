@@ -40,7 +40,7 @@ export const PortfolioActions = ({ portfolio, editable = false, triggerClassName
 					{editable && <RemovePortfolio portfolioId={portfolio._id} />}
 				</DropdownMenuContent>
 			</DropdownMenu>
-			<PortfolioPreview url={portfolio.url} portfolioId={portfolio._id} />
+			<PortfolioPreview url={portfolio.url} />
 		</Dialog>
 	)
 }

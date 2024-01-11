@@ -3,6 +3,7 @@ import { Button } from "@/shared/ui/button.tsx"
 import { Card } from "@/shared/ui/card.tsx"
 import { ProgressiveImage } from "@/shared/ui/progressive-image.tsx"
 import { cn } from "@/shared/ui/util.ts"
+import { Link } from "react-router-dom"
 
 type Props = {
 	className?: string
@@ -22,11 +23,13 @@ export const HelpCard = ({ image, title, href, className }: Props) => {
 					alt={title}
 				/>
 			</Card>
-			<Button variant={"ghost"} className={"group text-base"}>
-				{title}{" "}
-				<ArrowRightIcon
-					className={"ml-2 size-5 transition-transform group-hover:translate-x-1"}
-				/>
+			<Button variant={"ghost"} className={"group text-base"} asChild>
+				<Link to={href}>
+					{title}{" "}
+					<ArrowRightIcon
+						className={"ml-2 size-5 transition-transform group-hover:translate-x-1"}
+					/>
+				</Link>
 			</Button>
 		</article>
 	)

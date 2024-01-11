@@ -58,7 +58,7 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 				</div>
 			)}
 			{query.status === "LoadingMore" && <PortfoliosList.Skeleton />}
-			{query.status !== "Exhausted" && (
+			{query.status === "CanLoadMore" && (
 				<Button
 					variant={"outline"}
 					disabled={query.isLoading}
