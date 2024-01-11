@@ -11,7 +11,6 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/shared/ui/drawer.tsx"
-import { Spinner } from "@/shared/ui/spinner.tsx"
 
 export const FiltersDrawer = () => {
 	const { categories } = useCategories()
@@ -33,8 +32,9 @@ export const FiltersDrawer = () => {
 				</DrawerHeader>
 				<div className={"flex flex-col gap-8 overflow-auto p-4"}>
 					{!categories ? (
-						<div className={"grid place-items-center"}>
-							<Spinner />
+						<div className={"flex flex-col gap-8"}>
+							<MultipleFilter.Skeleton />
+							<SingleFilter.Skeleton />
 						</div>
 					) : (
 						<>

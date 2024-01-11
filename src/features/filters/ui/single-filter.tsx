@@ -1,6 +1,7 @@
 import { StringParam, useQueryParam, withDefault } from "use-query-params"
 import { Label } from "@/shared/ui/label.tsx"
 import { RadioGroup, RadioGroupItem } from "@/shared/ui/radio-group.tsx"
+import { Skeleton } from "@/shared/ui/skeleton.tsx"
 import { cn } from "@/shared/ui/util.ts"
 import type { FilterProps } from "../model/types.ts"
 import { FilterHeader } from "./filter-header.tsx"
@@ -32,6 +33,19 @@ export const SingleFilter = ({
 					</div>
 				))}
 			</RadioGroup>
+		</div>
+	)
+}
+
+SingleFilter.Skeleton = () => {
+	return (
+		<div className={"flex flex-col gap-3"}>
+			{Array.from({ length: 3 }).map((_, index) => (
+				<div key={`single-filter-skeleton-${index}`} className={"flex items-center gap-3"}>
+					<Skeleton className={"h-6 w-6 shrink-0 rounded-full"} />
+					<Skeleton className={"h-6 w-full"} />
+				</div>
+			))}
 		</div>
 	)
 }

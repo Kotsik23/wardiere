@@ -2,6 +2,7 @@ import { CheckedState } from "@radix-ui/react-checkbox"
 import { ArrayParam, useQueryParam, withDefault } from "use-query-params"
 import { Checkbox } from "@/shared/ui/checkbox.tsx"
 import { Label } from "@/shared/ui/label.tsx"
+import { Skeleton } from "@/shared/ui/skeleton.tsx"
 import { cn } from "@/shared/ui/util.ts"
 import type { FilterItemType, FilterProps } from "../model/types.ts"
 import { FilterHeader } from "./filter-header.tsx"
@@ -36,6 +37,19 @@ export const MultipleFilter = ({
 					<Label htmlFor={item.value} className={"text-additional-text text-base font-normal"}>
 						{item.label}
 					</Label>
+				</div>
+			))}
+		</div>
+	)
+}
+
+MultipleFilter.Skeleton = () => {
+	return (
+		<div className={"flex flex-col gap-3"}>
+			{Array.from({ length: 5 }).map((_, index) => (
+				<div key={`multiple-filter-skeleton-${index}`} className={"flex items-center gap-3"}>
+					<Skeleton className={"h-6 w-6 shrink-0"} />
+					<Skeleton className={"h-6 w-full"} />
 				</div>
 			))}
 		</div>

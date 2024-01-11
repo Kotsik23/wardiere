@@ -1,7 +1,6 @@
 import { genderItems, MultipleFilter, ResetFiltersButton, SingleFilter } from "@/features/filters"
 import { useCategories } from "@/entities/category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card.tsx"
-import { Spinner } from "@/shared/ui/spinner.tsx"
 import { cn } from "@/shared/ui/util.ts"
 
 type FiltersProps = {
@@ -27,8 +26,9 @@ export const FiltersCard = ({
 			</CardHeader>
 			<CardContent className={cn("flex flex-col gap-4 p-4", contentClassName)}>
 				{!categories ? (
-					<div className={"grid place-items-center"}>
-						<Spinner />
+					<div className={"flex flex-col gap-8"}>
+						<MultipleFilter.Skeleton />
+						<SingleFilter.Skeleton />
 					</div>
 				) : (
 					<>
