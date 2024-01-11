@@ -1,3 +1,4 @@
+import { useInView } from "react-intersection-observer"
 import { ArrayParam, useQueryParam, withDefault } from "use-query-params"
 import { useDebounce, useMediaQuery } from "usehooks-ts"
 import { Id } from "@convex/_generated/dataModel"
@@ -13,8 +14,16 @@ export const ExplorePage = () => {
 	const debouncedCategories = useDebounce(categories, 300)
 	const { query } = useGetAuthors({
 		categories: debouncedCategories as Id<"categories">[] | undefined,
-		initialNumItems: 5,
+		initialNumItems: 4,
 	})
+
+	const handleInfiniteChange = (inView: boolean) => {
+		if (inView && query.status !== "Exhausted") {
+			query.loadMore(4)
+		}
+	}
+
+	const { ref: infiniteRef } = useInView({ onChange: handleInfiniteChange })
 
 	const isMedium = useMediaQuery("(min-width: 768px)")
 
@@ -30,7 +39,13 @@ export const ExplorePage = () => {
 						action={<ResetFiltersButton />}
 					/>
 				)}
-				{query.results.length > 0 && <AuthorsList authors={query.results} />}
+				{query.results.length > 0 && (
+					<div className={"flex w-full flex-col gap-6"}>
+						<AuthorsList authors={query.results} />
+						{query.status === "LoadingMore" && <AuthorsList.Skeleton />}
+						<div ref={infiniteRef} />
+					</div>
+				)}
 			</PageLayout>
 		</>
 	)
