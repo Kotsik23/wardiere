@@ -1,10 +1,11 @@
-import { ChevronDownIcon, GalleryVerticalEndIcon } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 import { StringParam, useQueryParams, withDefault } from "use-query-params"
 import { Id } from "@convex/_generated/dataModel"
 import { PortfolioImage, PortfoliosWrapper } from "@/entities/author"
 import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
 import { Skeleton } from "@/shared/ui/skeleton.tsx"
+import { EmptyState } from "@/shared/ui/states/empty-state.tsx"
 import { usePortfoliosList } from "../model/use-portfolios-list.ts"
 import { PortfolioActions } from "./portfolio-actions.tsx"
 
@@ -26,45 +27,38 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 		order: params.sort as "asc" | "desc",
 	})
 
-	if (!query.results || query.isLoading) {
-		return <PortfoliosList.Skeleton />
-	}
-
-	if (!query.isLoading && query.results.length <= 0) {
-		return (
-			<div
-				className={
-					"flex min-h-96 flex-col items-center justify-center gap-6 text-muted-foreground"
-				}
-			>
-				<GalleryVerticalEndIcon className={"size-24"} strokeWidth={1} />
-				<p className={"max-w-sm text-balance text-center text-lg font-medium"}>
-					There is no portfolio images in this category yet
-				</p>
-			</div>
-		)
-	}
-
 	return (
-		<div className={"flex min-h-96 w-full flex-col items-center gap-6"}>
-			<PortfoliosWrapper>
-				{query.results.map(portfolio => (
-					<PortfolioImage
-						key={portfolio._id}
-						portfolioId={portfolio._id}
-						url={portfolio.url}
-						containerClassName={"max-w-full relative group"}
-						actions={
-							<PortfolioActions
-								portfolio={portfolio}
-								editable={editable}
-								triggerClassName={"absolute top-1 right-1"}
+		<>
+			{query.status === "LoadingFirstPage" && <PortfoliosList.Skeleton />}
+			{!query.isLoading && query.results.length <= 0 && (
+				<EmptyState
+					sectionClassName={"min-h-96"}
+					text={"There is no portfolio images in this category yet"}
+				/>
+			)}
+			{query.results.length > 0 && (
+				<div className={"flex min-h-96 w-full flex-col items-center gap-6"}>
+					<PortfoliosWrapper>
+						{query.results.map(portfolio => (
+							<PortfolioImage
+								key={portfolio._id}
+								portfolioId={portfolio._id}
+								url={portfolio.url}
+								containerClassName={"max-w-full relative group"}
+								actions={
+									<PortfolioActions
+										portfolio={portfolio}
+										editable={editable}
+										triggerClassName={"absolute top-1 right-1"}
+									/>
+								}
 							/>
-						}
-					/>
-				))}
-			</PortfoliosWrapper>
-			{query.results.length > 0 && query.status === "CanLoadMore" && (
+						))}
+					</PortfoliosWrapper>
+				</div>
+			)}
+			{query.status === "LoadingMore" && <PortfoliosList.Skeleton />}
+			{query.status === "CanLoadMore" && (
 				<Button
 					variant={"outline"}
 					disabled={query.isLoading}
@@ -73,7 +67,7 @@ export const PortfoliosList = ({ authorId, editable = false }: Props) => {
 					Load More <ChevronDownIcon className={"ml-2 size-5"} />
 				</Button>
 			)}
-		</div>
+		</>
 	)
 }
 

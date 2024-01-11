@@ -73,7 +73,7 @@ export const AuthorEditPage = () => {
 					Portfolios
 				</h2>
 				<UploadAuthorPortfolioButton authorId={author._id} />
-				<PortfoliosHeader />
+				<PortfoliosHeader authorId={author._id} />
 				<PortfoliosList authorId={author._id} editable />
 			</div>
 

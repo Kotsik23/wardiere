@@ -15,7 +15,7 @@ type Props = {
 }
 
 export const UploadAuthorPortfolioButton = ({ authorId, className }: Props) => {
-	const { categories } = useCategories()
+	const { categories } = useCategories({})
 	const [category] = useQueryParam(
 		"category",
 		withDefault(StringParam, categories ? categories[0]?.value : "")

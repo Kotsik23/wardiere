@@ -7,9 +7,16 @@ type Props = {
 	textClassName?: string
 	iconClassName?: string
 	action?: ReactNode
+	text?: string
 }
 
-export const EmptyState = ({ sectionClassName, textClassName, iconClassName, action }: Props) => {
+export const EmptyState = ({
+	sectionClassName,
+	textClassName,
+	iconClassName,
+	text,
+	action,
+}: Props) => {
 	return (
 		<section
 			className={cn(
@@ -19,7 +26,7 @@ export const EmptyState = ({ sectionClassName, textClassName, iconClassName, act
 		>
 			<GalleryVerticalEndIcon className={cn("size-24", iconClassName)} strokeWidth={1} />
 			<p className={cn("max-w-sm text-balance text-center text-lg font-medium", textClassName)}>
-				There is nothing here...
+				{text || "There is nothing here..."}
 			</p>
 			{action}
 		</section>
