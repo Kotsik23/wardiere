@@ -21,8 +21,20 @@ export const usePopulateAuthor = () => {
 	return { populateAuthorAction }
 }
 
-export const useGetAuthors = ({ initialNumItems }: { initialNumItems: number }) => {
-	const query = usePaginatedQuery(api.authors.getAll, {}, { initialNumItems })
+export const useGetAuthors = ({
+	categories,
+	initialNumItems,
+}: {
+	categories?: Id<"categories">[]
+	initialNumItems: number
+}) => {
+	const query = usePaginatedQuery(
+		api.authors.getAll,
+		{ categories: categories || [] },
+		{
+			initialNumItems,
+		}
+	)
 
 	return { query }
 }

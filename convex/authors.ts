@@ -3,15 +3,38 @@ import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
 import { authorFields, imageFields } from "./schema"
 import { api, internal } from "./_generated/api"
+import { Id } from "./_generated/dataModel"
 
 export const getAll = query({
 	args: {
+		categories: v.array(v.id("categories")),
 		paginationOpts: paginationOptsValidator,
 	},
 	handler: async (ctx, args) => {
-		return await ctx.db
+		if (args.categories.length > 0) {
+			const portfolios = await ctx.db
+				.query("portfolios")
+				.filter(q =>
+					q.or(...args.categories.map(category => q.eq(q.field("categoryId"), category)))
+				)
+				.collect()
+
+			const authorIds = new Set<Id<"authors">>()
+			portfolios.forEach(portfolio => authorIds.add(portfolio.authorId))
+
+			return ctx.db
+				.query("authors")
+				.filter(q =>
+					q.or(...Array.from(authorIds).map(authorId => q.eq(q.field("_id"), authorId)))
+				)
+				.filter(q => q.eq(q.field("isPublic"), true))
+				.order("desc")
+				.paginate(args.paginationOpts)
+		}
+
+		return ctx.db
 			.query("authors")
-			.filter(q => q.neq(q.field("isPublic"), false))
+			.filter(q => q.eq(q.field("isPublic"), true))
 			.order("desc")
 			.paginate(args.paginationOpts)
 	},

@@ -1,5 +1,5 @@
 import { FilterIcon } from "lucide-react"
-import { genderItems, MultipleFilter, SingleFilter } from "@/features/filters"
+import { genderItems, MultipleFilter, ResetFiltersButton, SingleFilter } from "@/features/filters"
 import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
 import {
@@ -26,7 +26,10 @@ export const FiltersDrawer = () => {
 			</DrawerTrigger>
 			<DrawerContent className={"max-h-[94%] outline-none"}>
 				<DrawerHeader>
-					<DrawerTitle className={"text-2xl"}>Filter By</DrawerTitle>
+					<div className={"flex items-center justify-between gap-4"}>
+						<DrawerTitle className={"text-2xl"}>Filter By</DrawerTitle>
+						<ResetFiltersButton />
+					</div>
 				</DrawerHeader>
 				<div className={"flex flex-col gap-8 overflow-auto p-4"}>
 					{!categories ? (

@@ -1,4 +1,4 @@
-import { genderItems, MultipleFilter, SingleFilter } from "@/features/filters"
+import { genderItems, MultipleFilter, ResetFiltersButton, SingleFilter } from "@/features/filters"
 import { useCategories } from "@/entities/category"
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card.tsx"
 import { Spinner } from "@/shared/ui/spinner.tsx"
@@ -18,9 +18,12 @@ export const FiltersCard = ({
 	const { categories } = useCategories()
 
 	return (
-		<Card className={cn("h-fit w-80 shrink-0", containerClassName)}>
+		<Card className={cn("sticky top-24 h-fit w-80 shrink-0", containerClassName)}>
 			<CardHeader className={"p-4"}>
-				<CardTitle className={titleClassName}>Filter By</CardTitle>
+				<div className={"flex items-center justify-between gap-4"}>
+					<CardTitle className={titleClassName}>Filter By</CardTitle>
+					<ResetFiltersButton />
+				</div>
 			</CardHeader>
 			<CardContent className={cn("flex flex-col gap-4 p-4", contentClassName)}>
 				{!categories ? (
