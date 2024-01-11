@@ -6,6 +6,8 @@ import { AuthorsList } from "@/widgets/author"
 import { FiltersCard, FiltersDrawer } from "@/widgets/filters"
 import { ResetFiltersButton } from "@/features/filters"
 import { useGetAuthors } from "@/entities/author"
+import { ROUTES } from "@/shared/constants/routes.ts"
+import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 import { EmptyState } from "@/shared/ui/states/empty-state.tsx"
 
@@ -29,7 +31,11 @@ export const ExplorePage = () => {
 
 	return (
 		<>
-			<PageLayout className={"container my-9 flex min-h-screen flex-col gap-6 md:flex-row"}>
+			<Breadcrumbs
+				className={"container mt-6"}
+				pages={[{ name: "Explore", href: ROUTES.EXPLORE, currentPage: true }]}
+			/>
+			<PageLayout className={"container my-6 flex min-h-screen flex-col gap-6 md:flex-row"}>
 				{isMedium ? <FiltersCard /> : <FiltersDrawer />}
 				{query.status === "LoadingFirstPage" && <AuthorsList.Skeleton />}
 				{!query.isLoading && query.results.length <= 0 && (

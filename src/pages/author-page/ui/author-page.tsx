@@ -14,8 +14,10 @@ import {
 	useGetAuthorById,
 	useIsOwner,
 } from "@/entities/author"
+import { ROUTES } from "@/shared/constants/routes.ts"
 import { AuthRequiredAlert } from "@/shared/ui/alerts/auth-required-alert.tsx"
 import { OwnerAlert } from "@/shared/ui/alerts/owner-alert.tsx"
+import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
 import { cn } from "@/shared/ui/util.ts"
@@ -31,54 +33,75 @@ export const AuthorPage = () => {
 	}
 
 	return (
-		<PageLayout className={cn("container my-8 flex flex-col gap-6")}>
-			<Brand brand={author.brand} />
-			<div className={"flex w-full flex-col items-center gap-4"}>
-				<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
-				<LikeButton authorId={author._id} />
-			</div>
-			{author.aboutText && (
-				<div className={"flex flex-col items-center gap-6"}>
-					<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-						About Me
-					</h2>
-					<AboutText aboutText={author.aboutText} />
+		<>
+			<Breadcrumbs
+				className={"container mt-6"}
+				pages={[
+					{ name: "Explore", href: ROUTES.EXPLORE },
+					{
+						name: author.brand || `Author-${author._id}`,
+						href: ROUTES.AUTHOR(author._id),
+						currentPage: true,
+					},
+				]}
+			/>
+			<PageLayout className={cn("container my-8 flex flex-col gap-6")}>
+				<Brand brand={author.brand} />
+				<div className={"flex w-full flex-col items-center gap-4"}>
+					<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />
+					<LikeButton authorId={author._id} />
 				</div>
-			)}
-			<div className={"my-6 flex flex-col items-center gap-6"}>
-				<KeywordsWrapper>
-					{author.keywords.map(keyword => (
-						<Keyword
-							key={author._id + keyword}
-							keyword={keyword}
-							className={"h-8 shrink-0 px-4 text-base"}
-						/>
-					))}
-				</KeywordsWrapper>
-			</div>
+				{author.aboutText && (
+					<div className={"flex flex-col items-center gap-6"}>
+						<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+							About Me
+						</h2>
+						<AboutText aboutText={author.aboutText} />
+					</div>
+				)}
+				<div className={"my-6 flex flex-col items-center gap-6"}>
+					<KeywordsWrapper>
+						{author.keywords.map(keyword => (
+							<Keyword
+								key={author._id + keyword}
+								keyword={keyword}
+								className={"h-8 shrink-0 px-4 text-base"}
+							/>
+						))}
+					</KeywordsWrapper>
+				</div>
 
-			<div className={"my-6 flex flex-col items-center gap-6"}>
-				<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-					Portfolios
-				</h2>
-				<PortfoliosHeader authorId={author._id} />
-				<PortfoliosList authorId={author._id} />
-			</div>
+				<div className={"my-6 flex flex-col items-center gap-6"}>
+					<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
+						Portfolios
+					</h2>
+					<PortfoliosHeader authorId={author._id} />
+					<PortfoliosList authorId={author._id} />
+				</div>
 
-			<div className={"my-6 flex flex-col items-start gap-6"}>
-				<h2 className={"self-center text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-					Contacts
-				</h2>
-				<Contacts contacts={author.contacts} />
-			</div>
+				<div className={"my-6 flex flex-col items-start gap-6"}>
+					<h2
+						className={
+							"self-center text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"
+						}
+					>
+						Contacts
+					</h2>
+					<Contacts contacts={author.contacts} />
+				</div>
 
-			<div className={"flex flex-col items-start gap-6"}>
-				<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>Comments</h2>
-				{isOwner && <OwnerAlert />}
-				{!user && <AuthRequiredAlert />}
-				{!isOwner && user && <CreateCommentForm authorId={author._id} className={"flex-row"} />}
-				<CommentList authorId={author._id} />
-			</div>
-		</PageLayout>
+				<div className={"flex flex-col items-start gap-6"}>
+					<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
+						Comments
+					</h2>
+					{isOwner && <OwnerAlert />}
+					{!user && <AuthRequiredAlert />}
+					{!isOwner && user && (
+						<CreateCommentForm authorId={author._id} className={"flex-row"} />
+					)}
+					<CommentList authorId={author._id} />
+				</div>
+			</PageLayout>
+		</>
 	)
 }
