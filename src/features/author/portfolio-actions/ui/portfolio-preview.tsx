@@ -14,7 +14,7 @@ type Props = {
 
 export const PortfolioPreview = ({ url }: Props) => {
 	return (
-		<DialogContent className={"max-w-xl"}>
+		<DialogContent className={"max-w-3xl px-1 md:px-4"}>
 			<DialogHeader>
 				<DialogTitle className={"text-xl"}>Portfolio Preview</DialogTitle>
 			</DialogHeader>
@@ -24,12 +24,14 @@ export const PortfolioPreview = ({ url }: Props) => {
 					alt={"preview"}
 					placeholder={url + "?tr=fo-auto,w-0.05,h-0.05,q-1"}
 					src={url + "?tr=fo-auto,q-90"}
-					className={"aspect-square h-full w-full object-cover"}
+					className={"h-full w-full object-cover"}
 				/>
 			</div>
 			<DialogFooter>
 				<DialogClose asChild>
-					<Button className={"w-full"}>Close preview</Button>
+					<Button className={"w-full"} variant={"outline"}>
+						Close preview
+					</Button>
 				</DialogClose>
 			</DialogFooter>
 		</DialogContent>

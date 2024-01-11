@@ -7,7 +7,7 @@ export type CategorySelectItem = {
 	has?: boolean
 } & SelectType
 
-const transformResponse = (response: (Doc<"categories"> & { has?: boolean })[]): SelectItem[] => {
+const transformResponse = (response: (Doc<"categories"> & { has?: boolean })[]): SelectType[] => {
 	return response.map(item => ({
 		label: item.name,
 		value: item._id,
