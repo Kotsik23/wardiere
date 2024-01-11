@@ -23,8 +23,8 @@ export const PortfolioImage = ({
 			<ProgressiveImage
 				loading={"lazy"}
 				alt={portfolioId}
-				placeholder={url + "?tr=w-50,h-50,fo-auto,q-1"}
-				src={url + "?tr=h-800,w-800,fo-auto"}
+				placeholder={url + "?tr=fo-auto,w-0.05,h-0.05,q-1"}
+				src={url + "?tr=q-80,fo-auto"}
 				className={cn("aspect-square h-full w-full object-cover", imageClassName)}
 			/>
 			{actions}
