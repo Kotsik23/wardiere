@@ -16,12 +16,10 @@ export const aboutTextCompletion = action({
 			throw new ConvexError("Unauthenticated")
 		}
 		const completion = await openai.chat.completions.create({
-			model: "gpt-3.5-turbo",
+			model: "gpt-3.5-turbo-1106",
+			response_format: { type: "json_object" },
 			messages: [
-				{
-					role: "system",
-					content: "Give answers in JSON format",
-				},
+				{ role: "system", content: "You are a helpful assistant designed to output JSON." },
 				{
 					role: "user",
 					content:
@@ -51,12 +49,10 @@ export const brandCompletion = action({
 			throw new ConvexError("Unauthenticated")
 		}
 		const completion = await openai.chat.completions.create({
-			model: "gpt-3.5-turbo",
+			model: "gpt-3.5-turbo-1106",
+			response_format: { type: "json_object" },
 			messages: [
-				{
-					role: "system",
-					content: "Give answers in JSON format",
-				},
+				{ role: "system", content: "You are a helpful assistant designed to output JSON." },
 				{
 					role: "user",
 					content:

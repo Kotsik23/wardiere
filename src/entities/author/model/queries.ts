@@ -43,6 +43,10 @@ export const useGetAuthorById = ({ authorId }: { authorId: Id<"authors"> | undef
 	return useQuery(api.authors.getById, authorId ? { authorId } : "skip")
 }
 
+export const useBestAuthors = ({ take }: { take?: number }) => {
+	return useQuery(api.authors.getStatistics, { take })
+}
+
 export const useGetAuthorByUserId = () => {
 	const convex = useConvex()
 

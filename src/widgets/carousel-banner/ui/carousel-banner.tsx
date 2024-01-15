@@ -1,8 +1,8 @@
 import Autoplay from "embla-carousel-autoplay"
 import { useEffect, useState } from "react"
+import { BestAuthorsBanner } from "@/entities/author"
 import { HelpBanner } from "@/entities/help"
-import { Card, CardContent } from "@/shared/ui/card.tsx"
-import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/shared/ui/carousel.tsx"
+import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/shared/ui/carousel.tsx"
 import { cn } from "@/shared/ui/util.ts"
 
 export const CarouselBanner = () => {
@@ -30,20 +30,19 @@ export const CarouselBanner = () => {
 			plugins={[
 				Autoplay({
 					delay: 5000,
+					stopOnMouseEnter: true,
 				}),
 			]}
 		>
-			<CarouselContent className={"h-64 md:h-80 lg:h-96"}>
+			<CarouselContent className={"h-64 md:h-96"}>
 				<CarouselItem>
 					<div className={"h-full py-1"}>
-						<HelpBanner />
+						<BestAuthorsBanner />
 					</div>
 				</CarouselItem>
 				<CarouselItem>
-					<div className={"py-1"}>
-						<Card>
-							<CardContent className={"flex"}>Content</CardContent>
-						</Card>
+					<div className={"h-full py-1"}>
+						<HelpBanner />
 					</div>
 				</CarouselItem>
 			</CarouselContent>

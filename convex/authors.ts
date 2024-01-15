@@ -3,7 +3,8 @@ import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
 import { authorFields, imageFields } from "./schema"
 import { api, internal } from "./_generated/api"
-import { Id } from "./_generated/dataModel"
+import { Doc, Id } from "./_generated/dataModel"
+import { asyncMap } from "convex-helpers"
 
 export const getAll = query({
 	args: {
@@ -59,6 +60,79 @@ export const getByUserId = query({
 			.withIndex("by_userId")
 			.filter(q => q.eq(q.field("userId"), args.userId))
 			.unique()
+	},
+})
+
+export const getStatistics = query({
+	args: {
+		take: v.optional(v.number()),
+	},
+	handler: async (ctx, args) => {
+		const authors = await ctx.db
+			.query("authors")
+			.filter(q => q.eq(q.field("isPublic"), true))
+			.collect()
+		const users = await asyncMap(authors, author =>
+			ctx.db
+				.query("users")
+				.withIndex("by_clerkId", q => q.eq("clerkUser.id", author.userId))
+				.unique()
+		)
+		const likes = await ctx.db.query("likes").collect()
+		const comments = await ctx.db.query("comments").collect()
+		const portfolios = await ctx.db.query("portfolios").collect()
+
+		const likesByAuthor = likes.reduce(
+			(acc, like) => {
+				acc[like.authorId] = acc[like.authorId] || []
+				acc[like.authorId].push(like)
+				return acc
+			},
+			{} as Record<Id<"authors">, Doc<"likes">[]>
+		)
+
+		const commentsByAuthor = comments.reduce(
+			(acc, comment) => {
+				acc[comment.authorId] = acc[comment.authorId] || []
+				acc[comment.authorId].push(comment)
+				return acc
+			},
+			{} as Record<Id<"authors">, Doc<"comments">[]>
+		)
+
+		const portfoliosByAuthor = portfolios.reduce(
+			(acc, portfolio) => {
+				acc[portfolio.authorId] = acc[portfolio.authorId] || []
+				acc[portfolio.authorId].push(portfolio)
+				return acc
+			},
+			{} as Record<Id<"authors">, Doc<"portfolios">[]>
+		)
+
+		const userByAuthorId = users.reduce(
+			(acc, user) => {
+				acc[user?.clerkUser.id] = user as Doc<"users">
+				return acc
+			},
+			{} as Record<string, Doc<"users">>
+		)
+
+		return authors
+			.map(author => ({
+				...author,
+				user: userByAuthorId[author.userId].clerkUser,
+				stats: {
+					likes: likesByAuthor[author._id]?.length || 0,
+					comments: commentsByAuthor[author._id]?.length || 0,
+					portfolios: portfoliosByAuthor[author._id]?.length || 0,
+				},
+			}))
+			.sort((a, b) => {
+				const totalA = a.stats.likes + a.stats.comments + a.stats.portfolios
+				const totalB = b.stats.likes + b.stats.comments + b.stats.portfolios
+				return totalB - totalA
+			})
+			.slice(0, args.take)
 	},
 })
 

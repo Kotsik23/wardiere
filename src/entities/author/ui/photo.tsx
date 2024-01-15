@@ -15,8 +15,8 @@ export const Photo = ({ author, containerClassName, imageClassName }: Props) => 
 			{author.photo ? (
 				<ProgressiveImage
 					alt={`${author._id}-photo`}
-					placeholder={author.photo.url + "?tr=w-100,h-100,fo-auto,q-1"}
-					src={author.photo.url + "?tr=h-800,w-800,fo-auto"}
+					placeholder={author.photo.url + "?tr=w-0.05,h-0.05,fo-auto,q-1"}
+					src={author.photo.url + "?tr=fo-auto"}
 					className={cn("aspect-square h-full w-96 object-cover", imageClassName)}
 				/>
 			) : (
