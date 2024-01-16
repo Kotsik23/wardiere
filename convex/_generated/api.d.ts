@@ -20,6 +20,7 @@ import type * as comments from "../comments.js";
 import type * as http from "../http.js";
 import type * as imageKit from "../imageKit.js";
 import type * as likes from "../likes.js";
+import type * as mailer from "../mailer.js";
 import type * as openai from "../openai.js";
 import type * as portfolios from "../portfolios.js";
 import type * as users from "../users.js";
@@ -39,6 +40,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   imageKit: typeof imageKit;
   likes: typeof likes;
+  mailer: typeof mailer;
   openai: typeof openai;
   portfolios: typeof portfolios;
   users: typeof users;

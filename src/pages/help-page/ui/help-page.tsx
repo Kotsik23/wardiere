@@ -1,3 +1,4 @@
+import { ContactUsSection } from "@/widgets/contact-us"
 import { HelpCard } from "@/entities/help"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
@@ -17,6 +18,7 @@ export const HelpPage = () => {
 						<HelpCard key={data.title} {...data} />
 					))}
 				</section>
+				<ContactUsSection />
 			</PageLayout>
 		</>
 	)

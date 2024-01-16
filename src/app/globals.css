@@ -82,6 +82,10 @@
 		@apply bg-gradient-to-br from-secondary to-violet-500 bg-clip-text text-transparent dark:to-violet-400;
 	}
 
+	.glowing-text {
+		@apply drop-shadow-[0_0_40px_rgba(163,140,243,1)];
+	}
+
 	.clip-corners {
 		-webkit-clip-path: polygon(7% 0, 100% 0%, 93% 100%, 0% 100%);
 		clip-path: polygon(7% 0, 100% 0%, 93% 100%, 0% 100%);

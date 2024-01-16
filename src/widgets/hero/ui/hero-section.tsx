@@ -10,7 +10,7 @@ export const HeroSection = () => {
 		<section className={"flex min-h-screen flex-col items-center justify-center"}>
 			<h1
 				className={
-					"text-center text-5xl font-bold drop-shadow-[0_0_30px_rgba(163,140,243,0.7)] md:text-6xl lg:text-7xl xl:text-8xl"
+					"glowing-text text-center text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl"
 				}
 			>
 				WARDIERE
