@@ -5,7 +5,11 @@ import { HelpBanner } from "@/entities/help"
 import { Carousel, type CarouselApi, CarouselContent, CarouselItem } from "@/shared/ui/carousel.tsx"
 import { cn } from "@/shared/ui/util.ts"
 
-export const CarouselBanner = () => {
+type Props = {
+	className?: string
+}
+
+export const CarouselBanner = ({ className }: Props) => {
 	const [api, setApi] = useState<CarouselApi>()
 	const [current, setCurrent] = useState(0)
 	const [count, setCount] = useState(0)
@@ -25,12 +29,12 @@ export const CarouselBanner = () => {
 
 	return (
 		<Carousel
-			className={"mx-auto w-full"}
+			className={cn("mx-auto w-full", className)}
 			setApi={setApi}
 			plugins={[
 				Autoplay({
 					delay: 5000,
-					stopOnMouseEnter: true,
+					stopOnInteraction: true,
 				}),
 			]}
 		>

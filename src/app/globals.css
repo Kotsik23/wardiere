@@ -78,14 +78,12 @@
 }
 
 @layer utilities {
-	/* Hide scrollbar for Chrome, Safari and Opera */
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
+	.primary-gradient-text {
+		@apply bg-gradient-to-br from-secondary to-violet-500 bg-clip-text text-transparent dark:to-violet-400;
 	}
 
-	/* Hide scrollbar for IE, Edge and Firefox */
-	.no-scrollbar {
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
+	.clip-corners {
+		-webkit-clip-path: polygon(7% 0, 100% 0%, 93% 100%, 0% 100%);
+		clip-path: polygon(7% 0, 100% 0%, 93% 100%, 0% 100%);
 	}
 }

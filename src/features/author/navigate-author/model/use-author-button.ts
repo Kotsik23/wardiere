@@ -3,7 +3,7 @@ import { toast } from "sonner"
 import { useCreateAuthor, useGetAuthorByUserId } from "@/entities/author"
 import { usePopulateAuthor } from "@/entities/author/model/queries.ts"
 import { ROUTES } from "@/shared/constants/routes.ts"
-import { unauthenticatedToast } from "@/shared/ui/toasts"
+import { createRedirectLink } from "@/shared/lib/create-redirect-link.ts"
 
 export const useAuthorButton = () => {
 	const { createAuthorMutation } = useCreateAuthor()
@@ -13,7 +13,7 @@ export const useAuthorButton = () => {
 
 	const handleClick = async ({ userId }: { userId: string | undefined }) => {
 		if (!userId) {
-			return unauthenticatedToast()
+			return navigate(createRedirectLink({ pathname: ROUTES.SIGN_UP, to: ROUTES.EXPLORE }))
 		}
 		try {
 			const isExistsAuthor = await getAuthorByUserId({ userId })

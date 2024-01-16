@@ -10,6 +10,7 @@ import { ROUTES } from "@/shared/constants/routes.ts"
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 import { EmptyState } from "@/shared/ui/states/empty-state.tsx"
+import { CarouselBanner } from "@/widgets/carousel-banner"
 
 export const ExplorePage = () => {
 	const [categories] = useQueryParam("category", withDefault(ArrayParam, []))
@@ -32,9 +33,10 @@ export const ExplorePage = () => {
 	return (
 		<>
 			<Breadcrumbs
-				className={"container mt-6"}
+				className={"container my-6"}
 				pages={[{ name: "Explore", href: ROUTES.EXPLORE, currentPage: true }]}
 			/>
+			<CarouselBanner className={"container mb-12"} />
 			<PageLayout className={"container my-6 flex min-h-screen flex-col gap-6 md:flex-row"}>
 				{isMedium ? <FiltersCard /> : <FiltersDrawer />}
 				{query.status === "LoadingFirstPage" && <AuthorsList.Skeleton />}

@@ -22,6 +22,18 @@ export const getByAuthorCategory = query({
 	},
 })
 
+export const getHero = query({
+	args: {
+		take: v.optional(v.number()),
+	},
+	handler: async (ctx, args) => {
+		return ctx.db
+			.query("portfolios")
+			.order("desc")
+			.take(args.take || 5)
+	},
+})
+
 export const upload = action({
 	args: {
 		authorId: portfolioFields.authorId,

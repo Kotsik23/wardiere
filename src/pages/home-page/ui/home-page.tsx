@@ -1,11 +1,10 @@
-import { CarouselBanner } from "@/widgets/carousel-banner"
+import { HeroSection } from "@/widgets/hero"
 import { PageLayout } from "@/shared/ui/layouts"
 
 export const HomePage = () => {
 	return (
-		<PageLayout className={"container my-8 flex flex-col gap-4"}>
-			<CarouselBanner />
-			HomePage
+		<PageLayout className={"container flex flex-col gap-4"}>
+			<HeroSection />
 		</PageLayout>
 	)
 }
