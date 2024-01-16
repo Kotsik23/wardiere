@@ -2,10 +2,20 @@ import { HelpCircleIcon } from "lucide-react"
 import { ContactUsForm } from "@/features/contact-us"
 import { Card } from "@/shared/ui/card.tsx"
 import { GlowingBubbles } from "@/shared/ui/glowing-bubbles.tsx"
+import { cn } from "@/shared/ui/util.ts"
 
-export const ContactUsSection = () => {
+type Props = {
+	className?: string
+}
+
+export const ContactUsSection = ({ className }: Props) => {
 	return (
-		<div className={"relative flex w-full max-w-5xl items-center justify-center"}>
+		<div
+			className={cn(
+				"container relative flex w-full max-w-5xl items-center justify-center",
+				className
+			)}
+		>
 			<Card
 				className={
 					"flex flex-col items-start p-4 backdrop-blur-md supports-[backdrop-filter]:bg-background/50"

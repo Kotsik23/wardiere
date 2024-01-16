@@ -42,8 +42,8 @@ export default defineConfig({
 					if (id.includes("sonner")) {
 						return "sonner"
 					}
-					if (id.includes("swiper")) {
-						return "swiper"
+					if (id.includes("react-hook-form") || id.includes("zod")) {
+						return "react-hook-form-zod"
 					}
 				},
 			},

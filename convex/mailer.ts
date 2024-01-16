@@ -5,7 +5,7 @@ import { action } from "./_generated/server"
 import { v } from "convex/values"
 
 const courier = new CourierClient({ authorizationToken: process.env.COURIER_AUTH_KEY })
-const SUPPORT_EMAIL = "tashcher228@yandex.ru"
+const SUPPORT_EMAIL = "olegsmushko@gmail.com"
 
 export const sendContactUs = action({
 	args: {
