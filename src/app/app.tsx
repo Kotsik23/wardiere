@@ -1,5 +1,6 @@
 import { BrowserRouter } from "react-router-dom"
 import { ThemeProvider } from "@/features/toggle-theme"
+import { ScrollTop } from "@/shared/lib/scroll-top.tsx"
 import { ClerkProvider } from "./providers/clerk-provider.tsx"
 import { ConvexProvider } from "./providers/convex-provider.tsx"
 import { QueryParamProvider } from "./providers/query-param-provider.tsx"
@@ -15,6 +16,7 @@ export const App = () => {
 						<ConvexProvider>
 							<RouterProvider />
 							<ToasterProvider />
+							<ScrollTop />
 						</ConvexProvider>
 					</ClerkProvider>
 				</ThemeProvider>
