@@ -3,7 +3,7 @@ import { PageLayout } from "@/shared/ui/layouts"
 
 export const HomePage = () => {
 	return (
-		<PageLayout className={"container flex flex-col gap-4"}>
+		<PageLayout className={"flex flex-col gap-4"}>
 			<HeroSection />
 		</PageLayout>
 	)
