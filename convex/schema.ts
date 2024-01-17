@@ -38,6 +38,11 @@ export const portfolioFields = {
 	...imageFields,
 }
 
+export const similarAuthorFields = {
+	for: v.id("authors"),
+	similar: v.array(v.id("authors")),
+}
+
 export default defineSchema({
 	users: defineTable({
 		// this is UserJSON from @clerk/backend
@@ -52,6 +57,7 @@ export default defineSchema({
 		vectorField: "embedding",
 		dimensions: 1536,
 	}),
+	similarAuthors: defineTable(similarAuthorFields).index("by_authorId", ["for"]),
 	comments: defineTable(commentFields).index("by_authorId", ["authorId"]),
 	likes: defineTable(likeFields).index("by_authorId", ["authorId"]),
 	categories: defineTable({

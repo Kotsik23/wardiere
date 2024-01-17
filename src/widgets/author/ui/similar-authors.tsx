@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useQuery } from "convex/react"
+import { api } from "@convex/_generated/api"
 import { Doc, Id } from "@convex/_generated/dataModel"
-import { useGetSimilarAuthors } from "@/entities/author"
 import { AuthorsList } from "./authors-list.tsx"
 
 type Props = {
@@ -8,22 +8,11 @@ type Props = {
 }
 
 export const SimilarAuthors = ({ authorId }: Props) => {
-	const [authors, setAuthors] = useState<Doc<"authors">[]>([])
-	const getSimilar = useGetSimilarAuthors()
+	const similar = useQuery(api.authors.getSimilarAuthors, { authorId })
 
-	useEffect(() => {
-		const fetchAuthors = async () => {
-			const res = await getSimilar({ authorId })
-			const existsAuthors = res.filter(a => a !== null)
-			setAuthors(existsAuthors as Doc<"authors">[])
-		}
+	if (!similar) {
+		return <AuthorsList.Skeleton count={4} />
+	}
 
-		fetchAuthors()
-	}, [authorId, getSimilar])
-
-	return authors.length > 0 ? (
-		<AuthorsList authors={authors} className={"lg:grid-cols-2"} />
-	) : (
-		<AuthorsList.Skeleton count={4} />
-	)
+	return <AuthorsList authors={similar as Doc<"authors">[]} className={"lg:grid-cols-2"} />
 }
