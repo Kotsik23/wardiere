@@ -1,4 +1,5 @@
 import { useUser } from "@clerk/clerk-react"
+import { ContactIcon, GalleryHorizontalEndIcon, MessageSquareIcon } from "lucide-react"
 import { Navigate, useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
 import {
@@ -23,6 +24,7 @@ import { ROUTES } from "@/shared/constants/routes.ts"
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
+import { SectionHeading } from "@/shared/ui/section-heading.tsx"
 
 export const AuthorEditPage = () => {
 	const { id: authorId } = useParams()
@@ -67,9 +69,11 @@ export const AuthorEditPage = () => {
 					<LikeButton authorId={author._id} />
 				</div>
 				<div className={"flex flex-col items-center gap-6"}>
-					<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-						About Me
-					</h2>
+					<SectionHeading
+						title={"About Me"}
+						containerClassName={"justify-center w-full"}
+						titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
+					/>
 					<div className={"relative w-full max-w-4xl"}>
 						<EditableAboutText author={author} />
 						<AboutTextCompletionButton
@@ -85,31 +89,37 @@ export const AuthorEditPage = () => {
 				</div>
 
 				<div className={"my-6 flex flex-col items-center gap-6"}>
-					<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-						Portfolios
-					</h2>
+					<SectionHeading
+						title={"Portfolios"}
+						icon={GalleryHorizontalEndIcon}
+						containerClassName={"justify-center w-full"}
+						titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
+						iconClassName={"text-orange-500 dark:text-orange-400"}
+					/>
 					<UploadAuthorPortfolioButton authorId={author._id} />
 					<PortfoliosHeader authorId={author._id} />
 					<PortfoliosList authorId={author._id} editable />
 				</div>
 
 				<div className={"my-6 flex flex-col items-start gap-6"}>
-					<h2
-						className={
-							"self-center text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"
-						}
-					>
-						Contacts
-					</h2>
+					<SectionHeading
+						title={"Contacts"}
+						icon={ContactIcon}
+						containerClassName={"justify-center w-full"}
+						titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
+						iconClassName={"text-violet-500 dark:text-violet-400"}
+					/>
 					<div className={"mx-auto flex w-full max-w-xl flex-col"}>
 						<EditableContacts authorId={author._id} contacts={author.contacts} />
 					</div>
 				</div>
 
 				<div className={"flex flex-col items-start gap-6"}>
-					<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
-						Comments
-					</h2>
+					<SectionHeading
+						title={"Comments"}
+						icon={MessageSquareIcon}
+						iconClassName={"text-pink-500 dark:text-pink-400"}
+					/>
 					<CommentList authorId={author._id} />
 				</div>
 			</PageLayout>

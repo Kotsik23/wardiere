@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-react"
 import { ContactIcon, GalleryHorizontalEndIcon, MessageSquareIcon, UsersIcon } from "lucide-react"
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { PortfoliosHeader, PortfoliosList, SimilarAuthors } from "@/widgets/author"
+import { PortfoliosHeader, PortfoliosList } from "@/widgets/author"
 import { CommentList, CreateCommentForm } from "@/features/author/comment-author"
 import { LikeButton } from "@/features/author/like-author"
 import {
@@ -117,7 +117,7 @@ export const AuthorPage = () => {
 						icon={UsersIcon}
 						iconClassName={"text-emerald-500 dark:text-emerald-400"}
 					/>
-					<SimilarAuthors authorId={author._id} />
+					{/*<SimilarAuthors authorId={author._id} />*/}
 				</div>
 			</PageLayout>
 		</>
