@@ -18,6 +18,7 @@ export const authorFields = {
 		telegram: v.string(),
 	}),
 	isPublic: v.boolean(),
+	embeddingId: v.optional(v.id("authorEmbeddings")),
 }
 
 export const commentFields = {
@@ -42,7 +43,15 @@ export default defineSchema({
 		// this is UserJSON from @clerk/backend
 		clerkUser: v.any(),
 	}).index("by_clerkId", ["clerkUser.id"]),
-	authors: defineTable(authorFields).index("by_userId", ["userId"]),
+	authors: defineTable(authorFields)
+		.index("by_userId", ["userId"])
+		.index("by_embeddingId", ["embeddingId"]),
+	authorEmbeddings: defineTable({
+		embedding: v.array(v.float64()),
+	}).vectorIndex("by_embedding", {
+		vectorField: "embedding",
+		dimensions: 1536,
+	}),
 	comments: defineTable(commentFields).index("by_authorId", ["authorId"]),
 	likes: defineTable(likeFields).index("by_authorId", ["authorId"]),
 	categories: defineTable({

@@ -47,6 +47,10 @@ export const useBestAuthors = ({ take }: { take?: number }) => {
 	return useQuery(api.authors.getStatistics, { take })
 }
 
+export const useGetSimilarAuthors = () => {
+	return useAction(api.search.getSimilarAuthors)
+}
+
 export const useGetAuthorByUserId = () => {
 	const convex = useConvex()
 

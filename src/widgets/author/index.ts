@@ -1,4 +1,5 @@
 export { AuthorsList } from "./ui/authors-list.tsx"
+export { SimilarAuthors } from "./ui/similar-authors.tsx"
 export { PortfoliosList } from "./ui/portfolios-list.tsx"
 export { PortfoliosHeader } from "./ui/portfolios-header.tsx"
 export { UploadAuthorPhotoButton } from "./ui/upload-author-photo-button.tsx"

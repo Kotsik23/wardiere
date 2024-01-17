@@ -1,7 +1,8 @@
 import { useUser } from "@clerk/clerk-react"
+import { ContactIcon, GalleryHorizontalEndIcon, MessageSquareIcon, UsersIcon } from "lucide-react"
 import { useParams } from "react-router-dom"
 import { Id } from "@convex/_generated/dataModel"
-import { PortfoliosHeader, PortfoliosList } from "@/widgets/author"
+import { PortfoliosHeader, PortfoliosList, SimilarAuthors } from "@/widgets/author"
 import { CommentList, CreateCommentForm } from "@/features/author/comment-author"
 import { LikeButton } from "@/features/author/like-author"
 import {
@@ -20,6 +21,7 @@ import { OwnerAlert } from "@/shared/ui/alerts/owner-alert.tsx"
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 import { ScreenLoader } from "@/shared/ui/loaders"
+import { SectionHeading } from "@/shared/ui/section-heading.tsx"
 import { cn } from "@/shared/ui/util.ts"
 
 export const AuthorPage = () => {
@@ -53,9 +55,11 @@ export const AuthorPage = () => {
 				</div>
 				{author.aboutText && (
 					<div className={"flex flex-col items-center gap-6"}>
-						<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-							About Me
-						</h2>
+						<SectionHeading
+							title={"About Me"}
+							containerClassName={"justify-center w-full"}
+							titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
+						/>
 						<AboutText aboutText={author.aboutText} />
 					</div>
 				)}
@@ -72,34 +76,48 @@ export const AuthorPage = () => {
 				</div>
 
 				<div className={"my-6 flex flex-col items-center gap-6"}>
-					<h2 className={"text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"}>
-						Portfolios
-					</h2>
+					<SectionHeading
+						title={"Portfolios"}
+						icon={GalleryHorizontalEndIcon}
+						containerClassName={"justify-center w-full"}
+						titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
+						iconClassName={"text-orange-500 dark:text-orange-400"}
+					/>
 					<PortfoliosHeader authorId={author._id} />
 					<PortfoliosList authorId={author._id} />
 				</div>
 
 				<div className={"my-6 flex flex-col items-start gap-6"}>
-					<h2
-						className={
-							"self-center text-2xl font-semibold capitalize md:text-4xl lg:text-5xl"
-						}
-					>
-						Contacts
-					</h2>
+					<SectionHeading
+						title={"Contacts"}
+						icon={ContactIcon}
+						containerClassName={"justify-center w-full"}
+						titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
+						iconClassName={"text-violet-500 dark:text-violet-400"}
+					/>
 					<Contacts contacts={author.contacts} />
 				</div>
 
 				<div className={"flex flex-col items-start gap-6"}>
-					<h2 className={"text-xl font-semibold capitalize md:text-2xl lg:text-3xl"}>
-						Comments
-					</h2>
+					<SectionHeading
+						title={"Comments"}
+						icon={MessageSquareIcon}
+						iconClassName={"text-pink-500 dark:text-pink-400"}
+					/>
 					{isOwner && <OwnerAlert />}
 					{!user && <AuthRequiredAlert />}
 					{!isOwner && user && (
 						<CreateCommentForm authorId={author._id} className={"flex-row"} />
 					)}
 					<CommentList authorId={author._id} />
+				</div>
+				<div className={"flex flex-col items-start gap-6"}>
+					<SectionHeading
+						title={"You may also like"}
+						icon={UsersIcon}
+						iconClassName={"text-emerald-500 dark:text-emerald-400"}
+					/>
+					<SimilarAuthors authorId={author._id} />
 				</div>
 			</PageLayout>
 		</>

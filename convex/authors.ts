@@ -1,4 +1,11 @@
-import { action, mutation, query } from "./_generated/server"
+import {
+	action,
+	internalAction,
+	internalMutation,
+	internalQuery,
+	mutation,
+	query,
+} from "./_generated/server"
 import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
 import { authorFields, imageFields } from "./schema"
@@ -145,7 +152,7 @@ export const create = mutation({
 		if (!identity) {
 			throw new ConvexError("Authentication required")
 		}
-		return ctx.db.insert("authors", {
+		const authorId = await ctx.db.insert("authors", {
 			userId: args.userId,
 			isPublic: false,
 			keywords: [],
@@ -155,6 +162,10 @@ export const create = mutation({
 				telegram: "",
 			},
 		})
+		await ctx.scheduler.runAfter(0, internal.authors.generateAndAddEmbedding, {
+			authorId,
+		})
+		return authorId
 	},
 })
 
@@ -279,5 +290,78 @@ export const populateAuthor = action({
 				},
 			},
 		})
+	},
+})
+
+// EMBEDDINGS
+export const generateAndAddEmbedding = internalAction({
+	args: {
+		authorId: v.id("authors"),
+	},
+	handler: async (ctx, args) => {
+		const input = await ctx.runAction(internal.authors.getEmbeddingInput, {
+			authorId: args.authorId,
+		})
+		const embedding = await ctx.runAction(internal.openai.embed, { text: input })
+		await ctx.runMutation(internal.authors.addEmbedding, {
+			authorId: args.authorId,
+			embedding,
+		})
+	},
+})
+
+export const getEmbeddingInput = internalAction({
+	args: {
+		authorId: v.id("authors"),
+	},
+	handler: async (ctx, args): Promise<string[]> => {
+		const author = await ctx.runQuery(api.authors.getById, { authorId: args.authorId })
+		if (!author) {
+			// No author for generating
+			throw new ConvexError("Author doesn't exists. (generateAndAddEmbedding)")
+		}
+		const bareCategories = (await ctx.runQuery(api.categories.getAll, {
+			authorId: args.authorId,
+		})) as (Doc<"categories"> & { has: boolean })[]
+		const keywords = author.keywords
+		const categories = bareCategories.filter(c => c.has).map(c => c.name)
+		return Array.of(keywords, categories).flat()
+	},
+})
+
+export const addEmbedding = internalMutation({
+	args: {
+		authorId: v.id("authors"),
+		embedding: v.array(v.float64()),
+	},
+	handler: async (ctx, args) => {
+		const author = await ctx.db.get(args.authorId)
+		if (!author) {
+			// No author for update
+			throw new ConvexError("Author doesn't exists. (addEmbedding)")
+		}
+		if (author.embeddingId) {
+			await ctx.db.delete(author.embeddingId)
+		}
+		const authorEmbeddingId = await ctx.db.insert("authorEmbeddings", {
+			embedding: args.embedding,
+		})
+		await ctx.db.patch(args.authorId, {
+			embeddingId: authorEmbeddingId,
+		})
+	},
+})
+
+export const getAllByEmbeddings = internalQuery({
+	args: {
+		embeddingIds: v.array(v.id("authorEmbeddings")),
+	},
+	handler: async (ctx, args) => {
+		return asyncMap(args.embeddingIds, embeddingId =>
+			ctx.db
+				.query("authors")
+				.withIndex("by_embeddingId", q => q.eq("embeddingId", embeddingId))
+				.unique()
+		)
 	},
 })

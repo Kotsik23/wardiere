@@ -13,6 +13,7 @@ export {
 	useGetAuthorById,
 	useGetAuthorByUserId,
 	useGetAuthors,
+	useGetSimilarAuthors,
 } from "./model/queries.ts"
 export { useIsOwner } from "./model/use-is-owner.ts"
 export { getContactsIcons } from "./lib/get-contacts-icons.tsx"

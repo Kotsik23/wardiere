@@ -1,7 +1,7 @@
 "use node"
 
 import OpenAI from "openai"
-import { action } from "./_generated/server"
+import { action, internalAction } from "./_generated/server"
 import { ConvexError, v } from "convex/values"
 
 const openai = new OpenAI({
@@ -68,5 +68,18 @@ export const brandCompletion = action({
 		} else {
 			throw new ConvexError("Something went wrong. Try again.")
 		}
+	},
+})
+
+export const embed = internalAction({
+	args: {
+		text: v.union(v.string(), v.array(v.string())),
+	},
+	handler: async (_, args): Promise<number[]> => {
+		const embeddings = await openai.embeddings.create({
+			model: "text-embedding-ada-002",
+			input: args.text,
+		})
+		return embeddings.data[0].embedding
 	},
 })

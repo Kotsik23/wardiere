@@ -23,6 +23,7 @@ import type * as likes from "../likes.js";
 import type * as mailer from "../mailer.js";
 import type * as openai from "../openai.js";
 import type * as portfolios from "../portfolios.js";
+import type * as search from "../search.js";
 import type * as users from "../users.js";
 
 /**
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   mailer: typeof mailer;
   openai: typeof openai;
   portfolios: typeof portfolios;
+  search: typeof search;
   users: typeof users;
 }>;
 export declare const api: FilterApi<
