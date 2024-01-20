@@ -20,7 +20,7 @@ export const UserButton = () => {
 	}
 
 	return (
-		<DropdownMenu modal={false}>
+		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Avatar
 					className={

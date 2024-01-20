@@ -8,7 +8,7 @@ import {
 } from "./_generated/server"
 import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
-import { authorEmbeddingFields, authorFields, imageFields } from "./schema"
+import { authorFields, imageFields } from "./schema"
 import { api, internal } from "./_generated/api"
 import { Doc, Id } from "./_generated/dataModel"
 import { asyncMap, pruneNull } from "convex-helpers"

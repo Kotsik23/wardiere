@@ -1,6 +1,6 @@
 import { useQuery } from "convex/react"
 import { api } from "@convex/_generated/api"
-import { Doc, Id } from "@convex/_generated/dataModel"
+import { Id } from "@convex/_generated/dataModel"
 import { AuthorsList } from "./authors-list.tsx"
 
 type Props = {
@@ -18,5 +18,5 @@ export const SimilarAuthors = ({ authorId }: Props) => {
 		return null
 	}
 
-	return <AuthorsList authors={similar as Doc<"authors">[]} className={"lg:grid-cols-2"} />
+	return <AuthorsList authors={similar} className={"lg:grid-cols-2"} />
 }
