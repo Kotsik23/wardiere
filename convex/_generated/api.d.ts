@@ -17,7 +17,6 @@ import type {
 import type * as authors from "../authors.js";
 import type * as categories from "../categories.js";
 import type * as comments from "../comments.js";
-import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as imageKit from "../imageKit.js";
 import type * as likes from "../likes.js";
@@ -38,7 +37,6 @@ declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   categories: typeof categories;
   comments: typeof comments;
-  crons: typeof crons;
   http: typeof http;
   imageKit: typeof imageKit;
   likes: typeof likes;

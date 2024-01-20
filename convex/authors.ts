@@ -8,10 +8,10 @@ import {
 } from "./_generated/server"
 import { paginationOptsValidator } from "convex/server"
 import { ConvexError, v } from "convex/values"
-import { authorFields, imageFields } from "./schema"
+import { authorEmbeddingFields, authorFields, imageFields } from "./schema"
 import { api, internal } from "./_generated/api"
 import { Doc, Id } from "./_generated/dataModel"
-import { asyncMap } from "convex-helpers"
+import { asyncMap, pruneNull } from "convex-helpers"
 
 export const getAll = query({
 	args: {
@@ -152,7 +152,7 @@ export const create = mutation({
 		if (!identity) {
 			throw new ConvexError("Authentication required")
 		}
-		const authorId = await ctx.db.insert("authors", {
+		return await ctx.db.insert("authors", {
 			userId: args.userId,
 			isPublic: false,
 			keywords: [],
@@ -162,10 +162,6 @@ export const create = mutation({
 				telegram: "",
 			},
 		})
-		await ctx.scheduler.runAfter(0, internal.authors.generateAndAddEmbedding, {
-			authorId,
-		})
-		return authorId
 	},
 })
 
@@ -191,10 +187,11 @@ export const update = mutation({
 		if (!identity) {
 			throw new ConvexError("Authentication required")
 		}
+		await ctx.db.patch(args.authorId, args.payload)
 		await ctx.scheduler.runAfter(0, internal.authors.generateAndAddEmbedding, {
 			authorId: args.authorId,
 		})
-		return ctx.db.patch(args.authorId, args.payload)
+		await ctx.scheduler.runAfter(5000, internal.authors.similarForAll)
 	},
 })
 
@@ -206,9 +203,6 @@ export const remove = mutation({
 		const author = await ctx.db.get(args.authorId)
 		if (!author) {
 			throw new ConvexError("Author doesn't exists. (remove author)")
-		}
-		if (author.embeddingId) {
-			await ctx.db.delete(author.embeddingId)
 		}
 		return ctx.db.delete(args.authorId)
 	},
@@ -303,7 +297,115 @@ export const populateAuthor = action({
 	},
 })
 
-// EMBEDDINGS
+// Similar
+export const getSimilarByAuthorId = query({
+	args: {
+		authorId: v.id("authors"),
+	},
+	handler: async (ctx, args) => {
+		const similarAuthorsRow = await ctx.db
+			.query("similarAuthors")
+			.withIndex("by_authorId", q => q.eq("authorId", args.authorId))
+			.unique()
+		if (!similarAuthorsRow) {
+			// No similar authors founded
+			return null
+		}
+		const similarAuthors = await asyncMap(similarAuthorsRow.similar, id => ctx.db.get(id))
+		return pruneNull(similarAuthors).filter(author => author._id !== args.authorId)
+	},
+})
+
+export const similarForAll = internalAction({
+	handler: async ctx => {
+		const authors = await ctx.runQuery(internal.authors.getAllRawAuthors)
+		for (const author of authors) {
+			const index = authors.indexOf(author)
+			await ctx.scheduler.runAfter((index + 1) * 30000, internal.authors.generateAndAddSimilar, {
+				authorId: author._id,
+			})
+		}
+	},
+})
+
+export const getAllRawAuthors = internalQuery({
+	handler: ctx => {
+		return ctx.db.query("authors").collect()
+	},
+})
+
+export const generateAndAddSimilar = internalAction({
+	args: {
+		authorId: v.id("authors"),
+	},
+	handler: async (ctx, args) => {
+		const input = await ctx.runAction(internal.authors.getEmbeddingInput, {
+			authorId: args.authorId,
+		})
+		if (input.length <= 0) {
+			// No input for create embedding
+			return
+		}
+		const embedding = await ctx.runAction(internal.openai.embed, {
+			text: input,
+		})
+		const results = await ctx.vectorSearch("authorEmbeddings", "by_embedding", {
+			limit: 3,
+			vector: embedding,
+		})
+		const similarAuthors: Array<Doc<"authors">> = await ctx.runQuery(
+			internal.authors.getAuthorsByEmbeddings,
+			{
+				authorEmbeddingsIds: results.map(res => res._id),
+			}
+		)
+		await ctx.runMutation(internal.authors.addSimilar, {
+			authorId: args.authorId,
+			similar: similarAuthors.map(author => author._id),
+		})
+	},
+})
+
+export const getAuthorsByEmbeddings = internalQuery({
+	args: {
+		authorEmbeddingsIds: v.array(v.id("authorEmbeddings")),
+	},
+	handler: async (ctx, args) => {
+		const authorsEmbeddings: Array<Doc<"authorEmbeddings">> = pruneNull(
+			await asyncMap(args.authorEmbeddingsIds, id => ctx.db.get(id))
+		)
+		const authorIds = authorsEmbeddings.map(embedding => embedding.authorId)
+		const authors = await asyncMap(authorIds, id =>
+			ctx.db
+				.query("authors")
+				.filter(q => q.eq(q.field("_id"), id))
+				.unique()
+		)
+		return pruneNull(authors)
+	},
+})
+
+export const addSimilar = internalMutation({
+	args: {
+		authorId: v.id("authors"),
+		similar: v.array(v.id("authors")),
+	},
+	handler: async (ctx, args) => {
+		const similarRow = await ctx.db
+			.query("similarAuthors")
+			.filter(q => q.eq(q.field("authorId"), args.authorId))
+			.unique()
+		if (similarRow) {
+			await ctx.db.delete(similarRow._id)
+		}
+		await ctx.db.insert("similarAuthors", {
+			authorId: args.authorId,
+			similar: args.similar,
+		})
+	},
+})
+
+// Embeddings
 export const generateAndAddEmbedding = internalAction({
 	args: {
 		authorId: v.id("authors"),
@@ -312,7 +414,13 @@ export const generateAndAddEmbedding = internalAction({
 		const input = await ctx.runAction(internal.authors.getEmbeddingInput, {
 			authorId: args.authorId,
 		})
-		const embedding = await ctx.runAction(internal.openai.embed, { text: input })
+		if (input.length <= 0) {
+			// No input for create embedding
+			return
+		}
+		const embedding = await ctx.runAction(internal.openai.embed, {
+			text: input,
+		})
 		await ctx.runMutation(internal.authors.addEmbedding, {
 			authorId: args.authorId,
 			embedding,
@@ -326,16 +434,15 @@ export const getEmbeddingInput = internalAction({
 	},
 	handler: async (ctx, args): Promise<string[]> => {
 		const author = await ctx.runQuery(api.authors.getById, { authorId: args.authorId })
-		if (!author) {
-			// No author for generating
-			throw new ConvexError("Author doesn't exists. (generateAndAddEmbedding)")
+		if (author === null) {
+			// Author doesn't exist
+			return []
 		}
 		const bareCategories = (await ctx.runQuery(api.categories.getAll, {
 			authorId: args.authorId,
 		})) as (Doc<"categories"> & { has: boolean })[]
-		const keywords = author.keywords
 		const categories = bareCategories.filter(c => c.has).map(c => c.name)
-		return Array.of(keywords, categories).flat()
+		return Array.of(author.keywords, categories).flat()
 	},
 })
 
@@ -345,141 +452,16 @@ export const addEmbedding = internalMutation({
 		embedding: v.array(v.float64()),
 	},
 	handler: async (ctx, args) => {
-		const author = await ctx.db.get(args.authorId)
-		if (!author) {
-			// No author for update
-			throw new ConvexError("Author doesn't exists. (addEmbedding)")
+		const existsEmbedding = await ctx.db
+			.query("authorEmbeddings")
+			.withIndex("by_authorId", q => q.eq("authorId", args.authorId))
+			.unique()
+		if (existsEmbedding) {
+			await ctx.db.delete(existsEmbedding._id)
 		}
-		if (author.embeddingId) {
-			await ctx.db.delete(author.embeddingId)
-		}
-		const authorEmbeddingId = await ctx.db.insert("authorEmbeddings", {
+		await ctx.db.insert("authorEmbeddings", {
+			authorId: args.authorId,
 			embedding: args.embedding,
 		})
-		await ctx.db.patch(args.authorId, {
-			embeddingId: authorEmbeddingId,
-		})
-	},
-})
-
-export const getAllByEmbeddings = internalQuery({
-	args: {
-		embeddingIds: v.array(v.id("authorEmbeddings")),
-	},
-	handler: async (ctx, args) => {
-		return asyncMap(args.embeddingIds, embeddingId =>
-			ctx.db
-				.query("authors")
-				.withIndex("by_embeddingId", q => q.eq("embeddingId", embeddingId))
-				.unique()
-		)
-	},
-})
-
-export const populateSimilarAuthors = internalAction({
-	args: {},
-	handler: async ctx => {
-		const authors = await ctx.runQuery(internal.authors.getRawAuthors)
-		for (const author of authors) {
-			const index = authors.indexOf(author)
-			await ctx.scheduler.runAfter(
-				(index + 1) * 20000,
-				internal.authors.getAndAddSimilarAuthors,
-				{
-					authorId: author._id,
-				}
-			)
-		}
-	},
-})
-
-export const getSimilarAuthors = query({
-	args: {
-		authorId: v.id("authors"),
-	},
-	handler: async (ctx, args) => {
-		const similarAuthorRow = await ctx.db
-			.query("similarAuthors")
-			.withIndex("by_authorId", q => q.eq("for", args.authorId))
-			.unique()
-		if (!similarAuthorRow) {
-			throw new ConvexError("Similar author row doesn't exists. (getSimilarAuthors)")
-		}
-		const similarAuthors = await asyncMap(similarAuthorRow.similar, similarId =>
-			ctx.db.get(similarId)
-		)
-		return similarAuthors.filter(Boolean).filter(a => a?._id !== args.authorId)
-	},
-})
-
-export const getAndAddSimilarAuthors = internalAction({
-	args: {
-		authorId: v.id("authors"),
-	},
-	handler: async (ctx, args) => {
-		const similar = await ctx.runAction(api.authors.searchSimilarAuthors, {
-			authorId: args.authorId,
-		})
-		await ctx.runMutation(internal.authors.addSimilarAuthors, {
-			forAuthorId: args.authorId,
-			similar,
-		})
-	},
-})
-
-export const addSimilarAuthors = internalMutation({
-	args: {
-		forAuthorId: v.id("authors"),
-		similar: v.array(v.id("authors")),
-	},
-	handler: async (ctx, args) => {
-		const existsSimilarAuthorRow = await ctx.db
-			.query("similarAuthors")
-			.filter(q => q.eq(q.field("for"), args.forAuthorId))
-			.unique()
-		if (existsSimilarAuthorRow) {
-			await ctx.db.replace(existsSimilarAuthorRow._id, {
-				for: args.forAuthorId,
-				similar: args.similar,
-			})
-		} else {
-			await ctx.db.insert("similarAuthors", {
-				for: args.forAuthorId,
-				similar: args.similar,
-			})
-		}
-	},
-})
-
-export const getRawAuthors = internalQuery({
-	args: {},
-	handler: ctx => {
-		return ctx.db.query("authors").collect()
-	},
-})
-
-export const searchSimilarAuthors = action({
-	args: {
-		authorId: v.id("authors"),
-	},
-	handler: async (ctx, args): Promise<Id<"authors">[]> => {
-		const authorFor = await ctx.runQuery(api.authors.getById, { authorId: args.authorId })
-		if (!authorFor) {
-			// No author for update
-			throw new ConvexError("Author doesn't exists. (getSimilarAuthors)")
-		}
-		const input = await ctx.runAction(internal.authors.getEmbeddingInput, {
-			authorId: args.authorId,
-		})
-		const embedding = await ctx.runAction(internal.openai.embed, { text: input })
-		const results = await ctx.vectorSearch("authorEmbeddings", "by_embedding", {
-			vector: embedding,
-			limit: 3,
-		})
-		const bareAuthors = await ctx.runQuery(internal.authors.getAllByEmbeddings, {
-			embeddingIds: results.map(res => res._id),
-		})
-		const authors = bareAuthors.filter(Boolean) as Doc<"authors">[]
-		return authors.map(author => author._id)
 	},
 })

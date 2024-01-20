@@ -3,6 +3,7 @@ import { ArrayParam, useQueryParam, withDefault } from "use-query-params"
 import { useDebounce, useMediaQuery } from "usehooks-ts"
 import { Id } from "@convex/_generated/dataModel"
 import { AuthorsList } from "@/widgets/author"
+import { CarouselBanner } from "@/widgets/carousel-banner"
 import { FiltersCard, FiltersDrawer } from "@/widgets/filters"
 import { ResetFiltersButton } from "@/features/filters"
 import { useGetAuthors } from "@/entities/author"
@@ -10,14 +11,13 @@ import { ROUTES } from "@/shared/constants/routes.ts"
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
 import { EmptyState } from "@/shared/ui/states/empty-state.tsx"
-import { CarouselBanner } from "@/widgets/carousel-banner"
 
 export const ExplorePage = () => {
 	const [categories] = useQueryParam("category", withDefault(ArrayParam, []))
 	const debouncedCategories = useDebounce(categories, 300)
 	const { query } = useGetAuthors({
 		categories: debouncedCategories as Id<"categories">[] | undefined,
-		initialNumItems: 4,
+		initialNumItems: 8,
 	})
 
 	const handleInfiniteChange = (inView: boolean) => {

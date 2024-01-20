@@ -54,6 +54,10 @@ export const upload = action({
 			fileId,
 			url,
 		})
+		await ctx.scheduler.runAfter(0, internal.authors.generateAndAddEmbedding, {
+			authorId: args.authorId,
+		})
+		await ctx.scheduler.runAfter(5000, internal.authors.similarForAll)
 	},
 })
 
@@ -74,6 +78,10 @@ export const removeUpload = action({
 		}
 		await ctx.runAction(internal.imageKit.remove, { fileId: portfolio.fileId })
 		await ctx.runMutation(internal.portfolios.remove, { portfolioId: args.portfolioId })
+		await ctx.scheduler.runAfter(0, internal.authors.generateAndAddEmbedding, {
+			authorId: portfolio.authorId,
+		})
+		await ctx.scheduler.runAfter(5000, internal.authors.similarForAll)
 	},
 })
 

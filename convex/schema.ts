@@ -18,7 +18,6 @@ export const authorFields = {
 		telegram: v.string(),
 	}),
 	isPublic: v.boolean(),
-	embeddingId: v.optional(v.id("authorEmbeddings")),
 }
 
 export const commentFields = {
@@ -39,8 +38,13 @@ export const portfolioFields = {
 }
 
 export const similarAuthorFields = {
-	for: v.id("authors"),
+	authorId: v.id("authors"),
 	similar: v.array(v.id("authors")),
+}
+
+export const authorEmbeddingFields = {
+	authorId: v.id("authors"),
+	embedding: v.array(v.float64()),
 }
 
 export default defineSchema({
@@ -48,16 +52,14 @@ export default defineSchema({
 		// this is UserJSON from @clerk/backend
 		clerkUser: v.any(),
 	}).index("by_clerkId", ["clerkUser.id"]),
-	authors: defineTable(authorFields)
-		.index("by_userId", ["userId"])
-		.index("by_embeddingId", ["embeddingId"]),
-	authorEmbeddings: defineTable({
-		embedding: v.array(v.float64()),
-	}).vectorIndex("by_embedding", {
-		vectorField: "embedding",
-		dimensions: 1536,
-	}),
-	similarAuthors: defineTable(similarAuthorFields).index("by_authorId", ["for"]),
+	authors: defineTable(authorFields).index("by_userId", ["userId"]),
+	authorEmbeddings: defineTable(authorEmbeddingFields)
+		.vectorIndex("by_embedding", {
+			vectorField: "embedding",
+			dimensions: 1536,
+		})
+		.index("by_authorId", ["authorId"]),
+	similarAuthors: defineTable(similarAuthorFields).index("by_authorId", ["authorId"]),
 	comments: defineTable(commentFields).index("by_authorId", ["authorId"]),
 	likes: defineTable(likeFields).index("by_authorId", ["authorId"]),
 	categories: defineTable({
