@@ -1,20 +1,21 @@
 import { ChevronsUpDownIcon } from "lucide-react"
 import { StringParam, useQueryParam, withDefault } from "use-query-params"
 import { useBoolean, useMediaQuery } from "usehooks-ts"
+import { Id } from "@convex/_generated/dataModel"
 import { useCategories } from "@/entities/category"
 import { Button } from "@/shared/ui/button.tsx"
 import { Drawer, DrawerContent, DrawerTrigger } from "@/shared/ui/drawer.tsx"
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover.tsx"
 import { Skeleton } from "@/shared/ui/skeleton.tsx"
 import { CategoriesList } from "./categories-list.tsx"
-import { Id } from "@convex/_generated/dataModel"
 
 type Props = {
 	authorId: Id<"authors">
+	onlyExists?: boolean
 }
 
-export const CategoriesSelect = ({ authorId }: Props) => {
-	const { categories } = useCategories({ authorId })
+export const CategoriesSelect = ({ authorId, onlyExists = false }: Props) => {
+	const { categories } = useCategories({ authorId, onlyExists })
 	const [categoryId, setCategoryId] = useQueryParam(
 		"category",
 		withDefault(StringParam, categories ? categories[0]?.value : "")

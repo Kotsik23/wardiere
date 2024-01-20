@@ -4,12 +4,13 @@ import { SortPortfoliosButton } from "@/features/sort-portfolios"
 
 type Props = {
 	authorId: Id<"authors">
+	onlyExists?: boolean
 }
 
-export const PortfoliosHeader = ({ authorId }: Props) => {
+export const PortfoliosHeader = ({ authorId, onlyExists = false }: Props) => {
 	return (
 		<div className={"flex w-full flex-col items-center justify-between gap-3 md:flex-row"}>
-			<CategoriesSelect authorId={authorId} />
+			<CategoriesSelect authorId={authorId} onlyExists={onlyExists} />
 			<SortPortfoliosButton />
 		</div>
 	)

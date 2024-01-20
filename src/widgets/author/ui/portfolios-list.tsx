@@ -15,7 +15,7 @@ type Props = {
 }
 
 export const PortfoliosList = ({ authorId, editable = false }: Props) => {
-	const { categories } = useCategories({})
+	const { categories } = useCategories({ authorId, onlyExists: !editable })
 	const [params] = useQueryParams({
 		category: withDefault(StringParam, categories ? categories[0]?.value : ""),
 		sort: withDefault(StringParam, "desc"),

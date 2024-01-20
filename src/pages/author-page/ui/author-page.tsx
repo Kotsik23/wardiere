@@ -83,7 +83,7 @@ export const AuthorPage = () => {
 						titleClassName={"text-2xl md:text-4xl lg:text-5xl"}
 						iconClassName={"text-orange-500 dark:text-orange-400"}
 					/>
-					<PortfoliosHeader authorId={author._id} />
+					<PortfoliosHeader authorId={author._id} onlyExists />
 					<PortfoliosList authorId={author._id} />
 				</div>
 

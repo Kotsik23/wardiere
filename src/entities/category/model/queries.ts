@@ -7,7 +7,9 @@ export type CategorySelectItem = {
 	has?: boolean
 } & SelectType
 
-const transformResponse = (response: (Doc<"categories"> & { has?: boolean })[]): SelectType[] => {
+const transformResponse = (
+	response: (Doc<"categories"> & { has?: boolean })[]
+): CategorySelectItem[] => {
 	return response.map(item => ({
 		label: item.name,
 		value: item._id,
@@ -15,9 +17,19 @@ const transformResponse = (response: (Doc<"categories"> & { has?: boolean })[]):
 	}))
 }
 
-export const useCategories = ({ authorId }: { authorId?: Id<"authors"> }) => {
+export const useCategories = ({
+	authorId,
+	onlyExists = false,
+}: {
+	authorId?: Id<"authors">
+	onlyExists?: boolean
+}) => {
 	const categories = useQuery(api.categories.getAll, { authorId })
 	return {
-		categories: categories && transformResponse(categories),
+		categories:
+			categories &&
+			(onlyExists
+				? transformResponse(categories).filter(c => c.has)
+				: transformResponse(categories)),
 	}
 }
