@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/clerk-react"
 import { ArrowRightIcon } from "lucide-react"
 import { ReactNode } from "react"
 import { Link } from "react-router-dom"
@@ -11,9 +12,11 @@ import {
 	CardHeader as UiCardHeader,
 } from "@/shared/ui/card.tsx"
 import { useIsNew } from "../model/use-is-new.ts"
+import { useIsOwner } from "../model/use-is-owner.ts"
 import { Keyword, KeywordsWrapper } from "./keyword.tsx"
 import { NewBadge } from "./new-badge.tsx"
 import { Photo as AuthorPhoto } from "./photo.tsx"
+import { YoursAuthorBadge } from "./yours-author-badge.tsx"
 
 type AuthorCardProps = {
 	author: Doc<"authors">
@@ -22,6 +25,9 @@ type AuthorCardProps = {
 
 export const Card = ({ author, actions }: AuthorCardProps) => {
 	const isNew = useIsNew(author._creationTime)
+
+	const { user } = useUser()
+	const isOwner = useIsOwner({ authorUserId: author.userId, userId: user?.id })
 
 	return (
 		<UiCard className={"relative"}>
@@ -52,7 +58,10 @@ export const Card = ({ author, actions }: AuthorCardProps) => {
 					</Link>
 				</Button>
 			</UiCardFooter>
-			{isNew && <NewBadge className={"absolute right-4 top-4"} />}
+			<div className={"absolute right-4 top-4 flex items-center gap-4"}>
+				{isNew && <NewBadge />}
+				{isOwner && <YoursAuthorBadge authorId={author._id} />}
+			</div>
 		</UiCard>
 	)
 }
