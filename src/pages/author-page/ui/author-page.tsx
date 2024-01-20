@@ -12,6 +12,7 @@ import {
 	Contacts,
 	Keyword,
 	KeywordsWrapper,
+	SwitchEditButton,
 	useGetAuthorById,
 	useIsOwner,
 } from "@/entities/author"
@@ -48,6 +49,11 @@ export const AuthorPage = () => {
 				]}
 			/>
 			<PageLayout className={cn("container my-8 flex flex-col gap-6")}>
+				{isOwner && (
+					<div className={"flex w-full items-center justify-end"}>
+						<SwitchEditButton authorId={author._id} editable={false} />
+					</div>
+				)}
 				<Brand brand={author.brand} />
 				<div className={"flex w-full flex-col items-center gap-4"}>
 					<AuthorPhoto author={author} imageClassName={"max-sm:w-72"} />

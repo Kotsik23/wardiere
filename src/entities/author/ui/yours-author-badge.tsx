@@ -13,9 +13,9 @@ type Props = {
 
 export const YoursAuthorBadge = ({ authorId, className }: Props) => {
 	return (
-		<TooltipProvider>
+		<TooltipProvider delayDuration={100}>
 			<Tooltip>
-				<TooltipTrigger className={"hover:cursor-default"}>
+				<TooltipTrigger>
 					<Badge
 						className={cn(
 							"w-fit bg-yellow-500 p-1 font-semibold uppercase hover:bg-yellow-500/90 dark:bg-yellow-400 dark:hover:bg-yellow-400/90",

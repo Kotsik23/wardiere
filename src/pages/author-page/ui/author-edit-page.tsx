@@ -19,7 +19,7 @@ import {
 } from "@/features/author/edit-author"
 import { LikeButton } from "@/features/author/like-author"
 import { TogglePubic } from "@/features/author/toggle-public"
-import { AuthorPhoto, useGetAuthorById, useIsOwner } from "@/entities/author"
+import { AuthorPhoto, SwitchEditButton, useGetAuthorById, useIsOwner } from "@/entities/author"
 import { ROUTES } from "@/shared/constants/routes.ts"
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs.tsx"
 import { PageLayout } from "@/shared/ui/layouts"
@@ -54,9 +54,12 @@ export const AuthorEditPage = () => {
 				]}
 			/>
 			<PageLayout className={"container my-8 flex flex-col gap-10"}>
-				<TogglePubic author={author} />
+				<div className={"flex items-center justify-between gap-4"}>
+					<TogglePubic author={author} />
+					<SwitchEditButton authorId={author._id} editable />
+				</div>
 
-				<div className={"relative w-full"}>
+				<div className={"relative mt-6 w-full"}>
 					<EditableBrand author={author} />
 					<BrandCompletionButton
 						authorId={author._id}
