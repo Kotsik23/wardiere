@@ -1,12 +1,9 @@
-import { useUser } from "@clerk/clerk-react"
-import { useAuthorButton } from "@/features/author/navigate-author"
+import { Link } from "react-router-dom"
+import { ROUTES } from "@/shared/constants/routes.ts"
 import { Button } from "@/shared/ui/button.tsx"
 import { GlowingBubbles } from "@/shared/ui/glowing-bubbles.tsx"
 
 export const HeroSection = () => {
-	const { user } = useUser()
-	const { handleClick } = useAuthorButton()
-
 	return (
 		<section
 			className={
@@ -39,9 +36,11 @@ export const HeroSection = () => {
 					className={"mt-6 rounded-full text-lg font-semibold"}
 					size={"lg"}
 					variant={"outline"}
-					onClick={() => handleClick({ userId: user?.id })}
+					asChild
 				>
-					<span className={"primary-gradient-text drop-shadow-md"}>Get Started</span>
+					<Link to={ROUTES.EXPLORE} className={"primary-gradient-text drop-shadow-md"}>
+						Get Started
+					</Link>
 				</Button>
 			</div>
 			<GlowingBubbles />
