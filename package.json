@@ -59,6 +59,7 @@
 	},
 	"devDependencies": {
 		"@conarti/eslint-plugin-feature-sliced": "^1.0.5",
+		"@tailwindcss/typography": "^0.5.10",
 		"@types/node": "^20.10.4",
 		"@types/react": "^18.2.37",
 		"@types/react-dom": "^18.2.15",

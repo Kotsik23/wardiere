@@ -12,6 +12,15 @@ const ExplorePage = lazy(() =>
 const HelpPage = lazy(() =>
 	import("@/pages/help-page").then(value => ({ default: value.HelpPage }))
 )
+const HelpSecurityPage = lazy(() =>
+	import("@/pages/help-page").then(value => ({ default: value.HelpSecurityPage }))
+)
+const HelpYourAccountPage = lazy(() =>
+	import("@/pages/help-page").then(value => ({ default: value.HelpYourAccountPage }))
+)
+const HelpWardiereDzenPage = lazy(() =>
+	import("@/pages/help-page").then(value => ({ default: value.HelpWardiereDzenPage }))
+)
 const SettingsPage = lazy(() =>
 	import("@/pages/settings-page").then(value => ({ default: value.SettingsPage }))
 )
@@ -36,7 +45,12 @@ export const RouterProvider = () => {
 				<Routes>
 					<Route element={<HomePage />} path={ROUTES.HOME} />
 					<Route element={<ExplorePage />} path={ROUTES.EXPLORE} />
+
 					<Route element={<HelpPage />} path={ROUTES.HELP} />
+					<Route element={<HelpSecurityPage />} path={ROUTES.HELP_SECURITY} />
+					<Route element={<HelpYourAccountPage />} path={ROUTES.HELP_YOUR_ACCOUNT} />
+					<Route element={<HelpWardiereDzenPage />} path={ROUTES.HELP_WARDIERE_DZEN} />
+
 					<Route
 						element={
 							<ProtectedRoute>

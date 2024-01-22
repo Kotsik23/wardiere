@@ -9,7 +9,7 @@ export const HelpPage = () => {
 	return (
 		<>
 			<Breadcrumbs className={"container mt-6"} pages={[{ name: "Help", href: ROUTES.HELP }]} />
-			<PageLayout className={"my-8 overflow-hidden"}>
+			<PageLayout className={"overflow-hidden py-8"}>
 				<div className={"container flex flex-col items-center gap-10"}>
 					<h2 className={"text-center text-3xl font-bold md:text-4xl lg:text-5xl xl:text-6xl"}>
 						How can we help?
